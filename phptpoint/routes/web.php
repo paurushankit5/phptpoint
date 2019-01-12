@@ -11,6 +11,28 @@
 |
 */
 
+Auth::routes();
+Route::get('/logout',function(){
+	Auth::logout();
+	return redirect('/');
+});
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/dashboard',function(){
+	echo "user logged in";
+});
+
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+foreach(glob(dirname(__FILE__) . '/web/*.php') AS $file){
+	require_once($file);
+}
+
+Route::any('/{slug}', function($slug)
+{
+	return \App::call('\App\Http\Controllers\TestController@test');
 });
