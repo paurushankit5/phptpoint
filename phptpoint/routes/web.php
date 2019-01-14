@@ -17,7 +17,7 @@ Route::get('/logout',function(){
 	return redirect('/');
 });
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 

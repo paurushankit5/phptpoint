@@ -145,7 +145,7 @@ class TutorialController extends Controller
     }
 
     public function arrangesubtutorials($id){
-        $tutorial = Tutorial::with('subtutorial')->find($id)->orderBy('subtut_order')->get();  
+        $tutorial = Tutorial::with('subtutorial')->find($id)->get();  
         return view ('admin.arrangesubtutorials',['tutorial' =>  $tutorial]);
     }
 }
