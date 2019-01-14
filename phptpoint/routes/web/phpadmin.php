@@ -5,6 +5,7 @@ Route::group(['middleware' => ['checkadmin'], 'prefix' => 'phpadmin'], function(
 	});
 	Route::resource('/categories','CategoryController');
 	Route::resource('/tutorials','TutorialController');
+	Route::get('tutorial/{id}/arrangesubtutorials','TutorialController@arrangesubtutorials')->name('arrangesubtutorials');
 	Route::resource('/subtutorials','SubTutorialController');
 });
 ?>

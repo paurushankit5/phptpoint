@@ -143,4 +143,9 @@ class TutorialController extends Controller
         Session::flash('alert-success', 'Tutorial deleted successfully');
         return redirect(route('tutorials.index'));
     }
+
+    public function arrangesubtutorials($id){
+        $tutorial = Tutorial::with('subtutorial')->find($id)->orderBy('subtut_order')->get();  
+        return view ('admin.arrangesubtutorials',['tutorial' =>  $tutorial]);
+    }
 }

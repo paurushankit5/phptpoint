@@ -71,14 +71,17 @@
                                 </th>
                             </tr>
                         @php
-                        echo "<tr><td colspan='2'><ol> ";
+                        echo "<tr><td><ol> ";
                         foreach($tutorial->subtutorial as $subtut)
                         {
                             @endphp
                                 <li><a href="{{ route('subtutorials.show',$subtut->id) }}">{{ $subtut->subtut_name }}</a></li>
                             @php
                         }
-                    echo "</ol></td></tr>";
+                        echo "</ol></td><td>";
+                    @endphp
+                        <a href="{{ route('arrangesubtutorials',$tutorial->id) }}" class="btn btn-primary"><i class="fa fa-icon-move"></i> Arrange Sub-Tutorial Order</a></td></tr>
+                @php
                     }
                 @endphp
                 
