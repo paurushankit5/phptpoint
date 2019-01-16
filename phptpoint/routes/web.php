@@ -38,7 +38,7 @@ Route::any('/{slug}', function($slug)
 		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
 	}
 	else{
-		return "404";
+		abort(404);
 	}
 	
 });

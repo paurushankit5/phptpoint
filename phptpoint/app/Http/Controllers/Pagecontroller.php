@@ -15,7 +15,28 @@ class Pagecontroller extends Controller
 
     public function getsubtutorial($slug_id){
     	$subtut 	=  Subtutorial::with('tutorial')->where('slug_id',$slug_id)->first();
-    	return view('subtutorial',['subtut' => $subtut]);
+    	$next_slug 	= 	Subtutorial::where('slug_id','>',$slug_id)
+    									->where('tutorial_id', $subtut->tutorial_id)
+    									->orderBy('slug_id','ASC')
+    									->first();
+    	$prev_slug 	= 	Subtutorial::where('slug_id','<',$slug_id)
+    									->where('tutorial_id', $subtut->tutorial_id)
+    									->orderBy('slug_id','DESC')
+    									->first();
+    	if($prev_slug)
+    	{
+    		$prev_slug 	= 	$prev_slug->slug->slug;
+    	}
+    	if($next_slug)
+    	{
+    		$next_slug 	= 	$next_slug->slug->slug;
+    	}
+    	//	return $prev_slug;
+    	return view('subtutorial',[	
+    							'subtut' => $subtut,
+    							'next_slug' 	=> 	$next_slug,
+    							'prev_slug' 	=> 	$prev_slug,
+    						]);
     }
 
 

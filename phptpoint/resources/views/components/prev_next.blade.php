@@ -4,12 +4,12 @@
 
 	if(!isset($next_url))
 	{
-		$next_class = 'disabled';
+		$next_class = 'd-none';
 		$next_url  = '#';
 	}
 	if(!isset($prev_url))
 	{
-		$prev_class = 'disabled';
+		$prev_class = 'd-none';
 		$prev_url = '#';
 	}
 @endphp

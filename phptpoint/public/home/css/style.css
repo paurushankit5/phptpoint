@@ -959,3 +959,17 @@ a {
     .no-border-radius{
       border-radius: 0px;
     }
+    pre, code{
+      background-color: #f5f5f5;
+      padding: 10px;
+    }
+    .error-page-heading{
+      font-size: 200px;
+      letter-spacing: 50px;
+      font-weight: 900;
+    }
+    .error-page-para{      
+      padding-bottom: 50px;
+      font-size: 40px;
+      letter-spacing: 10px;
+    }
