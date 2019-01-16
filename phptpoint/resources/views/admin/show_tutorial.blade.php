@@ -36,7 +36,7 @@
                 	<th>Category</th>
                 	<td> 
                         @php
-                            if($tutorial->categry)
+                            if($tutorial->category)
                             {
                                 echo $tutorial->category->cat_name ;
                             }

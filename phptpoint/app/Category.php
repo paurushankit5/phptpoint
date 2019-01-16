@@ -16,4 +16,8 @@ class Category extends Model
     {
         return $this->hasMany('App\Tutorial');
     }
+    public function categoryWithTutorials(){
+    	return $this->hasMany('App\Tutorial')->where('category_id','<>',Null);
+	}
 }
+

@@ -262,11 +262,11 @@ a {
       display: inline-block;
       padding: 10px 5px; }
       .site-navbar .site-navigation .site-menu > li > a {
-        padding: 10px 10px;
+        padding: 10px 5px;
         text-transform: uppercase;
         letter-spacing: .05em;
         color: rgba(0, 0, 0, 0.6);
-        font-size: 15px;
+        font-size: 12px;
         text-decoration: none !important; }
         .site-navbar .site-navigation .site-menu > li > a:hover {
           color: #000; }
@@ -773,7 +773,7 @@ a {
   .unit-5 > .container {
     z-index: 2;
     position: relative; }
-  .unit-5 h2 {
+  .unit-5 h1 {
     color: #fff;
     font-size: 3rem; }
 
@@ -955,3 +955,7 @@ a {
     background: #28a745;
     color: #fff;
     border: 1px solid transparent; }
+
+    .no-border-radius{
+      border-radius: 0px;
+    }

@@ -16,9 +16,7 @@ Route::get('/logout',function(){
 	Auth::logout();
 	return redirect('/');
 });
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/','HomeController@index')->name('homepage');
 
 
 Route::get('/dashboard',function(){
@@ -34,5 +32,13 @@ foreach(glob(dirname(__FILE__) . '/web/*.php') AS $file){
 
 Route::any('/{slug}', function($slug)
 {
-	return \App::call('\App\Http\Controllers\TestController@test');
+	$method = \DB::table('slugs')->where('slug',$slug)->first();
+	if($method){
+		//return $method->method_name;
+		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
+	}
+	else{
+		return "404";
+	}
+	
 });

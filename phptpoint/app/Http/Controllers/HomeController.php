@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
+use App\Tutorial;
 
 class HomeController extends Controller
 {
@@ -13,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -22,7 +24,28 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('home');
+    {     
+        //dd($cat[1]);
+        return view('index');
+    }
+
+    public static function getmenubar(){
+        $cat   =   Category::with('tutorial')->get();
+        $tutorial   = Tutorial::where('category_id',Null)->get();
+        $menu=  array();
+        if(count($cat))
+        {
+            $i= 0;
+            foreach($cat as $c)
+            {
+                if(isset($c->tutorial) && count($c->tutorial))
+                {
+                    $menu['cat'][$i++] = $c;
+                }
+            }
+        }
+        $menu['tut']  = $tutorial;
+        return $menu;
+
     }
 }
