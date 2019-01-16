@@ -26,7 +26,8 @@ class HomeController extends Controller
     public function index()
     {     
         //dd($cat[1]);
-        return view('index');
+        $tutorial   =   Tutorial::with('slug')->get();
+        return view('index',['tutorial' =>  $tutorial]);
     }
 
     public static function getmenubar(){

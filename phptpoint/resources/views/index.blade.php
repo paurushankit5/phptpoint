@@ -1,140 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Job Finder &mdash; Colorlib Website Template</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Work+Sans:300,400,700" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('home/fonts/icomoon/style.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('home/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('home/css/magnific-popup.css') }}">
-    <link rel="stylesheet" href="{{ asset('home/css/jquery-ui.css') }}">
-    <link rel="stylesheet" href="{{ asset('home/css/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('home/css/owl.theme.default.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('home/css/bootstrap-datepicker.css') }}">
-    <link rel="stylesheet" href="{{ asset('home/css/animate.css') }}">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelementplayer.min.css">
-    
-    
-    
-    <link rel="stylesheet" href="{{ asset('home/fonts/flaticon/font/flaticon.css') }}">
+@extends('layouts.main')
+@section('title')
   
-    <link rel="stylesheet" href="{{ asset('home/css/aos.css') }}">
+@endsection
 
-    <link rel="stylesheet" href="{{ asset('home/css/style.css') }}">
-    
-  </head>
-  <body>
+@section('meta_keyword')
   
-  <div class="site-wrap">
+@endsection
 
-    <div class="site-mobile-menu">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div> <!-- .site-mobile-menu -->
-    
-    
-    <div class="site-navbar-wrap js-site-navbar bg-white">
-      
-      <div class="container">
-        <div class="site-navbar bg-light">
-          <div class="py-1">
-            <div class="row align-items-center">
-              <div class="col-2">
-                <h2 class="mb-0 site-logo"><a href="index.html">PHP<strong class="font-weight-bold">TPOINT</strong> </a></h2>
-              </div>
-              <div class="col-10">
-                <nav class="site-navigation text-right" role="navigation">
-                  <div class="container">
-                    <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
-
-                    <ul class="site-menu js-clone-nav d-none d-lg-block">
-                    	@php
-                    		$menu 	= 	App\Http\Controllers\HomeController::getmenubar();
-                    		if(count($menu['cat']))
-                    		{
-                    			foreach($menu['cat'] as $x)
-                    			{
-                    				@endphp
-                    					<li class="has-children">
-					                        <a href="category.html">{{ $x->cat_name }}</a>
-					                        <ul class="dropdown arrow-top">
-					                        	@php
-					                        		if(isset($x->tutorial) && count($x->tutorial))
-					                        		{
-					                        			foreach($x->tutorial as $tutorial)
-					                        			{
-					                        				@endphp
-					                        					<li><a href="{{ env('APP_URL' )}}/{{ $tutorial->slug->slug }}">{{$tutorial->tut_name}}</a></li>
-					                        				@php
-					                        			}
-					                        		}
-					                        	@endphp
-					                        </ul>
-					                      </li>
-                    				@php
-                    			}
-                    		}
-                    		if(count($menu['tut']))
-                    		{
-                    			foreach($menu['tut'] as $tut)
-                    			{
-                    				@endphp
-                    					<li><a href="{{ env('APP_URL' )}}/{{ $tutorial->slug->slug }}">{{$tut->tut_name}}</a></li>
-                    				@php
-                    			}
-                    		}
-                    	@endphp
-                      
-                      
-                      <li><a href="contact.html">Contact</a></li>
-                      <li><a href="new-post.html"><span class="bg-primary text-white py-3 px-4 rounded"><span class="icon-plus mr-3"></span>Post New Job</span></a></li>
-                    </ul>
-                  </div>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+@section('meta_description')
   
-    <div style="height: 113px;"></div>
+@endsection
 
-    <div class="site-blocks-cover overlay" style='background-image: url('{{ asset("home/images/hero_1.jpg") }}');' data-aos="fade" data-stellar-background-ratio="0.5">
+@section('page_banner')
+     <div style="height: 113px;"></div>
+
+    <div class="site-blocks-cover overlay" style='background-image: url("{{ asset('home/images/hero_1.jpg') }}");' data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-12" data-aos="fade">
-            <h1>Find Job</h1>
+            <h1>PHPTPOINT   </h1>
             <form action="#">
               <div class="row mb-3">
                 <div class="col-md-9">
                   <div class="row">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                      <input type="text" class="mr-3 form-control border-0 px-4" placeholder="job title, keywords or company name ">
-                    </div>
-                    <div class="col-md-6 mb-3 mb-md-0">
-                      <div class="input-wrap">
-                        <span class="icon icon-room"></span>
-                      <input type="text" class="form-control form-control-block search-input  border-0 px-4" id="autocomplete" placeholder="city, province or region" onFocus="geolocate()">
-                      </div>
+                    <div class="col-md-12 mb-6 mb-md-0">
+                      <input type="text" class="mr-3 form-control border-0 px-4" placeholder="Search For Tutorials ">
                     </div>
                   </div>
                 </div>
                 <div class="col-md-3">
                   <input type="submit" class="btn btn-search btn-primary btn-block" value="Search">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="small">or browse by category: <a href="#" class="category">Category #1</a> <a href="#" class="category">Category #2</a></p>
                 </div>
               </div>
               
@@ -143,79 +38,37 @@
         </div>
       </div>
     </div>
-    
 
     <div class="site-section">
       <div class="container">
         <div class="row">
           <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-            <h2 class="mb-5">Popular Categories</h2>
+            <h2 class="mb-5">Popular Tutorials</h2>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="100">
-            <a href="#" class="h-100 feature-item">
-              <span class="d-block icon flaticon-calculator mb-3 text-primary"></span>
-              <h2>Accounting / Finanace</h2>
-              <span class="counting">10,391</span>
-            </a>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="200">
-            <a href="#" class="h-100 feature-item">
-              <span class="d-block icon flaticon-wrench mb-3 text-primary"></span>
-              <h2>Automotive Jobs</h2>
-              <span class="counting">192</span>
-            </a>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="300">
-            <a href="#" class="h-100 feature-item">
-              <span class="d-block icon flaticon-worker mb-3 text-primary"></span>
-              <h2>Construction / Facilities</h2>
-              <span class="counting">1,021</span>
-            </a>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="400">
-            <a href="#" class="h-100 feature-item">
-              <span class="d-block icon flaticon-telecommunications mb-3 text-primary"></span>
-              <h2>Telecommunications</h2>
-              <span class="counting">1,219</span>
-            </a>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="500">
-            <a href="#" class="h-100 feature-item">
-              <span class="d-block icon flaticon-stethoscope mb-3 text-primary"></span>
-              <h2>Healthcare</h2>
-              <span class="counting">482</span>
-            </a>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="600">
-            <a href="#" class="h-100 feature-item">
-              <span class="d-block icon flaticon-computer-graphic mb-3 text-primary"></span>
-              <h2>Design, Art &amp; Multimedia</h2>
-              <span class="counting">5,409</span>
-            </a>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="700">
-            <a href="#" class="h-100 feature-item">
-              <span class="d-block icon flaticon-trolley mb-3 text-primary"></span>
-              <h2>Transportation &amp; Logistics</h2>
-              <span class="counting">291</span>
-            </a>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="800">
-            <a href="#" class="h-100 feature-item">
-              <span class="d-block icon flaticon-restaurant mb-3 text-primary"></span>
-              <h2>Restaurant / Food Service</h2>
-              <span class="counting">329</span>
-            </a>
-          </div>
+            @php
+                if(count($tutorial)){
+                    foreach ($tutorial as $tut) {
+                        @endphp
+                            <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="100">
+                                <a href="#" class="h-100 feature-item">
+                                    <span class="d-block icon flaticon-computer-graphic mb-3 text-primary"></span>
+                                    <h2>{{ $tut->tut_name }}</h2>
+<!--                                     <span class="counting">10,391</span>
+ -->                                </a>
+                            </div>
+                        @php
+                    }
+                }
+            @endphp
+          
+          
         </div>
 
       </div>
     </div>
-
-
-    <div class="site-section bg-light">
+     <div class="site-section bg-light">
       <div class="container">
         <div class="row">
           <div class="col-md-8 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
@@ -393,8 +246,7 @@
         </div>
       </div>
     </div>
-
-    <div class="site-section" data-aos="fade">
+     <div class="site-section" data-aos="fade">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6 mb-5 mb-md-0">
@@ -421,8 +273,6 @@
         </div>
       </div>
     </div>
-
-
     <div class="site-blocks-cover overlay inner-page" style='background-image: url("{{ asset('images/hero_1.jpg') }}");' data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center justify-content-center">
@@ -435,9 +285,6 @@
         </div>
       </div>
     </div>
-
-    
-
     <div class="site-section site-block-feature bg-light">
       <div class="container">
         
@@ -597,181 +444,4 @@
       </div>
     </div>
     
-
-
-    
-    <footer class="site-footer">
-      <div class="container">
-        
-
-        <div class="row">
-          <div class="col-md-4">
-            <h3 class="footer-heading mb-4 text-white">About</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat quos rem ullam, placeat amet.</p>
-            <p><a href="#" class="btn btn-primary pill text-white px-4">Read More</a></p>
-          </div>
-          <div class="col-md-6">
-            <div class="row">
-              <div class="col-md-6">
-                <h3 class="footer-heading mb-4 text-white">Quick Menu</h3>
-                  <ul class="list-unstyled">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Approach</a></li>
-                    <li><a href="#">Sustainability</a></li>
-                    <li><a href="#">News</a></li>
-                    <li><a href="#">Careers</a></li>
-                  </ul>
-              </div>
-              <div class="col-md-6">
-                <h3 class="footer-heading mb-4 text-white">Categories</h3>
-                  <ul class="list-unstyled">
-                    <li><a href="#">Full Time</a></li>
-                    <li><a href="#">Freelance</a></li>
-                    <li><a href="#">Temporary</a></li>
-                    <li><a href="#">Internship</a></li>
-                  </ul>
-              </div>
-            </div>
-          </div>
-
-          
-          <div class="col-md-2">
-            <div class="col-md-12"><h3 class="footer-heading mb-4 text-white">Social Icons</h3></div>
-              <div class="col-md-12">
-                <p>
-                  <a href="#" class="pb-2 pr-2 pl-0"><span class="icon-facebook"></span></a>
-                  <a href="#" class="p-2"><span class="icon-twitter"></span></a>
-                  <a href="#" class="p-2"><span class="icon-instagram"></span></a>
-                  <a href="#" class="p-2"><span class="icon-vimeo"></span></a>
-
-                </p>
-              </div>
-          </div>
-        </div>
-        <div class="row pt-5 mt-5 text-center">
-          <div class="col-md-12">
-            <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy; All Rights Reserved  </a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </p>
-          </div>
-          
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <script src="{{ asset('home/js/jquery-3.3.1.min.js') }}"></script>
-  <script src="{{ asset('home/js/jquery-migrate-3.0.1.min.js') }}"></script>
-  <script src="{{ asset('home/js/jquery-ui.js') }}"></script>
-  <script src="{{ asset('home/js/popper.min.js') }}"></script>
-  <script src="{{ asset('home/js/bootstrap.min.js') }}"></script>
-  <script src="{{ asset('home/js/owl.carousel.min.js') }}"></script>
-  <script src="{{ asset('home/js/jquery.stellar.min.js') }}"></script>
-  <script src="{{ asset('home/js/jquery.countdown.min.js') }}"></script>
-  <script src="{{ asset('home/js/jquery.magnific-popup.min.js') }}"></script>
-  <script src="{{ asset('home/js/bootstrap-datepicker.min.js') }}"></script>
-  <script src="{{ asset('home/js/aos.js') }}"></script>
-
-  
-  <script src="{{ asset('home/js/mediaelement-and-player.min.js') }}"></script>
-
-  <script src="{{ asset('home/js/main.js') }}"></script>
-    
-
-  <script>
-      document.addEventListener('DOMContentLoaded', function() {
-                var mediaElements = document.querySelectorAll('video, audio'), total = mediaElements.length;
-
-                for (var i = 0; i < total; i++) {
-                    new MediaElementPlayer(mediaElements[i], {
-                        pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
-                        shimScriptAccess: 'always',
-                        success: function () {
-                            var target = document.body.querySelectorAll('.player'), targetTotal = target.length;
-                            for (var j = 0; j < targetTotal; j++) {
-                                target[j].style.visibility = 'visible';
-                            }
-                  }
-                });
-                }
-            });
-    </script>
-
-
-    <script>
-      // This example displays an address form, using the autocomplete feature
-      // of the Google Places API to help users fill in the information.
-
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-      var placeSearch, autocomplete;
-      var componentForm = {
-        street_number: 'short_name',
-        route: 'long_name',
-        locality: 'long_name',
-        administrative_area_level_1: 'short_name',
-        country: 'long_name',
-        postal_code: 'short_name'
-      };
-
-      function initAutocomplete() {
-        // Create the autocomplete object, restricting the search to geographical
-        // location types.
-        autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-            {types: ['geocode']});
-
-        // When the user selects an address from the dropdown, populate the address
-        // fields in the form.
-        autocomplete.addListener('place_changed', fillInAddress);
-      }
-
-      function fillInAddress() {
-        // Get the place details from the autocomplete object.
-        var place = autocomplete.getPlace();
-
-        for (var component in componentForm) {
-          document.getElementById(component).value = '';
-          document.getElementById(component).disabled = false;
-        }
-
-        // Get each component of the address from the place details
-        // and fill the corresponding field on the form.
-        for (var i = 0; i < place.address_components.length; i++) {
-          var addressType = place.address_components[i].types[0];
-          if (componentForm[addressType]) {
-            var val = place.address_components[i][componentForm[addressType]];
-            document.getElementById(addressType).value = val;
-          }
-        }
-      }
-
-      // Bias the autocomplete object to the user's geographical location,
-      // as supplied by the browser's 'navigator.geolocation' object.
-      function geolocate() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var geolocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            var circle = new google.maps.Circle({
-              center: geolocation,
-              radius: position.coords.accuracy
-            });
-            autocomplete.setBounds(circle.getBounds());
-          });
-        }
-      }
-    </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&libraries=places&callback=initAutocomplete"
-        async defer></script>
-
-  </body>
-</html>
+@endsection
