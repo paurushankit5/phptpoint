@@ -40,6 +40,11 @@
 				  		}
 
 				  	@endphp
+				  	<!-- <a href="/{{ $subtut->slug->slug }}" class="list-group-item list-group-item-action">
+				  		<div class="sharethis-inline-share-buttons"></div>
+				  	</a> -->
+				  	
+
 				</div>
             </div>
             

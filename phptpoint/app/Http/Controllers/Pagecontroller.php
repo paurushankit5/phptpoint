@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tutorial;
 use App\Subtutorial;
+use App\Project;
 
 class Pagecontroller extends Controller
 {
@@ -39,5 +40,12 @@ class Pagecontroller extends Controller
     						]);
     }
 
-
+    public function getproject($slug_id){
+        $pro    =   Project::where('slug_id',$slug_id)->first();
+        $projects   =   Project::where('is_paid',$pro->is_paid)->get();
+        return view('project',[
+            "pro"        =>  $pro,
+            "projects"   =>  $projects,
+        ]);
+    }
 }

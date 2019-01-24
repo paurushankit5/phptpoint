@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{{ asset('home/css/aos.css') }}">
 
     <link rel="stylesheet" href="{{ asset('home/css/style.css') }}">
+    <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c45bbc2058f100011a5ac16&product=inline-share-buttons' async='async'></script>
     
   </head>
   <body>
@@ -50,7 +51,7 @@
           <div class="py-1">
             <div class="row align-items-center">
               <div class="col-2">
-                <h2 class="mb-0 site-logo"><a href="index.html">PHP<strong class="font-weight-bold">TPOINT</strong> </a></h2>
+                <h2 class="mb-0 site-logo"><a href="/">PHP<strong class="font-weight-bold">TPOINT</strong> </a></h2>
               </div>
               <div class="col-10">
                 <nav class="site-navigation text-right" role="navigation">
@@ -92,6 +93,50 @@
                                         <li><a href="{{ env('APP_URL' )}}/{{ $tutorial->slug->slug }}">{{$tut->tut_name}}</a></li>
                                     @php
                                 }
+                            }
+                            if(count($menu['free_projects']))
+                            {
+                              @endphp
+                               <li class="has-children">
+                                  <a href="category.html">Free Projects</a>
+                                  <ul class="dropdown arrow-top">
+                              @php
+                              foreach($menu['free_projects'] as $pro)
+                              {
+                                @endphp
+                                  <li><a href="{{ env('APP_URL' )}}/projects/{{ $pro->slug->slug }}">{{$pro->pro_name}}</a></li>
+                                @php 
+                              }
+                              @endphp
+                                </ul>
+                              </li>
+                              @php
+                            }
+                            if(count($menu['about']))
+                            {
+                              @endphp
+                               <li class="has-children">
+                                  <a href="category.html">About Us</a>
+                                  <ul class="dropdown arrow-top">
+                              @php
+                              foreach($menu['about'] as $page)
+                              {
+                                if($page->external_link!='')
+                                {
+                                  @endphp
+                                    <li><a href="{{ $page->external_link }}" target="_blank">{{$page->page_name}}</a></li>
+                                  @php
+                                }
+                                else{
+                                  @endphp
+                                    <li><a href="{{ env('APP_URL' )}}/{{ $page->slug->slug }}">{{$page->page_name}}</a></li>
+                                  @php
+                                }                                 
+                              }
+                              @endphp
+                                </ul>
+                              </li>
+                              @php
                             }
                         @endphp
                       

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Tutorial;
+use App\Project;
+use App\Page;
 
 class HomeController extends Controller
 {
@@ -46,6 +48,8 @@ class HomeController extends Controller
             }
         }
         $menu['tut']  = $tutorial;
+        $menu['free_projects'] = Project::where("is_paid",0)->get();
+        $menu['about'] = Page::all();
         return $menu;
 
     }

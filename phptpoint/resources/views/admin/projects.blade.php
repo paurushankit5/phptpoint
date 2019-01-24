@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('page_heading')
-    Tutorials
+    Projects
 @endsection
 
 
@@ -10,17 +10,17 @@
         <div class="box-header with-border">
             <h3 class="box-title">Tutorials</h3>
             <div class="box-tools pull-right">
-                <a href="{{ route('tutorials.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Tutorial</a>
+                <a href="{{ route('projects.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Projects</a>
           </div>
         </div>
         <div class="box-body">
-            @if(count($tutorials))
+            @if(count($projects))
                 <table class="table table-responsive ">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Name</th>
-                            <th>Status</th>
+                            <th>Type</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -34,25 +34,25 @@
 
                         @endphp
 
-                        @foreach($tutorials as $tut)
+                        @foreach($projects as $pro)
                             <tr>
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $tut->tut_name }}</td>
+                                <td>{{ $pro->pro_name }}</td>
                                 <td>
                                     @php
-                                        if($tut->status == 1)
+                                        if($pro->is_paid == 1)
                                         {
-                                            echo "Active";
+                                            echo "Paid - &#x20B9; ".$pro->price;
                                         }
                                         else{
-                                            echo "Inactive";
+                                            echo "Free";
                                         }
                                     @endphp
                                 </td>
                                 <td>
-                                    <a href="{{ route('tutorials.show', $tut->id) }}" title="View" class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                                    <a href="{{ route('tutorials.edit', $tut->id) }}" title="Edit" class="btn btn-info"><i class="fa fa-pencil"></i></a>
-                                    <button title="Edit" class="btn btn-danger" onclick="deletemodalopen({{ $tut->id }});"><i class="fa fa-trash"></i></button>
+                                    <a href="{{ route('projects.show', $pro->id) }}" title="View" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                                    <a href="{{ route('projects.edit', $pro->id) }}" title="Edit" class="btn btn-info"><i class="fa fa-pencil"></i></a>
+                                    <button title="Edit" class="btn btn-danger" onclick="deletemodalopen({{ $pro->id }});"><i class="fa fa-trash"></i></button>
                                     
                                 </td>
                             </tr>
@@ -64,7 +64,7 @@
             @endif
         </div>
         <div class="box-footer">
-          {{ $tutorials->links() }}
+          {{ $projects->links() }}
         </div>
     </div>
     <!--------------------------delete modal--------------------->
@@ -93,7 +93,7 @@
 
     <script type="text/javascript">
         function deletemodalopen(id){
-            $('#deleteform').attr('action', '/phpadmin/tutorials/'+id);
+            $('#deleteform').attr('action', '/phpadmin/projects/'+id);
             $('#deletemodal').modal('toggle');
         }
     </script>

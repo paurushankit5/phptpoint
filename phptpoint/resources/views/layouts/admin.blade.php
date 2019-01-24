@@ -143,6 +143,8 @@
         <li><a href="{{ route('categories.index') }}"><i class="fa fa-th"></i> <span>Categories</span></a></li>
         <li><a href="{{ route('tutorials.index') }}"><i class="fa fa-th"></i> <span>Tutorials</span></a></li>
         <li><a href="{{ route('subtutorials.index') }}"><i class="fa fa-th"></i> <span>Sub-Tutorials</span></a></li>
+        <li><a href="{{ route('projects.index') }}"><i class="fa fa-envelope"></i> <span>Projects</span></a></li>
+        <li><a href="{{ route('pages.index') }}"><i class="fa fa-laptop"></i> <span>Pages</span></a></li>
 
         <li class="treeview">
           <a href="#">

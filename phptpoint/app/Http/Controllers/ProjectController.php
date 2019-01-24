@@ -1,0 +1,190 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Project;
+use App\Slug;
+use Session;
+
+class ProjectController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $limit      =   100;
+        $projects =   Project::orderBy('id','DESC')->paginate($limit);
+        return view('admin.projects',['projects'  =>  $projects,'limit' =>  $limit]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view ('admin.create_projects');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        if(isset($_FILES['pro_image']['name']) && $_FILES['pro_image']['name']!='')
+        {
+            $request->validate([
+                'slug'          => 'required|unique:slugs,slug|max:255',
+                'project_name' => 'required|max:255',
+                'content'       => 'required',
+                'page_title'    => 'required',
+                'pro_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]); 
+            $image = $request->file('pro_image');
+            $pro_image = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images/projects');
+            $image->move($destinationPath, $pro_image);
+            
+        }
+        else{
+             $request->validate([
+                'slug'          => 'required|unique:slugs,slug|max:255',
+                'project_name'  => 'required|max:255',
+                'content'       => 'required',
+                'page_title'    => 'required',
+            ]);
+             $pro_image = Null;
+        }
+        
+
+        $slug                   =   new Slug;
+        $slug->slug             =   $request->slug;
+        $slug ->method_name     =   "Pagecontroller@getproject";
+        $slug->save();  
+
+        $tut                    =   new Project;
+        $tut->pro_name          =   $request->project_name;
+        $tut->pro_image         =   $pro_image;
+        $tut->page_name         =   $request->page_name;
+        $tut->video_url         =   $request->youtube_embed_link;
+        $tut->is_paid           =   $request->is_paid;
+        $tut->price             =   $request->project_price;
+        $tut->content           =   $request->content;
+        $tut->page_title        =   $request->page_title;
+        $tut->meta_title        =   $request->meta_title;
+        $tut->meta_keyword      =   $request->meta_keyword;
+        $tut->meta_description  =   $request->meta_description;
+        $tut->slug_id           =   $slug->id;
+        $tut->save();
+
+        Session::flash('alert-success', 'Project added successfully');
+        return redirect(route('projects.index'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $project   =   Project::findOrFail($id);
+        return view('admin.show_project',['project'   =>  $project]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *  
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $project   =   Project::findOrFail($id);
+        return view('admin.edit_project',['project'   =>  $project]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $pro       =   Project::findOrFail($id);
+        if(isset($_FILES['pro_image']['name']) && $_FILES['pro_image']['name']!='')
+        {
+            $request->validate([
+                'slug'          => 'required|max:255|unique:slugs,slug,'.$pro->slug_id,
+                'project_name' => 'required|max:255',
+                'content'       => 'required',
+                'page_title'    => 'required',
+                'pro_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]); 
+            $image = $request->file('pro_image');
+            $pro_image = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images/projects');
+            $image->move($destinationPath, $pro_image);            
+        }
+        else{
+             $request->validate([
+                'slug'          => 'required|max:255|unique:slugs,slug,'.$pro->slug_id,
+                'project_name'  => 'required|max:255',
+                'content'       => 'required',
+                'page_title'    => 'required',
+            ]);
+             $pro_image = Null;
+        }
+
+
+
+        $slug                   =   Slug::findOrFail($pro->slug_id);
+        $slug->slug             =   $request->slug;
+        $slug->save(); 
+        if($request->project_price == '')
+            $request->project_price = 0;
+
+        $pro->pro_name          =   $request->project_name;
+        $pro->pro_image         =   $pro_image;
+        $pro->page_name         =   $request->page_name;
+        $pro->video_url         =   $request->youtube_embed_link;
+        $pro->is_paid           =   $request->is_paid;
+        $pro->price             =   $request->project_price;
+        $pro->content           =   $request->content;
+        $pro->page_title        =   $request->page_title;
+        $pro->meta_title        =   $request->meta_title;
+        $pro->meta_keyword      =   $request->meta_keyword;
+        $pro->meta_description  =   $request->meta_description;
+        $pro->slug_id           =   $slug->id;
+        $pro->save();
+
+        Session::flash('alert-success', 'Project updated successfully');
+        return redirect(route('projects.show',$pro->id));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $pro            =   Project::findOrFail($id);
+        
+        $pro->delete();
+        Session::flash('alert-success', 'Project deleted successfully');
+        return redirect(route('projects.index'));
+    }
+}

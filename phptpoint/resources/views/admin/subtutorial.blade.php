@@ -20,6 +20,8 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Tutorial</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -37,6 +39,7 @@
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $subtut->subtut_name }}</td>
+                                <td><a href="/phpadmin/tutorials/{{$subtut->tutorial->id}}">{{ $subtut->tutorial->tut_name }}</a></td>
                                 <td>
                                     @php
                                         if($subtut->status == 1)

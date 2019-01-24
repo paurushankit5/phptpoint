@@ -17,7 +17,7 @@ class TutorialController extends Controller
     public function index()
     {
         $limit      =   100;
-        $tutorials =   Tutorial::paginate($limit);
+        $tutorials =   Tutorial::orderBy('id','DESC')->paginate($limit);
         return view('admin.tutorial',['tutorials'  =>  $tutorials,'limit' =>  $limit]);
     }
 
@@ -139,6 +139,7 @@ class TutorialController extends Controller
     public function destroy($id)
     {
         $tut            =   Tutorial::findOrFail($id);
+        
         $tut->delete();
         Session::flash('alert-success', 'Tutorial deleted successfully');
         return redirect(route('tutorials.index'));

@@ -19,7 +19,7 @@ class SubTutorialController extends Controller
     public function index()
     {
         $limit          =   100;
-        $subtutorials   =   Subtutorial::paginate($limit);
+        $subtutorials   =   Subtutorial::orderBy('id','DESC')->paginate($limit);
         return view('admin.subtutorial',['subtutorials'  =>  $subtutorials,'limit' =>  $limit]);
     }
 
@@ -146,6 +146,7 @@ class SubTutorialController extends Controller
     public function destroy($id)
     {
         $tut            =   Subtutorial::findOrFail($id);
+      
         $tut->delete();
         Session::flash('alert-success', 'Sub-Tutorial deleted successfully');
         return redirect(route('subtutorials.index'));

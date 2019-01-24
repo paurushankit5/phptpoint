@@ -42,3 +42,15 @@ Route::any('/{slug}', function($slug)
 	}
 	
 });
+Route::any('/projects/{slug}', function($slug)
+{
+	$method = \DB::table('slugs')->where('slug',$slug)->first();
+	if($method){
+		//return $method->method_name;
+		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
+	}
+	else{
+		abort(404);
+	}
+	
+});
