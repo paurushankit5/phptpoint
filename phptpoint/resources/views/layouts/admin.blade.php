@@ -128,25 +128,15 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="admin/index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-            <li><a href="admin/index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-          </ul>
-        </li>
+        
+        <li><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="{{ route('categories.index') }}"><i class="fa fa-th"></i> <span>Categories</span></a></li>
         <li><a href="{{ route('tutorials.index') }}"><i class="fa fa-th"></i> <span>Tutorials</span></a></li>
         <li><a href="{{ route('subtutorials.index') }}"><i class="fa fa-th"></i> <span>Sub-Tutorials</span></a></li>
         <li><a href="{{ route('projects.index') }}"><i class="fa fa-envelope"></i> <span>Projects</span></a></li>
         <li><a href="{{ route('pages.index') }}"><i class="fa fa-laptop"></i> <span>Pages</span></a></li>
 
-        <li class="treeview">
+        <<!-- li class="treeview">
           <a href="#">
             <i class="fa fa-files-o"></i>
             <span>Layout Options</span>
@@ -301,7 +291,7 @@
         <li class="header">LABELS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
       </ul>
     </section>
     <!-- /.sidebar -->
