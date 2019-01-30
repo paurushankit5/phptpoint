@@ -38,6 +38,10 @@
 
 				  	@endphp
 				</div>
+                @component('components.sidebar')
+                    @slot('sidebar_type','project')
+                    @slot('source_page_id',$project->id)
+                @endcomponent
             </div>
             
         </div>

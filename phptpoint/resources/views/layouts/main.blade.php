@@ -244,7 +244,6 @@
   <script src="{{ asset('home/js/main.js') }}"></script>
     
 
-
      
 
   </body>

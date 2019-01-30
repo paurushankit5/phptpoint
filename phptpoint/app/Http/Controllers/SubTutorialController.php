@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Tutorial;
 use App\Subtutorial;
+use App\Sidebar;
+use App\LinkSidebar;
 use App\Slug;
 use Session;
 
@@ -31,7 +33,8 @@ class SubTutorialController extends Controller
     public function create()
     {
         $tutorials = Tutorial::orderBy('tut_name')->get();
-        return view('admin.create_subtutorials',['tutorials'  =>  $tutorials]);
+        $sidebars = Sidebar::all();
+        return view('admin.create_subtutorials',['tutorials'  =>  $tutorials,'sidebars' =>  $sidebars]);
     }
 
     /**
@@ -70,6 +73,17 @@ class SubTutorialController extends Controller
         $tut->slug_id           =   $slug->id;
         $tut->save();
 
+        if(count($request->sidebars))
+        {
+            foreach ($request->sidebars as $sidebar) {
+                $side   =   new LinkSidebar;
+                $side->sidebar_type     =   'sub_tutorial';
+                $side->sidebar_id       =   $sidebar;
+                $side->source_page_id   =   $tut->id;
+                $side->Save();
+            }
+        }
+
         Session::flash('alert-success', 'Sub-Tutorial added successfully');
         return redirect(route('subtutorials.index'));
     }
@@ -83,7 +97,9 @@ class SubTutorialController extends Controller
     public function show($id)
     {
         $subtutorial   =   Subtutorial::findOrFail($id);
-        return view('admin.show_subtutorial',['subtutorial'   =>  $subtutorial]);
+        $sidebars   =   Linksidebar::where(['sidebar_type'   =>  'sub_tutorial','source_page_id' => $subtutorial->id])->get();
+
+        return view('admin.show_subtutorial',['subtutorial'   =>  $subtutorial,'sidebars'   =>  $sidebars]);
     }
 
     /**
@@ -96,7 +112,18 @@ class SubTutorialController extends Controller
     {
         $tutorials = Tutorial::orderBy('tut_name')->get();
         $subtutorial = Subtutorial::findOrFail($id);
-        return view('admin.edit_subtutorials',['tutorials'  =>  $tutorials,'subtutorial' =>  $subtutorial]);
+        $sidebars = Sidebar::all();
+        $linked_sidebar = LinkSidebar::where(['sidebar_type' => 'sub_tutorial','source_page_id' =>  $id])->select('sidebar_id')->get();
+        $linked_sidebar = $linked_sidebar->toArray();
+        if(count($linked_sidebar))
+        {
+            $tmp    = array();
+            foreach ($linked_sidebar as $link) {
+                array_push($tmp,$link['sidebar_id']);
+            }
+            $linked_sidebar = $tmp;
+        }
+        return view('admin.edit_subtutorials',['tutorials'  =>  $tutorials,'subtutorial' =>  $subtutorial,'linked_sidebar'  =>  $linked_sidebar,'sidebars'  =>   $sidebars]);
     }
 
     /**
@@ -132,6 +159,19 @@ class SubTutorialController extends Controller
         $tut->meta_description  =   $request->meta_description;
         $tut->slug_id           =   $slug->id;
         $tut->save();
+
+        LinkSidebar::where(['sidebar_type' => 'sub_tutorial','source_page_id' =>  $id])->delete();
+
+        if(count($request->sidebars))
+        {
+            foreach ($request->sidebars as $sidebar) {
+                $side   =   new LinkSidebar;
+                $side->sidebar_type     =   'subtutorial';
+                $side->sidebar_id       =   $sidebar;
+                $side->source_page_id   =   $tut->id;
+                $side->Save();
+            }
+        }
 
         Session::flash('alert-success', 'Sub-Tutorial updated successfully');
         return redirect(route('subtutorials.show', $tut->id));

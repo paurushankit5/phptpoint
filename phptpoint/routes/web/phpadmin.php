@@ -9,5 +9,6 @@ Route::group(['middleware' => ['checkadmin'], 'prefix' => 'phpadmin'], function(
 	Route::resource('/subtutorials','SubTutorialController');
 	Route::resource('/projects','ProjectController');
 	Route::resource('/pages','AdminPageController');
+	Route::resource('/sidebars','SidebarController');
 });
 ?>

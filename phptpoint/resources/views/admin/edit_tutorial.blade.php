@@ -103,7 +103,19 @@
                     <label>Meta Description</label>
                     <input type="text" class="form-control" name="meta_description" value="{{ $tutorial->meta_description  }}">
                 </div>
-
+                <div class="row bg-primary">
+                    <h3 class="text text-center">Sidebars</h3>
+                </div>
+                <div class="form-group">
+                    <label>Select Sidebars</label>
+                    <select class="form-control" name="sidebars[]" id="sidebars" multiple>
+                        @if($sidebars)
+                            @foreach($sidebars as $sidebar)
+                                <option value="{{ $sidebar->id }}" @php if(in_array($sidebar->id,$linked_sidebar)){ echo "selected";} @endphp>{{ $sidebar->sidebar_name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
             	<div class="form form-group">
             		<input type="submit" id="formsubmitbtn" class="btn btn-primary">
                	</div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
+use App\Sidebar;
+use App\LinkSidebar;
 use App\Slug;
 use Session;
 
@@ -28,7 +30,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view ('admin.create_projects');
+        $sidebars = Sidebar::all();
+        return view ('admin.create_projects',['sidebars'    =>  $sidebars]);
     }
 
     /**
@@ -85,6 +88,17 @@ class ProjectController extends Controller
         $tut->slug_id           =   $slug->id;
         $tut->save();
 
+        if(count($request->sidebars))
+        {
+            foreach ($request->sidebars as $sidebar) {
+                $side   =   new LinkSidebar;
+                $side->sidebar_type     =   'project';
+                $side->sidebar_id       =   $sidebar;
+                $side->source_page_id   =   $tut->id;
+                $side->Save();
+            }
+        }
+
         Session::flash('alert-success', 'Project added successfully');
         return redirect(route('projects.index'));
     }
@@ -98,7 +112,9 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project   =   Project::findOrFail($id);
-        return view('admin.show_project',['project'   =>  $project]);
+        $sidebars   =   Linksidebar::where(['sidebar_type'   =>  'project','source_page_id' => $project->id])->get();
+
+        return view('admin.show_project',['project'   =>  $project,'sidebars'   =>  $sidebars]);
     }
 
     /**
@@ -110,7 +126,18 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project   =   Project::findOrFail($id);
-        return view('admin.edit_project',['project'   =>  $project]);
+        $sidebars = Sidebar::all();
+        $linked_sidebar = LinkSidebar::where(['sidebar_type' => 'project','source_page_id' =>  $id])->select('sidebar_id')->get();
+        $linked_sidebar = $linked_sidebar->toArray();
+        if(count($linked_sidebar))
+        {
+            $tmp    = array();
+            foreach ($linked_sidebar as $link) {
+                array_push($tmp,$link['sidebar_id']);
+            }
+            $linked_sidebar = $tmp;
+        }
+        return view('admin.edit_project',['project'   =>  $project,'linked_sidebar' =>  $linked_sidebar,'sidebars'  =>  $sidebars]);
     }
 
     /**
@@ -168,6 +195,19 @@ class ProjectController extends Controller
         $pro->meta_description  =   $request->meta_description;
         $pro->slug_id           =   $slug->id;
         $pro->save();
+
+        LinkSidebar::where(['sidebar_type' => 'project','source_page_id' =>  $id])->delete();
+
+        if(count($request->sidebars))
+        {
+            foreach ($request->sidebars as $sidebar) {
+                $side   =   new LinkSidebar;
+                $side->sidebar_type     =   'project';
+                $side->sidebar_id       =   $sidebar;
+                $side->source_page_id   =   $pro->id;
+                $side->Save();
+            }
+        }
 
         Session::flash('alert-success', 'Project updated successfully');
         return redirect(route('projects.show',$pro->id));

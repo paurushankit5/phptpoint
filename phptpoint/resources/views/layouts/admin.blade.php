@@ -17,6 +17,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{asset('admin/dist/css/skins/_all-skins.min.css') }}">
+  <link rel="stylesheet" href="{{asset('admin/dist/css/style.css') }}">
 
   @yield('header_scripts')
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -135,6 +136,7 @@
         <li><a href="{{ route('subtutorials.index') }}"><i class="fa fa-th"></i> <span>Sub-Tutorials</span></a></li>
         <li><a href="{{ route('projects.index') }}"><i class="fa fa-envelope"></i> <span>Projects</span></a></li>
         <li><a href="{{ route('pages.index') }}"><i class="fa fa-laptop"></i> <span>Pages</span></a></li>
+        <li><a href="{{ route('sidebars.index') }}"><i class="fa fa-laptop"></i> <span>Sidebar</span></a></li>
 
         <<!-- li class="treeview">
           <a href="#">

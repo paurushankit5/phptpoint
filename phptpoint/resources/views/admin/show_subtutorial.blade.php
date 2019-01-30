@@ -70,7 +70,16 @@
                 	<th>Meta Description</th>
                 	<td>{{ $subtutorial->meta_description }}</td>
                 </tr>
-                
+                <tr>
+                    <th>Sidebars</th>
+                    <td>
+                        @if(count($sidebars))
+                            @foreach($sidebars as $sidebar)
+                                <a href="{{ route('sidebars.show', $sidebar->sidebar_id) }}" target="_blank">{{ $sidebar->sidebar->sidebar_name }}</a><br>
+                            @endforeach
+                        @endif
+                    </td>
+                </tr>
 
             </table>
           

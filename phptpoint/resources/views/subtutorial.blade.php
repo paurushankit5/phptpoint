@@ -38,6 +38,10 @@
 
 				  	@endphp
 				</div>
+				@component('components.sidebar')
+			  		@slot('sidebar_type','tutorial')
+			  		@slot('source_page_id',$subtut->id)
+			  	@endcomponent
             </div>
             
         </div>

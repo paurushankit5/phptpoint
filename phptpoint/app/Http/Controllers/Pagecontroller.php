@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Tutorial;
 use App\Subtutorial;
 use App\Project;
+use App\Page;
 
 class Pagecontroller extends Controller
 {
@@ -46,6 +47,13 @@ class Pagecontroller extends Controller
         return view('project',[
             "pro"        =>  $pro,
             "projects"   =>  $projects,
+        ]);
+    }
+
+    public function getstaticpage($slug_id){
+        $page    =   Page::where('slug_id',$slug_id)->first();
+        return view('page',[
+            "page"        =>  $page,
         ]);
     }
 }

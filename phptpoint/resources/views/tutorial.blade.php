@@ -40,9 +40,11 @@
 				  		}
 
 				  	@endphp
-				  	<!-- <a href="/{{ $subtut->slug->slug }}" class="list-group-item list-group-item-action">
-				  		<div class="sharethis-inline-share-buttons"></div>
-				  	</a> -->
+
+				  	@component('components.sidebar')
+				  		@slot('sidebar_type','tutorial')
+				  		@slot('source_page_id',$tut->id)
+				  	@endcomponent
 				  	
 
 				</div>

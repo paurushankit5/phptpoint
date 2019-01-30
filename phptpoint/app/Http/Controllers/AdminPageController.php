@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Page;
 use App\Slug;
+use App\Sidebar;
+use App\LinkSidebar;
 use Session;
 
 class AdminPageController extends Controller
@@ -28,7 +30,8 @@ class AdminPageController extends Controller
      */
     public function create()
     {
-         return view('admin.create_pages');
+        $sidebars = Sidebar::all();   
+        return view('admin.create_pages',['sidebars'    =>  $sidebars]);
     }
 
     /**
@@ -87,6 +90,17 @@ class AdminPageController extends Controller
         $page->slug_id           =   $slug_id;
         $page->save();
 
+        if(count($request->sidebars))
+        {
+            foreach ($request->sidebars as $sidebar) {
+                $side   =   new LinkSidebar;
+                $side->sidebar_type     =   'page';
+                $side->sidebar_id       =   $sidebar;
+                $side->source_page_id   =   $page->id;
+                $side->Save();
+            }
+        }
+
         Session::flash('alert-success', 'Page added successfully');
         return redirect(route('pages.index'));
     }
@@ -100,7 +114,8 @@ class AdminPageController extends Controller
     public function show($id)
     {
         $page   =   Page::findOrFail($id);
-        return view('admin.show_page',['page'   =>  $page]);
+        $sidebars   =   Linksidebar::where(['sidebar_type'   =>  'page','source_page_id' => $page->id])->get();
+        return view('admin.show_page',['page'   =>  $page,'sidebars'    =>  $sidebars]);
     }
 
     /**
@@ -112,7 +127,18 @@ class AdminPageController extends Controller
     public function edit($id)
     {
         $page   =   Page::findOrFail($id);
-        return view('admin.edit_page',['page'   =>  $page]);
+        $sidebars = Sidebar::all();
+        $linked_sidebar = LinkSidebar::where(['sidebar_type' => 'page','source_page_id' =>  $id])->select('sidebar_id')->get();
+        $linked_sidebar = $linked_sidebar->toArray();
+        if(count($linked_sidebar))
+        {
+            $tmp    = array();
+            foreach ($linked_sidebar as $link) {
+                array_push($tmp,$link['sidebar_id']);
+            }
+            $linked_sidebar = $tmp;
+        }
+        return view('admin.edit_page',['page'   =>  $page,'linked_sidebar'  =>  $linked_sidebar,'sidebars'  =>  $sidebars]);
     }
 
     /**
@@ -182,6 +208,19 @@ class AdminPageController extends Controller
         $page->external_link     =   $request->external_link;
         $page->slug_id           =   $slug_id;
         $page->save();
+
+        LinkSidebar::where(['sidebar_type' => 'page','source_page_id' =>  $id])->delete();
+
+        if(count($request->sidebars))
+        {
+            foreach ($request->sidebars as $sidebar) {
+                $side   =   new LinkSidebar;
+                $side->sidebar_type     =   'page';
+                $side->sidebar_id       =   $sidebar;
+                $side->source_page_id   =   $page->id;
+                $side->Save();
+            }
+        }
 
         Session::flash('alert-success', 'Page updated successfully');
         return redirect(route('pages.show', $page->id));

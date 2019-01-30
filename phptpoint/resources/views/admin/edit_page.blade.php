@@ -55,7 +55,7 @@
                         <label>Contents*</label>
                         <textarea lass="form-control" name="content" id="editor1" placeholder="Enter Tutorial Name" required>{{ $page->content }}</textarea>
                     </div>
-                    <div class="" s="row bg-primary">
+                    <div class="row bg-primary">
                         <h3 class="text text-center">SEO Panel</h3>
                     </div>
                     <div class="form-group">
@@ -86,6 +86,19 @@
                     <div class="form-group">
                         <label>Meta Description</label>
                         <input type="text" class="form-control" name="meta_description" value="{{ $page->meta_description  }}">
+                    </div>
+                    <div class="row bg-primary">
+                        <h3 class="text text-center">Sidebars</h3>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Sidebars</label>
+                        <select class="form-control" name="sidebars[]" id="sidebars" multiple>
+                            @if($sidebars)
+                                @foreach($sidebars as $sidebar)
+                                    <option value="{{ $sidebar->id }}" @php if(in_array($sidebar->id,$linked_sidebar)){ echo "selected";} @endphp>{{ $sidebar->sidebar_name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
                     </div>
                     </div>
                 	<div class="form form-group">
