@@ -4,6 +4,10 @@
     Project
 @endsection
 
+@section('header_scripts')
+    <link rel="stylesheet" href="{{ asset('plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css') }}" type="text/css" media="screen" />
+@endsection
+
 
 @section('content')
     <div class="box">
@@ -83,7 +87,24 @@
                         @endif
                     </td>
                 </tr>
+                <tr>
+                    <th>File</th>
+                    <td>
+                        @if($project->zip_name)
+                            <a href="/getprojectfile/{{ $project->slug->slug }}/{{ $project->id }}">{{ $project->zip_name }}</a>
+                        @else 
+                        N/A
+                        @endif
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-primary" onclick="showplupload();" title="Add/Edit Project Code"><i class="fa fa-pencil"></i></button>
+                    </td>
+                </tr>
                 
+                <tr>
+                    <td colspan="2">
+                        <div id="html5_uploader" style="display: none;">Your browser doesn't support native upload.</div>
+                    </td>
+                </tr>
                 
 
             </table>
@@ -115,11 +136,46 @@
       </div>
     </div>
      <!--------------------------delete modal--------------------->
+@endsection
 
+@section('after_scripts')
+    <script type="text/javascript" src="{{ asset('plupload/js/plupload.full.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plupload/js/jquery.plupload.queue/jquery.plupload.queue.js') }}"></script>
     <script type="text/javascript">
         function deletemodalopen(id){
             $('#deleteform').attr('action', '/phpadmin/projects/'+id);
             $('#deletemodal').modal('toggle');
         }
-    </script>
+    
+
+    // Setup html5 version
+    $("#html5_uploader").pluploadQueue({
+        // General settings
+        runtimes : 'html5',
+        url : '/phpadmin/projects/uploadzip/{{ $project->id }}',
+        chunk_size : '1mb',
+        unique_names : true,
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        filters : {
+            max_file_size : '1000mb',
+            mime_types: [
+                /*{title : "Image files", extensions : "jpg,gif,png"},*/
+                {title : "Zip files", extensions : "zip"},
+                {title : "Rar files", extensions : "rar"}
+            ]
+        },
+
+        // Resize images on clientside if we can
+        resize : {width : 320, height : 100, quality : 90}
+    });
+
+    function showplupload(){
+        $("#html5_uploader").slideToggle();
+    }
+  
+</script>
    @endsection
+
+

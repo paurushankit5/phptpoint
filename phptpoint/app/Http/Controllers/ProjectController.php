@@ -8,6 +8,7 @@ use App\Sidebar;
 use App\LinkSidebar;
 use App\Slug;
 use Session;
+use Plupload;
 
 class ProjectController extends Controller
 {
@@ -226,5 +227,23 @@ class ProjectController extends Controller
         $pro->delete();
         Session::flash('alert-success', 'Project deleted successfully');
         return redirect(route('projects.index'));
+    }
+
+    public function uploadzip($id){
+        //return $id;
+        
+        return Plupload::receive('file', function ($file) use($id)
+        {
+            $project = Project::findOrFail($id);
+            $file_name = $project->slug->slug.'-'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(storage_path('app/public/zip/project/'), $file_name);            
+            if($project->zip_name != '')
+            {
+                unlink(storage_path('app/public/zip/project/'.$project->zip_name));
+            }
+            $project->zip_name = $file_name;
+            $project->save();
+            return 'ready';
+        });
     }
 }

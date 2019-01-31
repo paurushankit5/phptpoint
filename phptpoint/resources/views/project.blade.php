@@ -51,9 +51,16 @@
         		      
             	{!! $pro->content !!}
             	<div class="clearfix"></div>
-                @if($project->video_url)
+                @if($project->video_url !='')
                     <h4 class="text text-center">Downloading and installation Steps</h4>
                     <iframe  src="<?= $project->video_url; ?>" style="width: 100%;min-height:400px;" frameborder="0" allowfullscreen></iframe>
+                @endif
+                @if($pro->is_paid == 0 && $pro->zip_name !='')
+                    <div class="col-md-12 text-center">
+                        <br>
+                        <br>
+                        <a href="/getprojectfile/{{$pro->slug->slug}}/{{ $pro->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
+                    </div>
                 @endif
             	
         	</div>          

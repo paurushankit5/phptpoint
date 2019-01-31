@@ -25,6 +25,7 @@ Route::get('/dashboard',function(){
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/getprojectfile/{slug}/{id}', 'HomeController@getprojectfile')->name('home');
 
 foreach(glob(dirname(__FILE__) . '/web/*.php') AS $file){
 	require_once($file);

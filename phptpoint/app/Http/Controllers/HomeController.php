@@ -8,9 +8,12 @@ use App\Tutorial;
 use App\Subtutorial;
 use App\Project;
 use App\Page;
+use App\Slug;
 use App\Sidebar;
 use App\LinkSidebar;
 use App\SidebarContent;
+
+use Session;
 
 class HomeController extends Controller
 {
@@ -110,5 +113,21 @@ class HomeController extends Controller
         }
         return $sidebar_type;
 
+    }
+    public function getprojectfile($slug,$id){
+        $project  = Project::select('zip_name')
+                        ->join('slugs','slugs.id','=','slug_id')
+                        ->where(['slug' => $slug,'projects.id' => $id])
+                        ->first();
+        if($project && $project->zip_name !='')
+        {
+            return response()->download(storage_path('app/public/zip/project/'.$project->zip_name));
+        } 
+        else{
+            Session::flash('alert-warning', 'Invalid Request');
+            return back();
+        }
+       
+        
     }
 }

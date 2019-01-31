@@ -973,3 +973,9 @@ a {
       font-size: 40px;
       letter-spacing: 10px;
     }
+    .btn-download{
+      
+      padding: 20px 40px;
+      border-radius: 39px;
+      font-size: 20px;
+    }
