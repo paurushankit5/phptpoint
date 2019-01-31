@@ -239,7 +239,7 @@ class ProjectController extends Controller
             $file->move(storage_path('app/public/zip/project/'), $file_name);            
             if($project->zip_name != '')
             {
-                unlink(storage_path('app/public/zip/project/'.$project->zip_name));
+                @unlink(storage_path('app/public/zip/project/'.$project->zip_name));
             }
             $project->zip_name = $file_name;
             $project->save();
