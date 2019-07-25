@@ -16,6 +16,16 @@
         <div class="box-body">
             @if(count($pages))
                 <table class="table table-responsive ">
+                    <tr>
+                        <form action="">
+                            <th colspan="2">
+                                <input type="text" placeholder="Enter Search Keyword" class="form-control" name="search" @if(!empty($_GET['search'])) value="{{ $_GET['search'] }}" @endif>
+                            </th>
+                            <th colspan="1">
+                                <input type="submit" class="btn btn-primary">
+                            </th>
+                        </form>
+                    </tr>
                     <thead>
                         <tr>
                             <th>#</th>
@@ -53,7 +63,7 @@
             @endif
         </div>
         <div class="box-footer">
-          {{ $pages->links() }}
+          {{ $pages->appends($_GET)->links() }}
         </div>
     </div>
     <!--------------------------delete modal--------------------->

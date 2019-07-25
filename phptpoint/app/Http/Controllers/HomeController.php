@@ -54,6 +54,7 @@ class HomeController extends Controller
                 }
             }
         }
+        $menu['cat']  = $cat;
         $menu['tut']  = $tutorial;
         $menu['free_projects'] = Project::where("is_paid",0)->get();
         $menu['about'] = Page::all();

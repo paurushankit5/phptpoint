@@ -25,6 +25,14 @@
                 	<td>{{ $tutorial->page_name }}</td>
                 </tr>
                 <tr>
+                    <th>Image</th>
+                    <td>
+                        @if($tutorial->image)
+                            <img src="{{asset('images/'.$tutorial->image)}}" class="img img-responsive" style="width: 200px;">
+                        @endif
+                    </td>
+                </tr>
+                <tr>
                 	<th>Content</th>
                 	<td>{!! $tutorial->content !!}</td>
                 </tr>
@@ -80,17 +88,21 @@
                                     </div>
                                 </th>
                             </tr>
+                        <tr><td colspan='2'>
+                            <div class="col-md-12">
+                            <a href="{{ route('arrangesubtutorials',$tutorial->id) }}" class="btn btn-primary pull-right"><i class="fa fa-icon-move"></i> Arrange Sub-Tutorial Order</a>
+                            <ol>
                         @php
-                        echo "<tr><td><ol> ";
                         foreach($tutorial->subtutorial as $subtut)
                         {
                             @endphp
                                 <li><a href="{{ route('subtutorials.show',$subtut->id) }}">{{ $subtut->subtut_name }}</a></li>
                             @php
                         }
-                        echo "</ol></td><td>";
+                        echo "</ol>";
                     @endphp
-                        <a href="{{ route('arrangesubtutorials',$tutorial->id) }}" class="btn btn-primary"><i class="fa fa-icon-move"></i> Arrange Sub-Tutorial Order</a></td></tr>
+                        </div>
+                        </td></tr>
                 @php
                     }
                 @endphp

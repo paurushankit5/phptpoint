@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Tutorial;
+use App\Subtutorial;
 use App\Sidebar;
 use App\LinkSidebar;
 use App\Slug;
@@ -18,8 +19,13 @@ class TutorialController extends Controller
      */
     public function index()
     {
-        $limit      =   100;
-        $tutorials =   Tutorial::orderBy('id','DESC')->paginate($limit);
+        $limit      =   env('PAGINATION_LIMIT', 10);
+        $query      =   Tutorial::where('deleted_at', null);
+        if(!empty($_GET['search'])){
+            $search = $_GET['search'];
+            $query->whereRaw("tut_name like '%$search%' ");
+        }
+        $tutorials  =   $query->paginate($limit);
         return view('admin.tutorial',['tutorials'  =>  $tutorials,'limit' =>  $limit]);
     }
 
@@ -49,6 +55,7 @@ class TutorialController extends Controller
             'tutorial_name' => 'required|max:255',
             'content'       => 'required',
             'page_title'    => 'required|max:255',
+            'image' => 'required | mimes:jpeg,jpg,png | max:2048',
         ]);
         $slug                   =   new Slug;
         $slug->slug             =   $request->slug;
@@ -66,6 +73,11 @@ class TutorialController extends Controller
         $tut->meta_keyword      =   $request->meta_keyword;
         $tut->meta_description  =   $request->meta_description;
         $tut->slug_id           =   $slug->id;
+        if(!empty($_FILES['image']) && !empty($_FILES['image']['name']))
+        {
+            $tut->image     =   CommonController::uploadImage($request);
+        }
+
         $tut->save();
 
         if(count($request->sidebars))
@@ -135,6 +147,8 @@ class TutorialController extends Controller
             'tutorial_name' => 'required|max:255',
             'content'       => 'required',
             'page_title'    => 'required|max:255',
+            'image' => 'mimes:jpeg,jpg,png | max:2048',
+
         ]);
 
         $slug                   =   Slug::findOrFail($tut->slug_id);
@@ -150,6 +164,14 @@ class TutorialController extends Controller
         $tut->meta_title        =   $request->meta_title;
         $tut->meta_keyword      =   $request->meta_keyword;
         $tut->meta_description  =   $request->meta_description;
+
+        if(!empty($_FILES['image']) && !empty($_FILES['image']['name']))
+        {
+            if($tut->image != ''){
+                @unlink(public_path('/images/'.$tut->image));
+            }
+            $tut->image     =   CommonController::uploadImage($request);
+        }
         $tut->save();
 
 
@@ -187,7 +209,22 @@ class TutorialController extends Controller
     }
 
     public function arrangesubtutorials($id){
-        $tutorial = Tutorial::with('subtutorial')->find($id)->get();  
-        return view ('admin.arrangesubtutorials',['tutorial' =>  $tutorial]);
+        $tutorial = Tutorial::with('subtutorial')->find($id);  
+
+        $array  =   array('tut' =>  $tutorial);
+        return view ('admin.arrangesubtutorials',$array);
+    }
+    public function saveSubtutOrder(Request $request){
+        if(count($request->ids)){
+            $i=1;
+            foreach($request->ids as $id){
+                $subtut = Subtutorial::findOrFail($id);
+                $subtut->subtut_order = $i;
+                $subtut->save();
+                $i++;
+            }
+            Session::flash('alert-success', 'Subtutorial arranged successfully');
+        }
+        return 1;
     }
 }

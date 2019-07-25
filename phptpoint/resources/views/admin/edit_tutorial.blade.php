@@ -30,7 +30,7 @@
 				        </ul>
 				    </div>
 				@endif
-            {{ Form::open(array('url' => route("tutorials.update",$tutorial->id), 'method' => 'PUT', 'class'=>'form form-horizontal')) }}
+            {{ Form::open(array('url' => route("tutorials.update",$tutorial->id), 'method' => 'PUT', 'class'=>'form form-horizontal', 'files' => true)) }}
             	@csrf
             	<div class="form form-group">
             		<label>Category Name</label>
@@ -65,6 +65,10 @@
                 <div class="form-group">
                     <label>Page Name*</label>
                     <input type="text" class="form-control" name="page_name" id="page_name" value="{{ $tutorial->page_name }}" placeholder="Enter Page Name to displayed as header" required>
+                </div>
+                <div class="form-group">
+                    <label>Image*</label>
+                    <input type="file" accept="image/*" name="image" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Publish*</label>

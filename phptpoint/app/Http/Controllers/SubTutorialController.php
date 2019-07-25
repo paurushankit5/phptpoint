@@ -20,8 +20,13 @@ class SubTutorialController extends Controller
      */
     public function index()
     {
-        $limit          =   100;
-        $subtutorials   =   Subtutorial::orderBy('id','DESC')->paginate($limit);
+        $limit          =   env('PAGINATION_LIMIT', 10);
+        $query          =   Subtutorial::where('deleted_at', null);
+        if(!empty($_GET['search'])){
+            $search = $_GET['search'];
+            $query->whereRaw("subtut_name like '%$search%' ");
+        }
+        $subtutorials   =   $query->paginate($limit);
         return view('admin.subtutorial',['subtutorials'  =>  $subtutorials,'limit' =>  $limit]);
     }
 

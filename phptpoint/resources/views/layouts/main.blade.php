@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="{{ asset('home/css/aos.css') }}">
 
     <link rel="stylesheet" href="{{ asset('home/css/style.css') }}">
-    <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c45bbc2058f100011a5ac16&product=inline-share-buttons' async='async'></script>
+    <!-- <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c45bbc2058f100011a5ac16&product=inline-share-buttons' async='async'></script> -->
     
   </head>
   <body>
@@ -61,13 +61,13 @@
                     <ul class="site-menu js-clone-nav d-none d-lg-block">
                         @php
                             $menu   =   App\Http\Controllers\HomeController::getmenubar();
-                            if(count($menu['cat']))
+                            if(isset($menu['cat']) && count($menu['cat']))
                             {
                                 foreach($menu['cat'] as $x)
                                 {
                                     @endphp
                                         <li class="has-children">
-                                            <a href="category.html">{{ $x->cat_name }}</a>
+                                            <a href="#">{{ $x->cat_name }}</a>
                                             <ul class="dropdown arrow-top">
                                                 @php
                                                     if(isset($x->tutorial) && count($x->tutorial))
@@ -159,7 +159,7 @@
     
 
     <div class="site-section bg-light">
-      <div class="container">
+      <div class="container-fluid">
             @yield('content')
       </div>
     </div>
@@ -239,7 +239,7 @@
   <script src="{{ asset('home/js/aos.js') }}"></script>
 
   
-  <script src="{{ asset('home/js/mediaelement-and-player.min.js') }}"></script>
+  <!-- <script src="{{ asset('home/js/mediaelement-and-player.min.js') }}"></script> -->
 
   <script src="{{ asset('home/js/main.js') }}"></script>
     

@@ -24,16 +24,23 @@
 				        </ul>
 				    </div>
 				@endif
-				{{ Form::open(array('url' => route("categories.update",$category->id), 'method' => 'PUT', 'class'=>'form form-horizontal')) }}
+				{{ Form::open(array('url' => route("categories.update",$category->id), 'method' => 'PUT', 'class'=>'form form-horizontal', 'files' => true)) }}
 	            	@csrf
 	            	<div class="form form-group">
 	            		<label>Category Name</label>
 	            		<input type="text" class="form-control" name="category_name" value="{{ $category->cat_name}}" placeholder="Enter Category Name">
 	            	</div>
+	            	<div class="form-group">
+	                    <label>Image*</label>
+	                    <input type="file" accept="image/*" name="image" class="form-control">
+	                </div>
 	            	<div class="form form-group">
 	            		<input type="submit" class="btn btn-primary">
 	               	</div>
 	            {{ Form::close() }}
+	            @if($category->image)
+	            	<img src="{{ asset('images/'.$category->image) }}" class="img img-responsive" style="width:200px;">
+	            @endif
         	</div>
         </div>
         <div class="box-footer">

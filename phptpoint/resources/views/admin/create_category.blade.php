@@ -24,12 +24,16 @@
 				        </ul>
 				    </div>
 				@endif
-            <form class="form form-horizontal" method="post" action="{{ route('categories.store') }}">
+            <form class="form form-horizontal" enctype="multipart/form-data" method="post" action="{{ route('categories.store') }}">
             	@csrf
             	<div class="form form-group">
             		<label>Category Name</label>
-            		<input type="text" class="form-control" name="category_name" placeholder="Enter Category Name">
+            		<input type="text" class="form-control" value="{{ old('category_name') }}" name="category_name" placeholder="Enter Category Name">
             	</div>
+                <div class="form-group">
+                    <label>Image*</label>
+                    <input type="file" accept="image/*" required name="image" class="form-control">
+                </div>
             	<div class="form form-group">
             		<input type="submit" class="btn btn-primary">
                	</div>

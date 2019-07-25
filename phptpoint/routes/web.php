@@ -31,18 +31,7 @@ foreach(glob(dirname(__FILE__) . '/web/*.php') AS $file){
 	require_once($file);
 }
 
-Route::any('/{slug}', function($slug)
-{
-	$method = \DB::table('slugs')->where('slug',$slug)->first();
-	if($method){
-		//return $method->method_name;
-		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
-	}
-	else{
-		abort(404);
-	}
-	
-});
+
 Route::any('/projects/{slug}', function($slug)
 {
 	$method = \DB::table('slugs')->where('slug',$slug)->first();
@@ -54,4 +43,22 @@ Route::any('/projects/{slug}', function($slug)
 		abort(404);
 	}
 	
-});
+})->where('slug', '.*');
+
+
+Route::any('/{slug}', function($slug)
+{
+	$method = \DB::table('slugs')->where('slug',$slug)->first();
+	if($method){
+		//return $method->method_name;
+		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
+	}
+	else{
+		abort(404);
+	}
+	
+})->where('slug', '.*');
+
+
+
+

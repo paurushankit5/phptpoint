@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Scout\Searchable;
+//use Laravel\Scout\Searchable;
 
 
 
 class Subtutorial extends Model
 {
     use SoftDeletes;
-    use Searchable;
+    //use Searchable;
 
     protected $dates = ['deleted_at'];
 

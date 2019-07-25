@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Scout\Searchable;
+//use Laravel\Scout\Searchable;
 
 
 
 class Tutorial extends Model
 {
     use SoftDeletes;
-    use Searchable;
+    //use Searchable;
     protected $dates = ['deleted_at'];
 
     public function slug()
@@ -24,6 +24,6 @@ class Tutorial extends Model
     }
     public function subtutorial()
     {
-        return $this->hasMany('App\Subtutorial');
+        return $this->hasMany('App\Subtutorial')->orderBy('subtut_order', 'ASC');
     }
 }

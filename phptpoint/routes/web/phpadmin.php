@@ -10,6 +10,7 @@ Route::group(['middleware' => ['checkadmin'], 'prefix' => 'phpadmin'], function(
 	Route::resource('/projects','ProjectController');
 	Route::resource('/pages','AdminPageController');
 	Route::resource('/sidebars','SidebarController');
+	Route::resource('/adds','AddController');
 
 	Route::get('/mine',function(){
 		echo request()->segment(1);
@@ -18,5 +19,7 @@ Route::group(['middleware' => ['checkadmin'], 'prefix' => 'phpadmin'], function(
 
 	Route::post('/projects/uploadzip/{id}', 'ProjectController@uploadzip');
 	Route::get('/projects/uploadzip/{id}', 'ProjectController@uploadzip');
+
+	Route::post('/arrangesubtutorials', 'TutorialController@saveSubtutOrder');
 });
 ?>

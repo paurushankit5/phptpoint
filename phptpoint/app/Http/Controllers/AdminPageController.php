@@ -18,8 +18,13 @@ class AdminPageController extends Controller
      */
     public function index()
     {
-        $limit      =   100;
-        $pages =   Page::orderBy('id','DESC')->paginate($limit);
+        $limit          =   env('PAGINATION_LIMIT', 10);
+        $query          =   Page::where('deleted_at', null);
+        if(!empty($_GET['search'])){
+            $search = $_GET['search'];
+            $query->whereRaw("page_name like '%$search%' ");
+        }
+        $pages   =   $query->orderBy('id','DESC')->paginate($limit);
         return view('admin.page',['pages'  =>  $pages,'limit' =>  $limit]);
     }
 

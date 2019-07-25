@@ -24,7 +24,7 @@
 
 @section('content')
 	<div class="row">
-   		<div class="col-lg-4">
+   		<div class="col-lg-3">
             <div class="p-4 mb-3 bg-white">
              	<div class="list-group">
 				  	<a href="/{{$subtut->tutorial->slug->slug}}" class="list-group-item list-group-item-action">{{ $subtut->tutorial->tut_name }} </a>
@@ -45,7 +45,7 @@
             </div>
             
         </div>
-        <div class="col-md-12 col-lg-8 mb-5 bg-white"> 
+        <div class="col-md-7 col-lg-7 mb-5 bg-white"> 
         	<div class="p-8 mb-5 bg-white"> 
         		<br>
         		@component('components.prev_next')
@@ -59,6 +59,11 @@
 					@slot('prev_url',$prev_slug)					
 				@endcomponent 
         	</div>          
-        </div>          
+        </div>
+        <div class="col-md-2">
+        	<div class="p-8 mb-5 bg-white">
+        		
+        	</div>
+        </div>           
     </div>
 @endsection

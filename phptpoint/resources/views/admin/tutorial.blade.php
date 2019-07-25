@@ -18,6 +18,16 @@
                 <table class="table table-responsive ">
                     <thead>
                         <tr>
+                            <form action="">
+                                <th colspan="2">
+                                    <input type="text" placeholder="Enter Search Keyword" class="form-control" name="search" @if(!empty($_GET['search'])) value="{{ $_GET['search'] }}" @endif>
+                                </th>
+                                <th colspan="2">
+                                    <input type="submit" class="btn btn-primary">
+                                </th>
+                            </form>
+                        </tr>
+                        <tr>
                             <th>#</th>
                             <th>Name</th>
                             <th>Status</th>
@@ -64,7 +74,7 @@
             @endif
         </div>
         <div class="box-footer">
-          {{ $tutorials->links() }}
+          {{ $tutorials->appends($_GET)->links() }}
         </div>
     </div>
     <!--------------------------delete modal--------------------->
