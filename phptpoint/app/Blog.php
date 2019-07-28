@@ -12,4 +12,8 @@ class Blog extends Model
     {
         return $this->belongsTo('App\Slug');
     }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

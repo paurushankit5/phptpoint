@@ -153,6 +153,7 @@ class BlogController extends Controller
         $slug->save();  
 
         $blog->blog_name         =   $request->blog_name;
+        $blog->user_id           =   \Auth::user()->id;
         $blog->status            =   $request->status;
         $blog->content           =   $request->content;
         $blog->page_title        =   $request->page_title;

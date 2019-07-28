@@ -21,6 +21,10 @@
                 	<td>{{ $blog->blog_name }}</td>
                 </tr>
                 <tr>
+                	<th>Created By</th>
+                	<td>@if(!empty($blog->user)) {{ $blog->user->name }} @endif</td>
+                </tr>
+                <tr>
                 	<th>Content</th>
                 	<td>{!! $blog->content !!}</td>
                 </tr>
