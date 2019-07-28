@@ -87,7 +87,7 @@ class TutorialController extends Controller
                 $side->sidebar_type     =   'tutorial';
                 $side->sidebar_id       =   $sidebar;
                 $side->source_page_id   =   $tut->id;
-                $side->Save();
+                $side->save();
             }
         }
 
@@ -184,7 +184,7 @@ class TutorialController extends Controller
                 $side->sidebar_type     =   'tutorial';
                 $side->sidebar_id       =   $sidebar;
                 $side->source_page_id   =   $tut->id;
-                $side->Save();
+                $side->save();
             }
         }
 

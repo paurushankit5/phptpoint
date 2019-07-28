@@ -42,6 +42,7 @@ class HomeController extends Controller
     public static function getmenubar(){
         $cat   =   Category::with('tutorial')->get();
         $tutorial   = Tutorial::where('category_id',Null)->get();
+        $alltutorial =  Tutorial::all();
         $menu=  array();
         if(count($cat))
         {
@@ -56,6 +57,7 @@ class HomeController extends Controller
         }
         $menu['cat']  = $cat;
         $menu['tut']  = $tutorial;
+        $menu['alltutorial']  = $alltutorial;
         $menu['free_projects'] = Project::where("is_paid",0)->get();
         $menu['about'] = Page::all();
         return $menu;

@@ -65,24 +65,11 @@
                 </p>
               </li>
               <!-- Menu Body -->
-              <li class="user-body">
-                <div class="row">
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Followers</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Sales</a>
-                  </div>
-                  <div class="col-xs-4 text-center">
-                    <a href="#">Friends</a>
-                  </div>
-                </div>
-                <!-- /.row -->
-              </li>
+              
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <!-- <a href="#" class="btn btn-default btn-flat">Profile</a> -->
                 </div>
                 <div class="pull-right">
                   <a href="/logout" class="btn btn-default btn-flat">Sign out</a>
@@ -128,6 +115,8 @@
         <li><a href="{{ route('subtutorials.index') }}"><i class="fa fa-th"></i> <span>Sub-Tutorials</span></a></li>
         <li><a href="{{ route('projects.index') }}"><i class="fa fa-envelope"></i> <span>Projects</span></a></li>
         <li><a href="{{ route('pages.index') }}"><i class="fa fa-laptop"></i> <span>Pages</span></a></li>
+        <li><a href="{{ route('blogs.index') }}"><i class="fa fa-laptop"></i> <span>Blogs</span></a></li>
+
         <li><a href="{{ route('sidebars.index') }}"><i class="fa fa-laptop"></i> <span>Sidebar</span></a></li>
         <li><a href="{{ route('adds.index') }}"><i class="fa fa-laptop"></i> <span>Adds</span></a></li>
 

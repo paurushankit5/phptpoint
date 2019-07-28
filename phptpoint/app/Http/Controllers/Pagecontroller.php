@@ -17,13 +17,13 @@ class Pagecontroller extends Controller
 
     public function getsubtutorial($slug_id){
     	$subtut 	=  Subtutorial::with('tutorial')->where('slug_id',$slug_id)->first();
-    	$next_slug 	= 	Subtutorial::where('slug_id','>',$slug_id)
+    	$next_slug 	= 	Subtutorial::where('subtut_order','>',$subtut->subtut_order)
     									->where('tutorial_id', $subtut->tutorial_id)
-    									->orderBy('slug_id','ASC')
+    									->orderBy('subtut_order','ASC')
     									->first();
-    	$prev_slug 	= 	Subtutorial::where('slug_id','<',$slug_id)
+    	$prev_slug 	= 	Subtutorial::where('subtut_order','<',$subtut->subtut_order)
     									->where('tutorial_id', $subtut->tutorial_id)
-    									->orderBy('slug_id','DESC')
+    									->orderBy('subtut_order','DESC')
     									->first();
     	if($prev_slug)
     	{

@@ -11,6 +11,7 @@ Route::group(['middleware' => ['checkadmin'], 'prefix' => 'phpadmin'], function(
 	Route::resource('/pages','AdminPageController');
 	Route::resource('/sidebars','SidebarController');
 	Route::resource('/adds','AddController');
+	Route::resource('/blogs','BlogController');
 
 	Route::get('/mine',function(){
 		echo request()->segment(1);

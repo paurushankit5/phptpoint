@@ -51,18 +51,22 @@
                 if(count($tutorial)){
                     foreach ($tutorial as $tut) {
                         @endphp
-                            <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="100">
-                                <a href="#" class="h-100 feature-item">
-                                    <span class="d-block icon flaticon-computer-graphic mb-3 text-primary"></span>
-                                    <h2>{{ $tut->tut_name }}</h2>
-<!--                                     <span class="counting">10,391</span>
- -->                                </a>
+                            <div class="col-md-3">
+                              <div class="media-with-text">
+                                <div class="img-border-sm mb-4">
+                                  <a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}" class="image-play">
+                                    <img src="{{ asset('images/'.$tut->image) }}" alt="" class="img-fluid">
+                                  </a>
+                                </div>
+                                <h2 class="heading mb-0 h5 text-center"><a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}">{{ $tut->tut_name }}</a></h2>
+                                
+                              </div>
                             </div>
                         @php
                     }
                 }
             @endphp
-          
+
           
         </div>
 

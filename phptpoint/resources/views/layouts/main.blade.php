@@ -116,7 +116,7 @@
                             {
                               @endphp
                                <li class="has-children">
-                                  <a href="category.html">About Us</a>
+                                  <a href="#">About Us</a>
                                   <ul class="dropdown arrow-top">
                               @php
                               foreach($menu['about'] as $page)
@@ -178,21 +178,41 @@
               <div class="col-md-6">
                 <h3 class="footer-heading mb-4 text-white">Quick Menu</h3>
                   <ul class="list-unstyled">
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Approach</a></li>
-                    <li><a href="#">Sustainability</a></li>
-                    <li><a href="#">News</a></li>
-                    <li><a href="#">Careers</a></li>
+                    @php
+                      if(count($menu['about']))
+                      {
+                        foreach($menu['about'] as $page)
+                        {
+                          if($page->external_link!='')
+                          {
+                            @endphp
+                              <li><a href="{{ $page->external_link }}" target="_blank">{{$page->page_name}}</a></li>
+                            @php
+                          }
+                          else{
+                            @endphp
+                              <li><a href="{{ env('APP_URL' )}}/{{ $page->slug->slug }}">{{$page->page_name}}</a></li>
+                            @php
+                          }                                 
+                        }
+                      }
+                      @endphp
                   </ul>
               </div>
               <div class="col-md-6">
-                <h3 class="footer-heading mb-4 text-white">Categories</h3>
+                <h3 class="footer-heading mb-4 text-white">Tutorials</h3>
                   <ul class="list-unstyled">
-                    <li><a href="#">Full Time</a></li>
-                    <li><a href="#">Freelance</a></li>
-                    <li><a href="#">Temporary</a></li>
-                    <li><a href="#">Internship</a></li>
+                    @php
+                      if(count($menu['alltutorial']))
+                      {
+                          foreach($menu['alltutorial'] as $tut)
+                          {
+                              @endphp
+                                  <li><a href="{{ env('APP_URL' )}}/{{ $tutorial->slug->slug }}">{{$tut->tut_name}}</a></li>
+                              @php
+                          }
+                      }
+                    @endphp
                   </ul>
               </div>
             </div>

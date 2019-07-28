@@ -17,6 +17,7 @@ Route::get('/logout',function(){
 	return redirect('/');
 });
 Route::get('/','HomeController@index')->name('homepage');
+Route::get('/home','HomeController@index')->name('home');
 
 
 Route::get('/dashboard',function(){
@@ -32,18 +33,18 @@ foreach(glob(dirname(__FILE__) . '/web/*.php') AS $file){
 }
 
 
-Route::any('/projects/{slug}', function($slug)
-{
-	$method = \DB::table('slugs')->where('slug',$slug)->first();
-	if($method){
-		//return $method->method_name;
-		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
-	}
-	else{
-		abort(404);
-	}
+// Route::any('/projects/{slug}', function($slug)
+// {
+// 	$method = \DB::table('slugs')->where('slug',$slug)->first();
+// 	if($method){
+// 		//return $method->method_name;
+// 		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
+// 	}
+// 	else{
+// 		abort(404);
+// 	}
 	
-})->where('slug', '.*');
+// })->where('slug', '.*');
 
 
 Route::any('/{slug}', function($slug)
