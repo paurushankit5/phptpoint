@@ -141,7 +141,8 @@
                         @endphp
                       
                       
-                      <li><a href="contact.html">Contact</a></li>
+                      <li><a href="/blogs">Blogs</a></li>
+                      <li><a href="#">Contact</a></li>
                       <li><a href="new-post.html"><span class="bg-primary text-white py-3 px-4 rounded"><span class="icon-plus mr-3"></span>Post New Job</span></a></li>
                     </ul>
                   </div>

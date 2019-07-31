@@ -61,9 +61,7 @@
         	</div>          
         </div>
         <div class="col-md-2">
-        	<div class="p-8 mb-5 bg-white">
-        		
-        	</div>
+        	@include('components.add')
         </div>           
     </div>
 @endsection
