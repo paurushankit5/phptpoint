@@ -12,4 +12,8 @@ class Project extends Model
     {
         return $this->belongsTo('App\Slug');
     }
+
+    public function downloads(){
+    	return $this->hasMany('App\Download');
+    }
 }

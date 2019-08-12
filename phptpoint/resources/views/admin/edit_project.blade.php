@@ -30,7 +30,7 @@
 				        </ul>
 				    </div>
 				@endif
-            {{ Form::open(array('url' => route("projects.update",$project->id), 'method' => 'PUT', 'class'=>'form form-horizontal')) }}
+            {{ Form::open(array('url' => route("projects.update",$project->id), 'method' => 'PUT', 'class'=>'form form-horizontal', 'files' => true)) }}
             	@csrf
             	
             	<div class="form-group">

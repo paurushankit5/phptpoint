@@ -51,12 +51,27 @@
         		@component('components.prev_next')
 					@slot('next_url',$next_slug)
 					@slot('prev_url',$prev_slug)
+					@slot('add','top')
+
 				@endcomponent       
             	{!! $subtut->content !!}
+            	@if($subtut->zip_name !='' )
+                    <div class="col-md-12 text-center">
+                        <br>
+                        <br>
+                        @guest
+                            <a href="/loginToDownload/{{$subtut->slug->slug}}/{{ $subtut->id }}?page=subtutorial" class="btn btn-primary btn-download"> Login / Register To Download</a>
+                        @else
+                            <a href="/getsubtutorialfile/{{$subtut->slug->slug}}/{{ $subtut->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
+                        @endguest
+                    </div>
+                @endif
             	<div class="clearfix"></div>
             	@component('components.prev_next')
 					@slot('next_url',$next_slug)
-					@slot('prev_url',$prev_slug)					
+					@slot('prev_url',$prev_slug)
+					@slot('add','bottom')
+					
 				@endcomponent 
         	</div>          
         </div>

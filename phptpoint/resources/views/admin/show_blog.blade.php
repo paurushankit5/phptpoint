@@ -21,6 +21,14 @@
                 	<td>{{ $blog->blog_name }}</td>
                 </tr>
                 <tr>
+                    <th>Image</th>
+                    <th>
+                        @if($blog->image)
+                            <img src="{{asset('images/'.$blog->image)}}" class="img img-responsive" style="width: 200px;">
+                        @endif
+                    </th>
+                </tr>
+                <tr>
                 	<th>Created By</th>
                 	<td>@if(!empty($blog->user)) {{ $blog->user->name }} @endif</td>
                 </tr>

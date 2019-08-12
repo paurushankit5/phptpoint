@@ -12,6 +12,8 @@ Route::group(['middleware' => ['checkadmin'], 'prefix' => 'phpadmin'], function(
 	Route::resource('/sidebars','SidebarController');
 	Route::resource('/adds','AddController');
 	Route::resource('/blogs','BlogController');
+	Route::resource('/users','UserController');
+	Route::resource('/seo','SeoController');
 
 	Route::get('/mine',function(){
 		echo request()->segment(1);
@@ -20,6 +22,14 @@ Route::group(['middleware' => ['checkadmin'], 'prefix' => 'phpadmin'], function(
 
 	Route::post('/projects/uploadzip/{id}', 'ProjectController@uploadzip');
 	Route::get('/projects/uploadzip/{id}', 'ProjectController@uploadzip');
+
+
+	Route::post('/tutorials/uploadzip/{id}', 'TutorialController@uploadzip');
+	Route::get('/tutorials/uploadzip/{id}', 'TutorialController@uploadzip');
+
+	Route::post('/subtutorials/uploadzip/{id}', 'SubTutorialController@uploadzip');
+	Route::get('/subtutorials/uploadzip/{id}', 'SubTutorialController@uploadzip');
+
 
 	Route::post('/arrangesubtutorials', 'TutorialController@saveSubtutOrder');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Session;
 class LoginController extends Controller
 {
     /*
@@ -31,7 +32,12 @@ class LoginController extends Controller
         {
             return '/phpadmin';
         }
-        return '/dashboard';
+        else if(Session::has('url')){
+            $url = Session('url');
+            session()->forget('url');
+            return $url;
+        }
+        return '/';
     }
 
     /**

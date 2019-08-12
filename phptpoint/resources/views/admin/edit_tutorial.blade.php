@@ -115,7 +115,7 @@
                     <select class="form-control" name="sidebars[]" id="sidebars" multiple>
                         @if($sidebars)
                             @foreach($sidebars as $sidebar)
-                                <option value="{{ $sidebar->id }}" @php if(in_array($sidebar->id,$linked_sidebar)){ echo "selected";} @endphp>{{ $sidebar->sidebar_name }}</option>
+                                <option value="{{ $sidebar->id }}" @php if(in_array($sidebar->id,$linked_sidebar)){ echo "selected";} @endphp > {{ $sidebar->sidebar_name }}</option>
                             @endforeach
                         @endif
                     </select>

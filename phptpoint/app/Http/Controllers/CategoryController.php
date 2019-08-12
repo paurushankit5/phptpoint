@@ -42,10 +42,12 @@ class CategoryController extends Controller
     {
         $request->validate([
             'category_name' => 'required|unique:categories,cat_name|max:255',
-            'image' => 'required | mimes:jpeg,jpg,png | max:2048',
+            'is_top_menu'   => 'required',
+            'image'         => 'required | mimes:jpeg,jpg,png | max:2048',
         ]);
         $cat    =   new Category;
         $cat->cat_name  =   $request->category_name;
+        $cat->is_top_menu  =   $request->is_top_menu;
         if(!empty($_FILES['image']) && !empty($_FILES['image']['name']))
         {
             $cat->image     =   CommonController::uploadImage($request);
@@ -90,11 +92,13 @@ class CategoryController extends Controller
     {
         $request->validate([
             'category_name' => 'required|max:255|unique:categories,cat_name,'.$id,
-            'image' => 'mimes:jpeg,jpg,png | max:2048',
+            'is_top_menu'   => 'required',
+            'image'         => 'mimes:jpeg,jpg,png | max:2048',
 
         ]);
         $cat            =   Category::findOrFail($id);
         $cat->cat_name  =   $request->category_name;
+        $cat->is_top_menu  =   $request->is_top_menu;
         if(!empty($_FILES['image']) && !empty($_FILES['image']['name']))
         {
             if($cat->image != ''){

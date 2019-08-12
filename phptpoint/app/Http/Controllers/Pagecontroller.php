@@ -7,11 +7,12 @@ use App\Tutorial;
 use App\Subtutorial;
 use App\Project;
 use App\Page;
+use App\Blog;
 
 class Pagecontroller extends Controller
 {
     public function gettutorial($slug_id){
-    	$tut 	=  Tutorial::with('subtutorial')->where('slug_id',$slug_id)->first();
+    	$tut 	=  Tutorial::with('subtutorial')->where('slug_id',$slug_id)->firstOrFail();
     	return view('tutorial',['tut' => $tut]);
     }
 
@@ -42,7 +43,7 @@ class Pagecontroller extends Controller
     }
 
     public function getproject($slug_id){
-        $pro    =   Project::where('slug_id',$slug_id)->first();
+        $pro    =   Project::where('slug_id',$slug_id)->firstOrFail();
         $projects   =   Project::where('is_paid',$pro->is_paid)->get();
         return view('project',[
             "pro"        =>  $pro,
@@ -51,9 +52,18 @@ class Pagecontroller extends Controller
     }
 
     public function getstaticpage($slug_id){
-        $page    =   Page::where('slug_id',$slug_id)->first();
+        $page    =   Page::where('slug_id',$slug_id)->firstOrFail();
         return view('page',[
             "page"        =>  $page,
         ]);
+    }
+    public function getblog($slug_id){
+        $blog   =   Blog::where('slug_id', $slug_id)->firstOrFail();
+        $recent_blogs = Blog::where('id','<>', $blog->id)->with('slug')->paginate(10);
+        $array  =   array(
+                            "blog"  =>  $blog,
+                            "recent_blogs"  =>  $recent_blogs
+                        );
+        return view('blog', $array);
     }
 }

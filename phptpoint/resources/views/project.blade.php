@@ -24,7 +24,7 @@
 
 @section('content')
 	<div class="row">
-   		<div class="col-lg-4">
+   		<div class="col-md-3 col-lg-3">
             <div class="p-4 mb-3 bg-white">
             	<h4 class="text-center text-primary">@if($pro->is_paid == 0) Free @else Paid @endif Projects</h4>
              	<div class="list-group">
@@ -45,25 +45,37 @@
             </div>
             
         </div>
-        <div class="col-md-12 col-lg-8 mb-5 bg-white"> 
+        <div class="col-md-7 col-lg-7 mb-5 bg-white"> 
         	<div class="p-8 mb-5 bg-white"> 
         		<br>
-        		      
+        		@component('components.prev_next')
+                    @slot('add','top')
+                @endcomponent 
             	{!! $pro->content !!}
             	<div class="clearfix"></div>
                 @if($project->video_url !='')
                     <h4 class="text text-center">Downloading and installation Steps</h4>
                     <iframe  src="<?= $project->video_url; ?>" style="width: 100%;min-height:400px;" frameborder="0" allowfullscreen></iframe>
                 @endif
-                @if($pro->is_paid == 0 && $pro->zip_name !='')
+                @if($pro->is_paid == 0 && $pro->zip_name !='' )
                     <div class="col-md-12 text-center">
                         <br>
                         <br>
-                        <a href="/getprojectfile/{{$pro->slug->slug}}/{{ $pro->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
+                        @guest
+                            <a href="/loginToDownload/{{$pro->slug->slug}}/{{ $pro->id }}" class="btn btn-primary btn-download"> Login / Register To Download</a>
+                        @else
+                            <a href="/getprojectfile/{{$pro->slug->slug}}/{{ $pro->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
+                        @endguest
                     </div>
                 @endif
+                @component('components.prev_next')
+                    @slot('add','bottom')
+                @endcomponent 
             	
         	</div>          
-        </div>          
+        </div>      
+        <div class="col-md-2">
+            @include('components.add')
+        </div>    
     </div>
 @endsection

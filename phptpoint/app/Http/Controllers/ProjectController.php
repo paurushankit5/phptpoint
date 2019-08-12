@@ -163,7 +163,9 @@ class ProjectController extends Controller
             $image = $request->file('pro_image');
             $pro_image = time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('/images/projects');
-            $image->move($destinationPath, $pro_image);            
+            $image->move($destinationPath, $pro_image);  
+            $pro->pro_image         =   $pro_image;
+
         }
         else{
              $request->validate([
@@ -172,7 +174,6 @@ class ProjectController extends Controller
                 'content'       => 'required',
                 'page_title'    => 'required',
             ]);
-             $pro_image = Null;
         }
 
 
@@ -184,7 +185,6 @@ class ProjectController extends Controller
             $request->project_price = 0;
 
         $pro->pro_name          =   $request->project_name;
-        $pro->pro_image         =   $pro_image;
         $pro->page_name         =   $request->page_name;
         $pro->video_url         =   $request->youtube_embed_link;
         $pro->is_paid           =   $request->is_paid;

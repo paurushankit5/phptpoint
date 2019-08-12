@@ -54,7 +54,7 @@ class BlogController extends Controller
             'blog_name'     => 'required|max:255',
             'content'       => 'required',
             'page_title'    => 'required|max:255',
-            //'image'         => 'required | mimes:jpeg,jpg,png | max:2048',
+            'image'         => 'required | mimes:jpeg,jpg,png | max:2048',
         ]);
         $slug                   =   new Slug;
         $slug->slug             =   $request->slug;
@@ -71,10 +71,10 @@ class BlogController extends Controller
         $blog->meta_keyword      =   $request->meta_keyword;
         $blog->meta_description  =   $request->meta_description;
         $blog->slug_id           =   $slug->id;
-        // if(!empty($_FILES['image']) && !empty($_FILES['image']['name']))
-        // {
-        //     $tut->image     =   CommonController::uploadImage($request);
-        // }
+        if(!empty($_FILES['image']) && !empty($_FILES['image']['name']))
+        {
+            $blog->image     =   CommonController::uploadImage($request);
+        }
 
         $blog->save();
 
@@ -144,7 +144,7 @@ class BlogController extends Controller
             'blog_name'     => 'required|max:255',
             'content'       => 'required',
             'page_title'    => 'required|max:255',
-            //'image' => 'mimes:jpeg,jpg,png | max:2048',
+            'image'         => 'mimes:jpeg,jpg,png | max:2048',
 
         ]);
 
@@ -161,13 +161,13 @@ class BlogController extends Controller
         $blog->meta_keyword      =   $request->meta_keyword;
         $blog->meta_description  =   $request->meta_description;
 
-        // if(!empty($_FILES['image']) && !empty($_FILES['image']['name']))
-        // {
-        //     if($tut->image != ''){
-        //         @unlink(public_path('/images/'.$tut->image));
-        //     }
-        //     $tut->image     =   CommonController::uploadImage($request);
-        // }
+        if(!empty($_FILES['image']) && !empty($_FILES['image']['name']))
+        {
+            if($blog->image != ''){
+                @unlink(public_path('/images/'.$blog->image));
+            }
+            $blog->image     =   CommonController::uploadImage($request);
+        }
         $blog->save();
 
 
@@ -201,5 +201,19 @@ class BlogController extends Controller
         $blog->delete();
         Session::flash('alert-success', 'Blog deleted successfully');
         return redirect(route('blogs.index'));
+    }
+
+    public function getLatestBlogs(){
+        $limit      =   12;
+        $query      =   Blog::where('status', 1);
+        if(!empty($_GET['search'])){
+            $search = $_GET['search'];
+            $query->whereRaw("blog_name like '%$search%' ");
+        }
+        $blogs  =   $query->orderBy('id', 'DESC')->paginate($limit);
+        return view('blogs',['blogs'  =>  $blogs,'limit' =>  $limit]);
+    }
+    public function getOneBlog($slug){
+        echo $slug;
     }
 }

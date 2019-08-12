@@ -57,22 +57,35 @@
         		@component('components.prev_next')
         			@if(count($tut->subtutorial))
 						@slot('next_url',$tut->subtutorial[0]->slug->slug)
+						@slot('add','top')
 					@endif
 				@endcomponent       
             	{!! $tut->content !!}
+            	@if($tut->zip_name !='' )
+                    <div class="col-md-12 text-center">
+                        <br>
+                        <br>
+                        @guest
+                            <a href="/loginToDownload/{{$tut->slug->slug}}/{{ $tut->id }}?page=tutorial" class="btn btn-primary btn-download"> Login / Register To Download</a>
+                        @else
+                            <a href="/gettutorialfile/{{$tut->slug->slug}}/{{ $tut->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
+                        @endguest
+                    </div>
+                @endif
             	<div class="clearfix"></div>
             	@component('components.prev_next')
         			@if(count($tut->subtutorial))
 						@slot('next_url',$tut->subtutorial[0]->slug->slug)
+						@slot('add','bottom')
+
 					@endif
 				@endcomponent 
 
         	</div>          
         </div>  
         <div class="col-md-2">
-        	<div class="p-8 mb-5 bg-white">
-        		
-        	</div>
+          	@include('components.add')
+
         </div>        
     </div>
 @endsection

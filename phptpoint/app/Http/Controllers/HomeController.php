@@ -12,8 +12,10 @@ use App\Slug;
 use App\Sidebar;
 use App\LinkSidebar;
 use App\SidebarContent;
-
+use App\Download;
 use Session;
+use Mail;
+
 
 class HomeController extends Controller
 {
@@ -40,8 +42,8 @@ class HomeController extends Controller
     }
 
     public static function getmenubar(){
-        $cat   =   Category::with('tutorial')->get();
-        $tutorial   = Tutorial::where('category_id',Null)->get();
+        $cat   =   Category::with('tutorial')->where('is_top_menu',1)->get();
+        $tutorial   = Tutorial::where('category_id',null)->get();
         $alltutorial =  Tutorial::all();
         $menu=  array();
         if(count($cat))
@@ -118,19 +120,115 @@ class HomeController extends Controller
 
     }
     public function getprojectfile($slug,$id){
-        $project  = Project::select('zip_name')
+        \Log::info('Downloading zip for ');
+        if(\Auth::check()){
+            $project  = Project::select('zip_name')
                         ->join('slugs','slugs.id','=','slug_id')
                         ->where(['slug' => $slug,'projects.id' => $id])
-                        ->first();
-        if($project && $project->zip_name !='')
-        {
-            return response()->download(storage_path('app/public/zip/project/'.$project->zip_name));
-        } 
-        else{
-            Session::flash('alert-warning', 'Invalid Request');
-            return back();
+                        ->firstOrFail();
+            if($project && $project->zip_name !='')
+            {
+                $obj    =   new Download;
+                $obj->user_id   =   \Auth::id();
+                $obj->project_id    =   $id;
+                $obj->save();
+                return response()->download(storage_path('app/public/zip/project/'.$project->zip_name));
+            } 
+            else{
+                Session::flash('alert-warning', 'Invalid Request');
+                return back();
+            }
         }
-       
-        
+        return redirect('/login');    
+    }
+    
+    public function gettutorialfile($slug,$id){
+        \Log::info('Downloading zip for ');
+        if(\Auth::check()){
+            $project  = Tutorial::select('zip_name')
+                        ->join('slugs','slugs.id','=','slug_id')
+                        ->where(['slug' => $slug,'tutorials.id' => $id])
+                        ->firstOrFail();
+
+
+            if($project && $project->zip_name !='')
+            {
+                $obj    =   new Download;
+                $obj->user_id   =   \Auth::id();
+                $obj->tutorial_id    =   $id;
+                if($obj->save()){
+                    return response()->download(storage_path('app/public/zip/project/'.$project->zip_name));
+                }
+                else{
+                    echo "not saved";
+                }
+                //return response()->download(storage_path('app/public/zip/project/'.$project->zip_name));
+            } 
+            else{
+                Session::flash('alert-warning', 'Invalid Request');
+                return back();
+            }
+        }
+        return redirect('/login');    
+    }
+    
+    public function getsubtutorialfile($slug,$id){
+        \Log::info('Downloading zip for ');
+        if(\Auth::check()){
+            $project  = Subtutorial::select('zip_name')
+                        ->join('slugs','slugs.id','=','slug_id')
+                        ->where(['slug' => $slug,'subtutorials.id' => $id])
+                        ->firstOrFail();
+
+
+            if($project && $project->zip_name !='')
+            {
+                $obj    =   new Download;
+                $obj->user_id   =   \Auth::id();
+                $obj->subtutorial_id    =   $id;
+                if($obj->save()){
+                    return response()->download(storage_path('app/public/zip/project/'.$project->zip_name));
+                }
+                else{
+                    echo "not saved";
+                }
+                //return response()->download(storage_path('app/public/zip/project/'.$project->zip_name));
+            } 
+            else{
+                Session::flash('alert-warning', 'Invalid Request');
+                return back();
+            }
+        }
+        return redirect('/login');    
+    }
+
+
+
+
+
+    public function loginToDownload(Request $request,$slug,$id){
+        $param = $request->input();
+        if(!empty($param['page']) && ($param['page'] == 'tutorial') || $param['page'] == 'subtutorial' )
+            Session::put('url', "/$slug");  
+        else
+            Session::put('url', "/projects/$slug");  
+        return redirect('/login');
+    }
+
+    public function adminDashboard(){
+        return view('admin.dashboard');
+    }
+
+    public function contactUs(){
+        return view('contactus');
+    }
+    public function saveContactMessage(Request $request){
+        $subject = env('APP_NAME')." enquiry from ".$request->name;
+        Mail::send('email.contact', ['request' =>   $request], function($message) use ($subject) {
+         $message->to(env('CONTACT_RECEIVER_EMAIL',"paurushankit5@gmmil.com"), env('APP_NAME'))->subject($subject);
+         $message->from( env('MAIL_FROM_ADDRESS') ,env('MAIL_FROM_NAME'));
+      });
+        Session::flash('alert-success', 'We have recieved your message. We will get back to you soon.');
+        return back();
     }
 }

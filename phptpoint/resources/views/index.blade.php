@@ -11,6 +11,17 @@
   
 @endsection
 
+@section('header_style')
+  <style type="text/css">
+    .media-with-text-1{
+      transition: transform .2s;
+    }
+    .media-with-text-1:hover {
+      transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+  </style>
+@endsection
+
 @section('page_banner')
      <div style="height: 113px;"></div>
 
@@ -24,7 +35,7 @@
                 <div class="col-md-9">
                   <div class="row">
                     <div class="col-md-12 mb-6 mb-md-0">
-                      <input type="text" class="mr-3 form-control border-0 px-4" placeholder="Search For Tutorials ">
+                      <input type="text" class="mr-3 form-control border-0 px-4" placeholder="Search For Tutorials / Sub-Tutorials">
                     </div>
                   </div>
                 </div>
@@ -51,11 +62,11 @@
                 if(count($tutorial)){
                     foreach ($tutorial as $tut) {
                         @endphp
-                            <div class="col-md-3">
-                              <div class="media-with-text">
+                            <div class="col-md-3" >
+                              <div class="media-with-text media-with-text-1" style="border: 1px solid gray; padding: 20px; border-radius: 10px; margin">
                                 <div class="img-border-sm mb-4">
                                   <a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}" class="image-play">
-                                    <img src="{{ asset('images/'.$tut->image) }}" alt="" class="img-fluid">
+                                    <img src="{{ asset('images/'.$tut->image) }}" style="height:200px; width: 100%;" alt="" class="img-fluid">
                                   </a>
                                 </div>
                                 <h2 class="heading mb-0 h5 text-center"><a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}">{{ $tut->tut_name }}</a></h2>
@@ -76,10 +87,10 @@
       <div class="container">
         <div class="row">
           <div class="col-md-8 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
-            <h2 class="mb-5 h3">Recent Jobs</h2>
+            <h2 class="mb-5 h3">Recent Tutorials</h2>
             <div class="rounded border jobs-wrap">
 
-              <a href="job-single.html" class="job-item d-block d-md-flex align-items-center  border-bottom fulltime">
+              <!-- <a href="job-single.html" class="job-item d-block d-md-flex align-items-center  border-bottom fulltime">
                 <div class="company-logo blank-logo text-center text-md-left pl-3">
                   <img src="{{ asset('home/images/company_logo_blank.png') }}" alt="Image" class="img-fluid mx-auto">
                 </div>
@@ -163,34 +174,40 @@
                     <span class="text-info p-2 rounded border border-info">Full Time</span>
                   </div>
                 </div>  
-              </a>
-
-              <a href="job-single.html" class="job-item d-block d-md-flex align-items-center partime">
-                <div class="company-logo blank-logo text-center text-md-left pl-3">
-                  <img src="{{ asset('home/images/logo_2.png') }}" alt="Image" class="img-fluid mx-auto">
-                </div>
-                <div class="job-details h-100">
-                  <div class="p-3 align-self-center">
-                    <h3>Telecommunication Manager</h3>
-                    <div class="d-block d-lg-flex">
-                      <div class="mr-3"><span class="icon-suitcase mr-1"></span> Think</div>
-                      <div class="mr-3"><span class="icon-room mr-1"></span> London</div>
+              </a> -->
+              @php
+                $recent_tutorials = App\Tutorial::where('status',1)->limit(5)->orderBy('id','DESC')->get();
+              @endphp
+              @if(count($recent_tutorials))
+                @foreach($recent_tutorials as $recent_tutorial)
+                  <a href="/{{ $recent_tutorial->slug->slug }}" class="job-item d-block d-md-flex align-items-center partime">
+                    <div class="company-logo blank-logo text-center text-md-left pl-3">
+                      <img src="{{ asset('home/images/logo_2.png') }}" alt="Image" class="img-fluid mx-auto">
                     </div>
-                  </div>
-                </div>
-                <div class="job-category align-self-center">
-                  <div class="p-3">
-                    <span class="text-danger p-2 rounded border border-danger">Par Time</span>
-                  </div>
-                </div>  
-              </a>
+                    <div class="job-details h-100">
+                      <div class="p-3 align-self-center">
+                        <h3>{{ $recent_tutorial->tut_name }}</h3>
+                        <div class="d-block d-lg-flex">
+                          <div class="mr-3"><span class="icon-suitcase mr-1"></span> {{ date('d-M-Y', strtotime($recent_tutorial->created_at)) }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="job-category align-self-center">
+                      <div class="p-3">
+                        <span class="text-danger p-2 rounded border border-danger">View</span>
+                      </div>
+                    </div>  
+                  </a>
+                @endforeach
+              @endif
+                  
 
 
             </div>
 
-            <div class="col-md-12 text-center mt-5">
+            <!-- <div class="col-md-12 text-center mt-5">
               <a href="#" class="btn btn-primary rounded py-3 px-5"><span class="icon-plus-circle"></span> Show More Jobs</a>
-            </div>
+            </div> -->
           </div>
           <div class="col-md-4 block-16" data-aos="fade-up" data-aos-delay="200">
             <div class="d-flex mb-0">
@@ -334,26 +351,34 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-            <h2>Recent Blog</h2>
+            <h2>Recent Projects</h2>
           </div>
         </div>
 
-
+        @php
+          $recent_projects   =   App\Project::where('pro_image','<>','')->limit(12)->orderBy('id','DESC')->get();
+        @endphp
         <div class="nonloop-block-15 owl-carousel">
-          
+            @if(count($recent_projects))
+              @foreach($recent_projects as $recent_project)
+                <div class="media-with-text">
+                  <div class="img-border-sm mb-4">
+                    <a href="/projects/{{ $recent_project->slug->slug }}" class="image-play">
+                      @if($recent_project->pro_image)
+                          <img src="{{ asset('images/projects/'.$recent_project->pro_image) }}" alt="{{ $recent_project->pro_name }}" style="height:300px;" class="img-fluid">
+                        @endif
+                    </a>
+                  </div>
+                  <h2 class="heading mb-0 h5"><a href="#">{{ $recent_project->pro_name }}</a></h2>
+                  <span class="mb-3 d-block post-date">{{ date('d-M-Y', strtotime($recent_project->created_at)) }} </span>
+                  <p>{!! substr($recent_project->content,0,200) !!}</p>
+                </div>
+              @endforeach 
+            @endif
 
-            <div class="media-with-text">
-              <div class="img-border-sm mb-4">
-                <a href="#" class="image-play">
-                  <img src="{{ asset('home/images/img_1.jpg') }}" alt="" class="img-fluid">
-                </a>
-              </div>
-              <h2 class="heading mb-0 h5"><a href="#">Jobs are made easy</a></h2>
-              <span class="mb-3 d-block post-date">January 20, 2018 &bullet; By <a href="#">Josh Holmes</a></span>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-            </div>
+                
           
-            <div class="media-with-text">
+            <!-- <div class="media-with-text">
               <div class="img-border-sm mb-4">
                 <a href="#" class="image-play">
                   <img src="{{ asset('home/images/img_2.jpg') }}" alt="" class="img-fluid">
@@ -439,7 +464,7 @@
               <h2 class="heading mb-0 h5"><a href="#">Jobs are made easy</a></h2>
               <span class="mb-3 d-block post-date">January 20, 2018 &bullet; By <a href="#">Josh Holmes</a></span>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio dolores culpa qui aliquam placeat nobis veritatis tempora natus rerum obcaecati.</p>
-            </div>
+            </div> -->
         </div>
 
         <div class="row">

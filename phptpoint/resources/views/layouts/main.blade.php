@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="{{ asset('home/css/aos.css') }}">
 
     <link rel="stylesheet" href="{{ asset('home/css/style.css') }}">
+    @yield('header_style')
+
     <!-- <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c45bbc2058f100011a5ac16&product=inline-share-buttons' async='async'></script> -->
     
   </head>
@@ -70,7 +72,7 @@
                                             <a href="#">{{ $x->cat_name }}</a>
                                             <ul class="dropdown arrow-top">
                                                 @php
-                                                    if(isset($x->tutorial) && count($x->tutorial))
+                                                    if(!empty($x->tutorial) && count($x->tutorial))
                                                     {
                                                         foreach($x->tutorial as $tutorial)
                                                         {
@@ -142,8 +144,24 @@
                       
                       
                       <li><a href="/blogs">Blogs</a></li>
-                      <li><a href="#">Contact</a></li>
-                      <li><a href="new-post.html"><span class="bg-primary text-white py-3 px-4 rounded"><span class="icon-plus mr-3"></span>Post New Job</span></a></li>
+                      <li><a href="/contact-us">Contact</a></li>
+                      @guest
+                            <li><a href="/login"><span class="bg-primary text-white py-3 px-4 rounded"><span class="icon-plus mr-3"></span>Login / Register  </span></a></li>
+                        @else
+                            <!-- <li><a href="/logout"><span class="bg-danger text-white py-3 px-4 rounded">Logout </span></a></li> -->
+                            <li class="dropdown">
+                              <button class="btn bg-danger text-white py-3 px-4 rounded dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                My Account
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <a class="dropdown-item" href="/change-password">Change Password</a>
+                                @if(\Auth::user()->is_admin == 1)
+                                <a class="dropdown-item" href="/phpadmin">Dashboard</a>
+                                @endif
+                                <a class="dropdown-item" href="/logout">Logout</a>
+                              </div>
+                            </li>
+                        @endguest
                     </ul>
                   </div>
                 </nav>
@@ -209,7 +227,7 @@
                           foreach($menu['alltutorial'] as $tut)
                           {
                               @endphp
-                                  <li><a href="{{ env('APP_URL' )}}/{{ $tutorial->slug->slug }}">{{$tut->tut_name}}</a></li>
+                                  <li><a href="{{ env('APP_URL' )}}/{{ $tut->slug->slug }}">{{$tut->tut_name}}</a></li>
                               @php
                           }
                       }

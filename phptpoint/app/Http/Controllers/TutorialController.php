@@ -10,6 +10,8 @@ use App\Sidebar;
 use App\LinkSidebar;
 use App\Slug;
 use Session;
+use Plupload;
+
 class TutorialController extends Controller
 {
     /**
@@ -226,5 +228,24 @@ class TutorialController extends Controller
             Session::flash('alert-success', 'Subtutorial arranged successfully');
         }
         return 1;
+    }
+
+
+    public function uploadzip($id){
+        //return $id;
+        
+        return Plupload::receive('file', function ($file) use($id)
+        {
+            $tutorial = Tutorial::findOrFail($id);
+            $file_name = $tutorial->slug->slug.'-'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(storage_path('app/public/zip/project/'), $file_name);            
+            if($tutorial->zip_name != '')
+            {
+                @unlink(storage_path('app/public/zip/project/'.$tutorial->zip_name));
+            }
+            $tutorial->zip_name = $file_name;
+            $tutorial->save();
+            return 'ready';
+        });
     }
 }

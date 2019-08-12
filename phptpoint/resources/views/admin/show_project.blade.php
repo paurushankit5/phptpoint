@@ -29,6 +29,10 @@
                 	<td>{{ $project->page_name }}</td>
                 </tr>
                 <tr>
+                    <th>Downloads</th>
+                    <td>{{ $project->downloads->count() }}</td>
+                </tr>
+                <tr>
                     <th>Price</th>
                     <td>
                         @php
@@ -56,6 +60,16 @@
                 			N/A
                 		@endif
                 	</td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td>
+                        @if($project->pro_image)
+                            <img  src="{{ asset('images/projects/'.$project->pro_image) }}"  style="width:200px;">
+                        @else
+                            N/A
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                 	<th>Url</th>

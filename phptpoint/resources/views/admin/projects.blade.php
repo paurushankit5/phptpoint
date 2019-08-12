@@ -20,6 +20,7 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Downloads</th>
                             <th>Type</th>
                             <th>Actions</th>
                         </tr>
@@ -38,6 +39,7 @@
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $pro->pro_name }}</td>
+                                <td>{{ $pro->downloads->count() }}</td>
                                 <td>
                                     @php
                                         if($pro->is_paid == 1)

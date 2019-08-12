@@ -1,9 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <br>
+            <br>
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
@@ -36,6 +38,34 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="mobile" class="col-md-4 col-form-label text-md-right">{{ __('Mobile') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="number" type="mobile" class="form-control{{ $errors->has('mobile') ? ' is-invalid' : '' }}" name="mobile" value="{{ old('mobile') }}" required pattern="[789][0-9]{9}">
+
+                                @if ($errors->has('mobile'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('mobile') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                         <div class="form-group row">
+                            <label for="user_type" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
+
+                            <div class="col-md-6">
+                                <label>
+                                    <input type="radio" checked required name="user_type" value="student"> 
+                                    &nbsp;Student
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <label>
+                                    <input type="radio" name="user_type" value="author"> 
+                                    &nbsp;Author
+                                </label>
                             </div>
                         </div>
 

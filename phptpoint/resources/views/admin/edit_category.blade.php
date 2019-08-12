@@ -30,6 +30,13 @@
 	            		<label>Category Name</label>
 	            		<input type="text" class="form-control" name="category_name" value="{{ $category->cat_name}}" placeholder="Enter Category Name">
 	            	</div>
+	            	<div class="form form-group">
+                    <label>Include In Top Menu</label>
+                    <br>
+                    <label>  <input type="radio" value="1" @if($category->is_top_menu == 1) checked @endif  name="is_top_menu"> Yes </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>  <input type="radio" value="0"  @if($category->is_top_menu == 0) checked @endif  name="is_top_menu"> No </label>
+                </div>
 	            	<div class="form-group">
 	                    <label>Image*</label>
 	                    <input type="file" accept="image/*" name="image" class="form-control">

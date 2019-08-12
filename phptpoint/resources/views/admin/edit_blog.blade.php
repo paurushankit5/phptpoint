@@ -48,7 +48,10 @@
                       <input type="radio" name="status" value="0"> No
                     </label>
                 </div>
-
+                <div class="form-group">
+                    <label>Image*</label>
+                    <input type="file" accept="image/*" name="image" class="form-control">
+                </div>
                 <div class="test_field">
                     <div class="form-group">
                         <label>Contents*</label>

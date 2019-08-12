@@ -28,7 +28,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="{{asset('admin/index2.html') }}" class="logo">
+    <a href="/" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>PHP</b>T</span>
       <!-- logo for regular state and mobile devices -->
@@ -69,7 +69,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <!-- <a href="#" class="btn btn-default btn-flat">Profile</a> -->
+                  <a href="/change-password" class="btn btn-default btn-flat">Change Password</a>
                 </div>
                 <div class="pull-right">
                   <a href="/logout" class="btn btn-default btn-flat">Sign out</a>
@@ -109,7 +109,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         
-        <li><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="/phpadmin"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li><a href="{{ route('categories.index') }}"><i class="fa fa-th"></i> <span>Categories</span></a></li>
         <li><a href="{{ route('tutorials.index') }}"><i class="fa fa-th"></i> <span>Tutorials</span></a></li>
         <li><a href="{{ route('subtutorials.index') }}"><i class="fa fa-th"></i> <span>Sub-Tutorials</span></a></li>
@@ -119,6 +119,8 @@
 
         <li><a href="{{ route('sidebars.index') }}"><i class="fa fa-laptop"></i> <span>Sidebar</span></a></li>
         <li><a href="{{ route('adds.index') }}"><i class="fa fa-laptop"></i> <span>Adds</span></a></li>
+        <li><a href="{{ route('users.index') }}"><i class="fa fa-user"></i> <span>Users</span></a></li>
+        <li><a href="{{ route('seo.index') }}"><i class="fa fa-laptop"></i> <span>Seo</span></a></li>
 
         <<!-- li class="treeview">
           <a href="#">
