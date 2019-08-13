@@ -1,14 +1,17 @@
 @extends('layouts.main')
+@php
+  $seo  = App\Seo::where('page_name',"contactus")->first();
+@endphp
 @section('title')
-  
+  @if(!empty($seo->page_title)) {{$seo->page_title}} @endif
 @endsection
 
 @section('meta_keyword')
-  
+     @if(!empty($seo->meta_keyword)) {{$seo->meta_keyword}} @endif
 @endsection
 
 @section('meta_description')
-  
+     @if(!empty($seo->meta_description)) {{$seo->meta_description}} @endif
 @endsection
 
 @section('header_style')
@@ -46,7 +49,7 @@
                 @endif
             @endforeach
         </div>
-        
+
         <div class="d-block d-md-flex border-bottom">
           <div class="text-center col-md-3 item border-right" data-aos="fade">
             <span class="flaticon-calculator display-3 mb-3 d-block text-primary"></span>
@@ -91,7 +94,7 @@
                 </div>
                 <div class="form-group row mb-0">
                     <div class="col-md-6 offset-md-4">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary btn-lg">
                             {{ __('Submit') }}
                         </button>
                     </div>
@@ -117,8 +120,5 @@
     </div>
 
     
-
-
-]
     
 @endsection

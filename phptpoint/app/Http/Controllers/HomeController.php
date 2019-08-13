@@ -231,4 +231,14 @@ class HomeController extends Controller
         Session::flash('alert-success', 'We have recieved your message. We will get back to you soon.');
         return back();
     }
+
+    public function search(Request $request){
+        $q = $request->input('q');
+        if(empty($q))
+            return redirect('/');
+        $tutorial = Tutorial::whereRaw("tut_name like '%$q%'")->get();
+        $subtutorial = Subtutorial::whereRaw("subtut_name like '%$q%'")->get();
+        $array = array('search_tutorial'    =>  $tutorial, 'search_subtutorial' =>  $subtutorial);
+        return view('search',$array);
+    }
 }

@@ -26,9 +26,10 @@ Route::get('/contact-us', 'HomeController@contactUs');
 Route::post('/contact-us', 'HomeController@saveContactMessage');
 
 Route::get('/dashboard',function(){
-	echo "user logged in";
-});
+	return redirect('/phpadmin');
+})->middleware('auth');
 
+Route::get('/search', 'HomeController@search')->name('search');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/clear-cache', function() {

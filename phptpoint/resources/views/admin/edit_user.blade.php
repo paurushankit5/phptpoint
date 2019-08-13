@@ -50,7 +50,7 @@
                     <label>User Status</label>
                     <select class="form-control" name="status">
                         <option value="1" @if($user->status == 1) checked @endif >Active</option>
-                        <option value="0"  @if($user->status == 0) checked @endif >Author</option>
+                        <option value="0"  @if($user->status == 0) checked @endif >Deactivate</option>
                     </select>
                 </div>
                 <div class="form form-group">

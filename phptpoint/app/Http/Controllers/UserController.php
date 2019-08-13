@@ -128,17 +128,25 @@ class UserController extends Controller
     public function updatePassword(Request $request){
         if(\Auth::check()) {
             $this->validate($request, [
-            'password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
+            'password'  =>  'required',
+            'new_password' => 'min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'min:6'
             ]);
-            \Auth::user()->password = Hash::make($request->password);
-            \Auth::user()->save();
-            Session::flash('alert-success', 'Password updated successfully');
-            if(\Auth::user()->is_admin)
-            {
-                return redirect('/phpadmin');
+
+            if (Hash::check($request->password, \Auth::user()->password )) {
+                \Auth::user()->password = Hash::make($request->new_password);
+                \Auth::user()->save();
+                Session::flash('alert-success', 'Password updated successfully');
+                if(\Auth::user()->is_admin)
+                {
+                    return redirect('/phpadmin');
+                }
+                return  redirect('/');
             }
-            return  redirect('/');
+            else{
+                Session::flash('alert-success', 'Password is incorrect');
+                return redirect('/change-password');
+            }            
         }
         return redirect('/login');
     }

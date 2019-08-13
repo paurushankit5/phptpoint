@@ -68,7 +68,7 @@
                                             echo "Active";
                                         }
                                         else{
-                                            echo "Inactive";
+                                            echo "Deactive";
                                         }
                                     @endphp
                                 </td>

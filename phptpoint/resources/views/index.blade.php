@@ -1,14 +1,17 @@
 @extends('layouts.main')
+@php
+  $seo  = App\Seo::where('page_name',"homepage")->first();
+@endphp
 @section('title')
-  
+  @if(!empty($seo->page_title)) {{$seo->page_title}} @endif
 @endsection
 
 @section('meta_keyword')
-  
+     @if(!empty($seo->meta_keyword)) {{$seo->meta_keyword}} @endif
 @endsection
 
 @section('meta_description')
-  
+     @if(!empty($seo->meta_description)) {{$seo->meta_description}} @endif
 @endsection
 
 @section('header_style')
@@ -30,12 +33,12 @@
         <div class="row align-items-center">
           <div class="col-12" data-aos="fade">
             <h1>PHPTPOINT   </h1>
-            <form action="#">
+            <form action="/search" >
               <div class="row mb-3">
                 <div class="col-md-9">
                   <div class="row">
                     <div class="col-md-12 mb-6 mb-md-0">
-                      <input type="text" class="mr-3 form-control border-0 px-4" placeholder="Search For Tutorials / Sub-Tutorials">
+                      <input type="text" name="q" min="4" required class="mr-3 form-control border-0 px-4" placeholder="Search For Tutorials / Sub-Tutorials">
                     </div>
                   </div>
                 </div>
@@ -86,7 +89,7 @@
      <div class="site-section bg-light">
       <div class="container">
         <div class="row">
-          <div class="col-md-8 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-md-8 offset-md-2 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
             <h2 class="mb-5 h3">Recent Tutorials</h2>
             <div class="rounded border jobs-wrap">
 
@@ -209,7 +212,7 @@
               <a href="#" class="btn btn-primary rounded py-3 px-5"><span class="icon-plus-circle"></span> Show More Jobs</a>
             </div> -->
           </div>
-          <div class="col-md-4 block-16" data-aos="fade-up" data-aos-delay="200">
+          <!-- <div class="col-md-4 block-16" data-aos="fade-up" data-aos-delay="200">
             <div class="d-flex mb-0">
               <h2 class="mb-5 h3 mb-0">Featured Jobs</h2>
               <div class="ml-auto mt-1"><a href="#" class="owl-custom-prev">Prev</a> / <a href="#" class="owl-custom-next">Next</a></div>
@@ -263,7 +266,7 @@
 
             </div>
 
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -298,7 +301,7 @@
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-6 text-center" data-aos="fade">
-            <h1 class="h3 mb-0">Your Dream Job</h1>
+            <h1 class="h3 mb-0">Your Dream Career</h1>
             <p class="h3 text-white mb-5">Is Waiting For You</p>
             <p><a href="#" class="btn btn-outline-warning py-3 px-4">Find Jobs</a> <a href="#" class="btn btn-warning py-3 px-4">Apply For A Job</a></p>
             
@@ -372,6 +375,7 @@
                   <h2 class="heading mb-0 h5"><a href="#">{{ $recent_project->pro_name }}</a></h2>
                   <span class="mb-3 d-block post-date">{{ date('d-M-Y', strtotime($recent_project->created_at)) }} </span>
                   <p>{!! substr($recent_project->content,0,200) !!}</p>
+                  <p class="text-center"><a href="/projects/{{ $recent_project->slug->slug }}" class="btn btn-danger btn-lg ">Download  </a></p>
                 </div>
               @endforeach 
             @endif
