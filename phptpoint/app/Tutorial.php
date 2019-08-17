@@ -26,4 +26,7 @@ class Tutorial extends Model
     {
         return $this->hasMany('App\Subtutorial')->orderBy('subtut_order', 'ASC');
     }
+    public function downloads(){
+        return $this->hasMany('App\Download');
+    }
 }

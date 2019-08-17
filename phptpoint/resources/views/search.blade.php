@@ -15,6 +15,8 @@
 @endsection
 
 @section('header_style')
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
   <style type="text/css">
     .media-with-text-1{
       transition: transform .2s;
@@ -31,21 +33,7 @@
     <div class="unit-5 overlay" style='background-image: url("{{ asset('home/images/hero_1.jpg') }}");'>
         <div class="container text-center">
           <h1 class="mb-0">Search</h1>
-          <form action="/search" >
-              <div class="row mb-3">
-                <div class="col-md-9">
-                  <div class="row">
-                    <div class="col-md-12 mb-6 mb-md-0">
-                      <input type="text" name="q" min="4" value="{{ $_GET['q'] }}" required class="mr-3 form-control border-0 px-4" placeholder="Search For Tutorials / Sub-Tutorials">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <input type="submit" class="btn btn-search btn-primary btn-block" value="Search">
-                </div>
-              </div>
-              
-            </form>
+            @include('components.search')
         </div>
     </div>
 
@@ -87,7 +75,7 @@
               <br>
               <br>
               <ul class="list-group">
-                <li class="list-group-item active bg-primary">Some More Results </li>
+                <li class="list-group-item active bg-primary">{{ count($search_tutorial) ? 'Some More Results' : 'Search Results' }} </li>
               @foreach($search_subtutorial as $subtutorial)
                 <li class="list-group-item"><a href="/{{ $subtutorial->slug->slug }}">{{ $subtutorial->subtut_name }}</a></li>
               @endforeach
@@ -101,4 +89,7 @@
     
   
     
+@endsection
+@section('after_scripts')
+  @include('components.search_js')
 @endsection

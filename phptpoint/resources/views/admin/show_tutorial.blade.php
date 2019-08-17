@@ -28,6 +28,10 @@
                 	<td>{{ $tutorial->page_name }}</td>
                 </tr>
                 <tr>
+                    <th>Downloads</th>
+                    <td>{{ $tutorial->downloads->count() }}</td>
+                </tr>
+                <tr>
                     <th>Image</th>
                     <td>
                         @if($tutorial->image)

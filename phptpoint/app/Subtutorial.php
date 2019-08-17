@@ -23,4 +23,7 @@ class Subtutorial extends Model
     {
         return $this->belongsTo('App\Tutorial');
     }
+    public function downloads(){
+        return $this->hasMany('App\Download');
+    }
 }

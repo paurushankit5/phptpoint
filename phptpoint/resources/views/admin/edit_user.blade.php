@@ -42,15 +42,15 @@
                 <div class="form-group">
                     <label>User Type</label>
                     <select class="form-control" name="user_type">
-                        <option value="student" @if($user->is_student) checked @endif >Student</option>
-                        <option value="author"  @if($user->is_author) checked @endif >Author</option>
+                        <option value="student" @if($user->is_student) selected @endif >Student</option>
+                        <option value="author"  @if($user->is_author) selected @endif >Author</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>User Status</label>
                     <select class="form-control" name="status">
-                        <option value="1" @if($user->status == 1) checked @endif >Active</option>
-                        <option value="0"  @if($user->status == 0) checked @endif >Deactivate</option>
+                        <option value="1" @if($user->status == 1) selected @endif >Active</option>
+                        <option value="0"  @if($user->status == 0) selected @endif >Deactive</option>
                     </select>
                 </div>
                 <div class="form form-group">

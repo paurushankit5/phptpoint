@@ -27,6 +27,10 @@
                 	<td>{{ $subtutorial->page_name }}</td>
                 </tr>
                 <tr>
+                    <th>Downloads</th>
+                    <td>{{ $subtutorial->downloads->count() }}</td>
+                </tr>
+                <tr>
                 	<th>Content</th>
                 	<td>{!! $subtutorial->content !!}</td>
                 </tr>

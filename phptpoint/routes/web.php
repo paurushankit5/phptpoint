@@ -11,11 +11,20 @@
 |
 */
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 
 Route::get('/logout',function(){
 	Auth::logout();
 	return redirect('/');
+});
+
+Route::get('/mail1', 'HomeController@sendmail');
+
+Route::get('user/verify/{id}','UserController@verifyUser');
+
+Route::get('/email/verify/{id}', function($id){
+	echo date('Y-m-d H:i:s',$_GET['expires']);
+	echo date('Y-m-d H:i:s');
 });
 
 Route::get('/change-password', 'UserController@changePassword')->middleware('auth');
@@ -30,6 +39,7 @@ Route::get('/dashboard',function(){
 })->middleware('auth');
 
 Route::get('/search', 'HomeController@search')->name('search');
+Route::get('/getHints', 'HomeController@getHints')->name('getHints');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/clear-cache', function() {

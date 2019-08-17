@@ -23,7 +23,7 @@ class UserController extends Controller
             $search = $_GET['search'];
             $query->whereRaw("name like '%$search%' ");
         }
-        $users  =   $query->paginate($limit);
+        $users  =   $query->orderBy('id','DESC')->paginate($limit);
         return view('admin.users',['users'  =>  $users,'limit' =>  $limit]);
     }
 
@@ -147,6 +147,30 @@ class UserController extends Controller
                 Session::flash('alert-success', 'Password is incorrect');
                 return redirect('/change-password');
             }            
+        }
+        return redirect('/login');
+    }
+    public function changeUserPassword(Request $request,$user_id){
+        $user = User::findOrFail($user_id);
+
+        $this->validate($request, [
+            'password'  =>  'required|min:6' 
+        ]);
+
+                
+        $user->password = Hash::make($request->password);
+        $user->save();
+        Session::flash('alert-success', 'Password updated successfully');
+        return  back();
+    }
+
+    public function verifyUser($id){
+        $user = User::findOrFail($id);
+        $user->status= 1;
+        $user->save();
+        Session::flash('alert-success', 'Email verififed successfully');
+        if(\Auth::check()){
+            return redirect('/');
         }
         return redirect('/login');
     }

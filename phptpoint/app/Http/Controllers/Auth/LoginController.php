@@ -28,7 +28,12 @@ class LoginController extends Controller
     //protected $redirectTo = '/home';
     protected function redirectTo()
     {
-        if(\Auth::user()->is_admin)
+        if(\Auth::user()->status == 0){
+            \Auth::logout();
+            Session::flash('alert-danger', 'Please verify your email to login.');
+            return '/login';
+        }
+        else if(\Auth::user()->is_admin)
         {
             return '/phpadmin';
         }

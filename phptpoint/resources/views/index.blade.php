@@ -15,6 +15,7 @@
 @endsection
 
 @section('header_style')
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style type="text/css">
     .media-with-text-1{
       transition: transform .2s;
@@ -33,21 +34,7 @@
         <div class="row align-items-center">
           <div class="col-12" data-aos="fade">
             <h1>PHPTPOINT   </h1>
-            <form action="/search" >
-              <div class="row mb-3">
-                <div class="col-md-9">
-                  <div class="row">
-                    <div class="col-md-12 mb-6 mb-md-0">
-                      <input type="text" name="q" min="4" required class="mr-3 form-control border-0 px-4" placeholder="Search For Tutorials / Sub-Tutorials">
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <input type="submit" class="btn btn-search btn-primary btn-block" value="Search">
-                </div>
-              </div>
-              
-            </form>
+            @include('components.search')
           </div>
         </div>
       </div>
@@ -89,7 +76,7 @@
      <div class="site-section bg-light">
       <div class="container">
         <div class="row">
-          <div class="col-md-8 offset-md-2 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-md-8 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
             <h2 class="mb-5 h3">Recent Tutorials</h2>
             <div class="rounded border jobs-wrap">
 
@@ -212,26 +199,33 @@
               <a href="#" class="btn btn-primary rounded py-3 px-5"><span class="icon-plus-circle"></span> Show More Jobs</a>
             </div> -->
           </div>
-          <!-- <div class="col-md-4 block-16" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-md-4 block-16" data-aos="fade-up" data-aos-delay="200">
             <div class="d-flex mb-0">
-              <h2 class="mb-5 h3 mb-0">Featured Jobs</h2>
+              <h2 class="mb-5 h3 mb-0">Recent Articles</h2>
               <div class="ml-auto mt-1"><a href="#" class="owl-custom-prev">Prev</a> / <a href="#" class="owl-custom-next">Next</a></div>
             </div>
 
             <div class="nonloop-block-16 owl-carousel">
+              @php
+                $recent_blogs = App\Blog::where('status',1)->limit(9)->orderBy('id','DESC')->get();
+              @endphp
+              @if(count($recent_blogs))
+                @foreach($recent_blogs as $recent_blog)
+                  <div class="border rounded p-4 bg-white">
+                    <h2 class="h5">{{ ucwords($recent_blog->blog_name) }}</h2>
+                    <p><a href="/blog/{{ $recent_blog->slug->slug }}" class="border border-warning rounded p-1 px-2 text-warning">View</a></p>
+                    <p>
+                      <span class="d-block"><span class="icon-suitcase"></span> {{ $recent_blog->user->name }}</span>
+                      <!-- <span class="d-block"><span class="icon-room"></span> Florida</span> -->
+                      <span class="d-block"><span class="icon-calendar mr-1"></span> {{ date('d-M Y',strtotime($recent_blog->created_at)) }}</span>
+                    </p>
+                    <p class="mb-0">{!! substr($recent_blog->content,0,200) !!}</p>
+                  </div>
+                @endforeach
+              @endif
+              
 
-              <div class="border rounded p-4 bg-white">
-                <h2 class="h5">Restaurant Crew</h2>
-                <p><span class="border border-warning rounded p-1 px-2 text-warning">Freelance</span></p>
-                <p>
-                  <span class="d-block"><span class="icon-suitcase"></span> Resto Bar</span>
-                  <span class="d-block"><span class="icon-room"></span> Florida</span>
-                  <span class="d-block"><span class="icon-money mr-1"></span> $55000 &mdash; 70000</span>
-                </p>
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi neque fugit tempora, numquam voluptate veritatis odit id, iste eum culpa alias, ut officiis omnis itaque ad, rem sunt doloremque molestias.</p>
-              </div>
-
-              <div class="border rounded p-4 bg-white">
+              <!-- <div class="border rounded p-4 bg-white">
                 <h2 class="h5">Javascript Fullstack Developer</h2>
                 <p><span class="border border-warning rounded p-1 px-2 text-warning">Freelance</span></p>
                 <p>
@@ -262,11 +256,11 @@
                   <span class="d-block"><span class="icon-money mr-1"></span> $55000 &mdash; 70000</span>
                 </p>
                 <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid at ipsum commodi hic, cum esse asperiores libero molestiae, perferendis consectetur assumenda iusto, dolorem nemo maiores magnam illo laborum sit, dicta.</p>
-              </div>
+              </div> -->
 
             </div>
 
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -297,7 +291,7 @@
         </div>
       </div>
     </div>
-    <div class="site-blocks-cover overlay inner-page" style='background-image: url("{{ asset('images/hero_1.jpg') }}");' data-aos="fade" data-stellar-background-ratio="0.5">
+   <!--  <div class="site-blocks-cover overlay inner-page" style='background-image: url("{{ asset('images/hero_1.jpg') }}");' data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-6 text-center" data-aos="fade">
@@ -308,7 +302,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="site-section site-block-feature bg-light">
       <div class="container">
         
@@ -477,4 +471,7 @@
       </div>
     </div>
     
+@endsection
+@section('after_scripts')
+  @include('components.search_js')
 @endsection

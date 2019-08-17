@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                 	<th>Url</th>
-                	<td><a href="{{ env('APP_URL') }}/{{ $blog->slug->slug }}" target="_blank">{{ env('APP_URL') }}/{{ $blog->slug->slug }}</a></td>
+                	<td><a href="{{ env('APP_URL') }}/blog/{{ $blog->slug->slug }}" target="_blank">{{ env('APP_URL') }}/blog/{{ $blog->slug->slug }}</a></td>
                 </tr>
 
                 <tr>

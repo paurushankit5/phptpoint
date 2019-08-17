@@ -59,10 +59,27 @@ class Pagecontroller extends Controller
     }
     public function getblog($slug_id){
         $blog   =   Blog::where('slug_id', $slug_id)->firstOrFail();
-        $recent_blogs = Blog::where('id','<>', $blog->id)->with('slug')->paginate(10);
+        $recent_blogs = Blog::where('id','<>', $blog->id)->with('slug')->orderBy('id','DESC')->paginate(10);
+        $prev_slug  =   Blog::where('id','>',$blog->id)
+                                       ->orderBy('id','ASC')
+                                        ->first();
+        $next_slug  =   Blog::where('id','<',$blog->id)
+                                        ->orderBy('id','DESC')
+                                        ->first();
+
+        if($prev_slug)
+        {
+            $prev_slug  =   $prev_slug->slug->slug;
+        }
+        if($next_slug)
+        {
+            $next_slug  =   $next_slug->slug->slug;
+        }
         $array  =   array(
                             "blog"  =>  $blog,
-                            "recent_blogs"  =>  $recent_blogs
+                            "recent_blogs"  =>  $recent_blogs,
+                            "prev_slug"     =>  $prev_slug,
+                            "next_slug"     =>  $next_slug
                         );
         return view('blog', $array);
     }

@@ -59,7 +59,11 @@
 						@slot('next_url',$tut->subtutorial[0]->slug->slug)
 						@slot('add','top')
 					@endif
-				@endcomponent       
+				@endcomponent  
+                @if($tut->zip_name !='')
+                    <p><b>Total Downloads : {{$tut->downloads->count()}}</b></p>
+                    <hr>
+                @endif    
             	{!! $tut->content !!}
             	@if($tut->zip_name !='' )
                     <div class="col-md-12 text-center">

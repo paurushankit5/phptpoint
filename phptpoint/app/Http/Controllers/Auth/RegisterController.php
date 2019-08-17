@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Session;
+use Mail;
 
 class RegisterController extends Controller
 {
@@ -28,8 +30,12 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
-
+    protected function redirectTo()
+    {
+        \Auth::logout();
+        Session::flash('alert-danger', 'Please Verify Your Email to Login.');
+        return '/login';        
+    }
     /**
      * Create a new controller instance.
      *
@@ -65,14 +71,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
             'is_student'    => $data['user_type'] == 'student' ? 1 :0,
             'is_author'    => $data['user_type'] == 'author' ? 1 :0,
-            'status'        =>  1
+            'status'        =>  0
         ]);
+        $res = Mail::send('email.welcome', array('user'   =>  $user), function($message) use ($user) {
+             $message->to($user->email)->subject("Verify Your Email");
+             $message->from( env('MAIL_FROM_ADDRESS') ,env('MAIL_FROM_NAME'));
+        });
+
+        return $user;
     }
 }

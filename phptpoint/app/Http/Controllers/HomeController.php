@@ -13,6 +13,7 @@ use App\Sidebar;
 use App\LinkSidebar;
 use App\SidebarContent;
 use App\Download;
+use App\Enquiry;
 use Session;
 use Mail;
 
@@ -208,9 +209,9 @@ class HomeController extends Controller
 
     public function loginToDownload(Request $request,$slug,$id){
         $param = $request->input();
-        if(!empty($param['page']) && ($param['page'] == 'tutorial') || $param['page'] == 'subtutorial' )
+        if(isset($param['page']) && !empty($param['page']) && ($param['page'] == 'tutorial') || $param['page'] == 'subtutorial' )
             Session::put('url', "/$slug");  
-        else
+        else if(isset($param['page']) && !empty($param['page']) && ($param['page'] ==  'project')  )
             Session::put('url', "/projects/$slug");  
         return redirect('/login');
     }
@@ -223,8 +224,14 @@ class HomeController extends Controller
         return view('contactus');
     }
     public function saveContactMessage(Request $request){
+        $enq    = new Enquiry;
+        $enq->name = $request->name;
+        $enq->email = $request->email;
+        $enq->mobile = $request->mobile;
+        $enq->message = $request->message;
+        $enq->save();
         $subject = env('APP_NAME')." enquiry from ".$request->name;
-        Mail::send('email.contact', ['request' =>   $request], function($message) use ($subject) {
+        $res = Mail::send('email.contact', ['request' =>   $request], function($message) use ($subject) {
          $message->to(env('CONTACT_RECEIVER_EMAIL',"paurushankit5@gmmil.com"), env('APP_NAME'))->subject($subject);
          $message->from( env('MAIL_FROM_ADDRESS') ,env('MAIL_FROM_NAME'));
       });
@@ -236,9 +243,33 @@ class HomeController extends Controller
         $q = $request->input('q');
         if(empty($q))
             return redirect('/');
-        $tutorial = Tutorial::whereRaw("tut_name like '%$q%'")->get();
-        $subtutorial = Subtutorial::whereRaw("subtut_name like '%$q%'")->get();
+        $tutorial = Tutorial::whereRaw("tut_name like '%$q%'")->where('status',1)->get();
+        $subtutorial = Subtutorial::whereRaw("subtut_name like '%$q%'")->where('status',1)->get();
         $array = array('search_tutorial'    =>  $tutorial, 'search_subtutorial' =>  $subtutorial);
         return view('search',$array);
+    }
+
+    public function getHints(Request $request){
+        $q = $request->input('q');
+        $tutorial = Tutorial::select('tut_name as name','slug')
+                            ->join('slugs','slugs.id','=','tutorials.slug_id')
+                            ->whereRaw("tut_name like '%$q%'")->where('status',1)
+                            ->get();
+        $subtutorial = Subtutorial::select('subtut_name as name','slug')
+                                    ->join('slugs','slugs.id','=','subtutorials.slug_id')
+                                    ->whereRaw("subtut_name like '%$q%'")
+                                    ->where('status',1)
+                                    ->get();
+        return array('tutorial'   =>  $tutorial, 'subtutorial' => $subtutorial);
+    }
+
+    public function sendmail(){
+        $user = \Auth::user();
+        $array = array('user'   =>  $user);
+
+        $res = Mail::send('email.welcome', $array, function($message) use ($user) {
+             $message->to($user->email)->subject("Verify Your Email");
+             $message->from( env('MAIL_FROM_ADDRESS') ,env('MAIL_FROM_NAME'));
+        });
     }
 }

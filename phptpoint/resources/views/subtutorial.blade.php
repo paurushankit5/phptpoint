@@ -53,7 +53,11 @@
 					@slot('prev_url',$prev_slug)
 					@slot('add','top')
 
-				@endcomponent       
+				@endcomponent  
+                @if($subtut->zip_name !='')
+                    <p><b>Total Downloads : {{$subtut->downloads->count()}}</b></p>
+                    <hr>
+                @endif     
             	{!! $subtut->content !!}
             	@if($subtut->zip_name !='' )
                     <div class="col-md-12 text-center">

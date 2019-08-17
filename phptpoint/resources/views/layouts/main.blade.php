@@ -7,6 +7,15 @@
     <meta name="keywords" content="@yield('meta_keyword')" />
     <meta name="description" content="@yield('meta_description')" />
 
+    <meta property="og:title" content="@yield('title')" />
+    <meta property="og:description" content="@yield('meta_description')" />
+    <meta property="og:url" content="{{ env('APP_URL').$_SERVER['REQUEST_URI'] }}" />
+    <meta property="og:site_name" content="{{env('APP_NAME')}}" />
+
+    <meta property="og:type" content="article" />
+
+    <link rel="canonical" href="{{ env('APP_URL').$_SERVER['REQUEST_URI'] }}" />
+
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Work+Sans:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('home/fonts/icomoon/style.css') }}">
 
@@ -19,6 +28,7 @@
     <link rel="stylesheet" href="{{ asset('home/css/animate.css') }}">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelementplayer.min.css">
+    <link rel="icon" href="{{ asset('images/favicon.png') }}" sizes="32x32" />
     
     
     
@@ -53,7 +63,7 @@
           <div class="py-1">
             <div class="row align-items-center">
               <div class="col-2">
-                <h2 class="mb-0 site-logo"><a href="/">PHP<strong class="font-weight-bold">TPOINT</strong> </a></h2>
+                <h2 class="mb-0 site-logo"><a href="/"><img src="{{asset('images/phptpoint_logo_jpg.jpg')}}" class="logo" /></a></h2>
               </div>
               <div class="col-10">
                 <nav class="site-navigation text-right" role="navigation">
@@ -100,7 +110,7 @@
                             {
                               @endphp
                                <li class="has-children">
-                                  <a href="category.html">Free Projects</a>
+                                  <a href="#">Free Projects</a>
                                   <ul class="dropdown arrow-top">
                               @php
                               foreach($menu['free_projects'] as $pro)
@@ -280,10 +290,7 @@
   
   <!-- <script src="{{ asset('home/js/mediaelement-and-player.min.js') }}"></script> -->
 
-  <script src="{{ asset('home/js/main.js') }}"></script>
-    
-
-     
-
+  <script src="{{ asset('home/js/main.js') }}"></script>     
+  @yield('after_scripts')
   </body>
 </html>

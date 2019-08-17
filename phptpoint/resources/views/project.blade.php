@@ -51,6 +51,10 @@
         		@component('components.prev_next')
                     @slot('add','top')
                 @endcomponent 
+                @if($pro->zip_name !='')
+                    <p><b>Total Downloads : {{$pro->downloads->count()}}</b></p>
+                    <hr>
+                @endif
             	{!! $pro->content !!}
             	<div class="clearfix"></div>
                 @if($project->video_url !='')
@@ -62,7 +66,7 @@
                         <br>
                         <br>
                         @guest
-                            <a href="/loginToDownload/{{$pro->slug->slug}}/{{ $pro->id }}" class="btn btn-primary btn-download"> Login / Register To Download</a>
+                            <a href="/loginToDownload/{{$pro->slug->slug}}/{{ $pro->id }}?page=project" class="btn btn-primary btn-download"> Login / Register To Download</a>
                         @else
                             <a href="/getprojectfile/{{$pro->slug->slug}}/{{ $pro->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
                         @endguest

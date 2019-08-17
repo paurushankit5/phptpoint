@@ -18,6 +18,7 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{asset('admin/dist/css/skins/_all-skins.min.css') }}">
   <link rel="stylesheet" href="{{asset('admin/dist/css/style.css') }}">
+      <link rel="icon" href="{{ asset('images/favicon.png') }}" sizes="32x32" />
 
   @yield('header_scripts')
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -32,7 +33,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>PHP</b>T</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>PHP</b>TPOINT</span>
+      <span class="logo-lg"><b><img src="{{ asset('images/phptpoint_logo_jpg.jpg')}}" class="logo" /></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -121,6 +122,7 @@
         <li><a href="{{ route('adds.index') }}"><i class="fa fa-laptop"></i> <span>Adds</span></a></li>
         <li><a href="{{ route('users.index') }}"><i class="fa fa-user"></i> <span>Users</span></a></li>
         <li><a href="{{ route('seo.index') }}"><i class="fa fa-laptop"></i> <span>Seo</span></a></li>
+        <li><a href="{{ route('enquiry.index') }}"><i class="fa fa-laptop"></i> <span>Enquiry</span></a></li>
 
         <<!-- li class="treeview">
           <a href="#">
@@ -319,7 +321,7 @@
     <div class="pull-right hidden-xs">
       <!-- <b>Version</b> 2.4.0 -->
     </div>
-    <strong>Copyright &copy; {{ date('Y') }} <a href="https://adminlte.io">PHPTPOINT</a>.</strong> All rights
+    <strong>Copyright &copy; {{ date('Y') }} <a href="/">PHPTPOINT</a>.</strong> All rights
     reserved.
   </footer>
 

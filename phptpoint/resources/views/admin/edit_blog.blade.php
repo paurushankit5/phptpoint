@@ -7,7 +7,7 @@
 
 
 @section('page_heading')
-    Add Blogs
+    Edit Blog
 @endsection
 
 
