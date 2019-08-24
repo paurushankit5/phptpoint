@@ -43,7 +43,7 @@ class CategoryController extends Controller
         $request->validate([
             'category_name' => 'required|unique:categories,cat_name|max:255',
             'is_top_menu'   => 'required',
-            'image'         => 'required | mimes:jpeg,jpg,png | max:2048',
+            'image'         => 'required|mimes:jpeg,jpg,png|max:2048',
         ]);
         $cat    =   new Category;
         $cat->cat_name  =   $request->category_name;
@@ -93,7 +93,7 @@ class CategoryController extends Controller
         $request->validate([
             'category_name' => 'required|max:255|unique:categories,cat_name,'.$id,
             'is_top_menu'   => 'required',
-            'image'         => 'mimes:jpeg,jpg,png | max:2048',
+            'image'         => 'mimes:jpeg,jpg,png|max:2048',
 
         ]);
         $cat            =   Category::findOrFail($id);

@@ -35,6 +35,9 @@ class LoginController extends Controller
         }
         else if(\Auth::user()->is_admin)
         {
+            if(Session::has('url')){
+                session()->forget('url');
+            }
             return '/phpadmin';
         }
         else if(Session::has('url')){

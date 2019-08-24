@@ -204,7 +204,7 @@ class SubTutorialController extends Controller
         return Plupload::receive('file', function ($file) use($id)
         {
             $tutorial = Subtutorial::findOrFail($id);
-            $file_name = $tutorial->slug->slug.'-'.time().'.'.$file->getClientOriginalExtension();
+            $file_name = $tutorial->subtut_name.'-'.time().'.'.$file->getClientOriginalExtension();
             $file->move(storage_path('app/public/zip/project/'), $file_name);            
             if($tutorial->zip_name != '')
             {
