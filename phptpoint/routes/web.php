@@ -19,7 +19,7 @@ Route::get('/logout',function(){
 });
 
 
-Route::get('user/verify/{id}','UserController@verifyUser');
+Route::get('/user/verify/{id}','UserController@verifyUser');
 
 Route::get('/email/verify/{id}', function($id){
 	echo date('Y-m-d H:i:s',$_GET['expires']);
