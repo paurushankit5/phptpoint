@@ -18,7 +18,6 @@ Route::get('/logout',function(){
 	return redirect('/');
 });
 
-Route::get('/mail1', 'HomeController@sendmail');
 
 Route::get('user/verify/{id}','UserController@verifyUser');
 
@@ -47,13 +46,15 @@ Route::get('/clear-cache', function() {
     // return what you want
 });
 
+Route::get('/mail1', 'HomeController@sendmail');
+
 
 Route::get('/blogs', 'BlogController@getLatestBlogs');
 
-Route::get('/getprojectfile/{slug}/{id}', 'HomeController@getprojectfile');
+Route::get('/getprojectfile/{slug}/{id}', 'HomeController@getprojectfile')->where('slug', '.*');
 Route::get('/gettutorialfile/{slug}/{id}', 'HomeController@gettutorialfile');
 Route::get('/getsubtutorialfile/{slug}/{id}', 'HomeController@getsubtutorialfile');
-Route::get('/loginToDownload/{slug}/{id}', 'HomeController@loginToDownload');
+Route::get('/loginToDownload/{slug}/{id}', 'HomeController@loginToDownload')->where('slug', '.*');
 
 foreach(glob(dirname(__FILE__) . '/web/*.php') AS $file){
 	require_once($file);

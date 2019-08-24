@@ -1,4 +1,18 @@
 @extends('layouts.main')
+@php
+  $seo  = App\Seo::where('page_name',"register")->first();
+@endphp
+@section('title')
+  @if(!empty($seo->page_title)) {{$seo->page_title}} @endif
+@endsection
+
+@section('meta_keyword')
+     @if(!empty($seo->meta_keyword)) {{$seo->meta_keyword}} @endif
+@endsection
+
+@section('meta_description')
+     @if(!empty($seo->meta_description)) {{$seo->meta_description}} @endif
+@endsection
 
 @section('content')
 <div class="container">

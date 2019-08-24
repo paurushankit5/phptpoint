@@ -235,7 +235,7 @@ class ProjectController extends Controller
         return Plupload::receive('file', function ($file) use($id)
         {
             $project = Project::findOrFail($id);
-            $file_name = $project->slug->slug.'-'.time().'.'.$file->getClientOriginalExtension();
+            $file_name = $project->pro_name.'-'.time().'.'.$file->getClientOriginalExtension();
             $file->move(storage_path('app/public/zip/project/'), $file_name);            
             if($project->zip_name != '')
             {

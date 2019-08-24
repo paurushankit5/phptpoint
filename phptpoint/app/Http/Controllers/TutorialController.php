@@ -57,7 +57,7 @@ class TutorialController extends Controller
             'tutorial_name' => 'required|max:255',
             'content'       => 'required',
             'page_title'    => 'required|max:255',
-            'image' => 'required | mimes:jpeg,jpg,png | max:2048',
+            'image' => 'required|mimes:jpeg,jpg,png|max:2048',
         ]);
         $slug                   =   new Slug;
         $slug->slug             =   $request->slug;
@@ -149,7 +149,7 @@ class TutorialController extends Controller
             'tutorial_name' => 'required|max:255',
             'content'       => 'required',
             'page_title'    => 'required|max:255',
-            'image' => 'mimes:jpeg,jpg,png | max:2048',
+            'image' => 'mimes:jpeg,jpg,png|max:2048',
 
         ]);
 
@@ -237,7 +237,7 @@ class TutorialController extends Controller
         return Plupload::receive('file', function ($file) use($id)
         {
             $tutorial = Tutorial::findOrFail($id);
-            $file_name = $tutorial->slug->slug.'-'.time().'.'.$file->getClientOriginalExtension();
+            $file_name = $tutorial->tut_name.'-'.time().'.'.$file->getClientOriginalExtension();
             $file->move(storage_path('app/public/zip/project/'), $file_name);            
             if($tutorial->zip_name != '')
             {
