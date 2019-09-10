@@ -29,6 +29,10 @@
                 	<td>{{ $project->page_name }}</td>
                 </tr>
                 <tr>
+                    <th>Top Menu</th>
+                    <td>{{ $project->is_top_menu ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
                     <th>Downloads</th>
                     <td>{{ $project->downloads->count() }}</td>
                 </tr>
@@ -73,7 +77,7 @@
                 </tr>
                 <tr>
                 	<th>Url</th>
-                	<td><a href="{{ env('APP_URL') }}/projects/{{ $project->slug->slug }}" target="_blank">{{ env('APP_URL') }}/projects/{{ $project->slug->slug }}/</a></td>
+                	<td><a href="{{ env('APP_URL') }}/projects/{{ $project->slug->slug }}" target="_blank">{{ env('APP_URL') }}/projects/{{ $project->slug->slug }}</a></td>
                 </tr>
                 <tr>
                 	<th>Page Title</th>

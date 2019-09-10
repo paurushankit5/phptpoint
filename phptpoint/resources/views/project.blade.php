@@ -45,16 +45,13 @@
             </div>
             
         </div>
-        <div class="col-md-7 col-lg-7 mb-5 bg-white"> 
+        <div class="col-md-6 col-lg-6 mb-5 bg-white"> 
         	<div class="p-8 mb-5 bg-white"> 
         		<br>
         		@component('components.prev_next')
                     @slot('add','top')
                 @endcomponent 
-                @if($pro->zip_name !='')
-                    <p><b>Total Downloads : {{$pro->downloads->count()}}</b></p>
-                    <hr>
-                @endif
+               
             	{!! $pro->content !!}
             	<div class="clearfix"></div>
                 @if($project->video_url !='')
@@ -63,8 +60,10 @@
                 @endif
                 @if($pro->is_paid == 0 && $pro->zip_name !='' )
                     <div class="col-md-12 text-center">
-                        <br>
-                        <br>
+                     
+                     @if($pro->zip_name !='')
+                    <p class="btn btn-primary"><b>Total Downloads : {{$pro->downloads->count()}}</b></p>
+                    @endif
                         @guest
                             <a href="/loginToDownload/{{$pro->slug->slug}}/{{ $pro->id }}?page=project" class="btn btn-primary btn-download"> Login / Register To Download</a>
                         @else
@@ -75,10 +74,41 @@
                 @component('components.prev_next')
                     @slot('add','bottom')
                 @endcomponent 
+                <div class="site-section">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                        <h2 class="mb-5">Latest Projects</h2>
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                        @php
+                            $recent_projects   =   App\Project::where('is_paid',0)->where('id','<>',$pro->id)->limit(8)->orderBy('id','DESC')->get();
+                            if(count($recent_projects)){
+                                foreach ($recent_projects as $recent_project) {
+                                    @endphp
+                                        <div class="col-md-3 col-sm-6 col-xs-6 form-group" >
+                                          <div class="media-with-text media-with-text-1" style="border: 1px solid #f7f1f1; padding: 20px; height:200px; border-radius:5px; margin;box-shadow: -2px 10px 22px -16px rgba(0,0,0)">
+                                            <div class="img-border-sm mb-4">
+                                              <a href="{{ env('APP_URL').'/projects/'.$recent_project->slug->slug  }}" class="image-play">
+                                                <center><img src="{{ asset('images/projects/'.$recent_project->pro_image) }}" alt="" style="height:100px;" class="img-fluid mx-auto"></center>
+                                              </a>
+                                            </div>
+                                            <h2 class="heading mb-0 h5 text-center"><a href="{{ env('APP_URL').'/projects/'.$recent_project->slug->slug  }}">{{ $recent_project->pro_name }}</a></h2>
+                                            
+                                          </div>
+                                        </div>
+                                    @php
+                                }
+                            }
+                        @endphp
+                    </div>
+                  </div>
+                </div> 
             	
         	</div>          
         </div>      
-        <div class="col-md-2">
+        <div class="col-md-3">
             @include('components.add')
         </div>    
     </div>

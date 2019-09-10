@@ -46,7 +46,7 @@ class HomeController extends Controller
     public static function getmenubar(){
         $cat   =   Category::with('tutorial')->where('is_top_menu',1)->get();
         $tutorial   = Tutorial::where('category_id',null)->get();
-        $alltutorial =  Tutorial::all();
+        $alltutorial =  Tutorial::orderBy('id','DESC')->limit(5)->get();
         $menu=  array();
         if(count($cat))
         {
@@ -62,7 +62,7 @@ class HomeController extends Controller
         $menu['cat']  = $cat;
         $menu['tut']  = $tutorial;
         $menu['alltutorial']  = $alltutorial;
-        $menu['free_projects'] = Project::where("is_paid",0)->get();
+        $menu['free_projects'] = Project::where("is_paid",0)->where('is_top_menu',1)->get();
         $menu['about'] = Page::all();
         return $menu;
 
@@ -74,7 +74,7 @@ class HomeController extends Controller
     }
 
     public static function getsidebarcontent($destination_id= Null,$sidebar_type=Null){
-        
+
         if($sidebar_type=='tutorial')
         {
             $tutorial = Tutorial::where(['tutorials.id' => $destination_id])
@@ -112,10 +112,9 @@ class HomeController extends Controller
         else if($sidebar_type=='page')
         {
             $tutorial = Page::where(['pages.id' => $destination_id])
-            ->select('page_name as name','slug')
-            ->join('slugs','slugs.id','=','pages.slug_id')
+            ->select('page_name as name','slug','external_link')
+            ->leftJoin('slugs','slugs.id','=','pages.slug_id')
             ->first();
-            $tutorial->slug= 'projects/'.$tutorial->slug;
             return $tutorial;
         }
         return $sidebar_type;

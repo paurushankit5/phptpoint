@@ -33,7 +33,32 @@
             <form class="form form-horizontal" id="submitForm" enctype="multipart/form-data" method="post" action="{{ route('blogs.store') }}">
             	@csrf
             	
-            	
+            	<div class="form form-group">
+                    <label>Category Name</label>
+                    <select class="form-control" name="category_id">
+                        <option value="">Select Category</option>
+                        @php
+                            if(count($categories))
+                            {
+                                foreach($categories as $cat)
+                                {
+                                    @endphp
+                                        <option value="{{ $cat->id }}" 
+                                            @php 
+                                                if($cat->id == old('category_id'))
+                                                {
+                                                    echo " selected ";
+                                                }
+                                            @endphp
+                                        >
+                                            {{ $cat->cat_name }}
+                                        </option>
+                                    @php
+                                }
+                            }
+                        @endphp
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>Blog Title*</label>
                     <input type="text" class="form-control" name="blog_name" id="page_name" value="{{ old('blog_name') }}" placeholder="Enter Page Name to displayed as header" required>

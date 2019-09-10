@@ -38,8 +38,8 @@
                     <label>  <input type="radio" value="0"  name="is_top_menu"> No </label>
                 </div>
                 <div class="form-group">
-                    <label>Image*</label>
-                    <input type="file" accept="image/*" required name="image" class="form-control">
+                    <label>Image</label>
+                    <input type="file" accept="image/*" name="image" class="form-control">
                 </div>
             	<div class="form form-group">
             		<input type="submit" class="btn btn-primary">

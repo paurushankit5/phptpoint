@@ -6,6 +6,7 @@ use App\Blog;
 use App\Sidebar;
 use App\Slug;
 use App\Tutorial;
+use App\Category;
 use App\LinkSidebar;
 use Illuminate\Http\Request;
 use Session;    
@@ -37,8 +38,12 @@ class BlogController extends Controller
     public function create()
     {
         $sidebars = Sidebar::all();
-
-        return view('admin.create_blogs',['sidebars'  =>  $sidebars]);
+        $categories = Category::all();
+        $array = array(
+                        'sidebars'      =>  $sidebars,
+                        'categories'   =>  $categories,
+                        );
+        return view('admin.create_blogs',$array);
     }
 
     /**
@@ -54,7 +59,7 @@ class BlogController extends Controller
             'blog_name'     => 'required|max:255',
             'content'       => 'required',
             'page_title'    => 'required|max:255',
-            'image'         => 'required | mimes:jpeg,jpg,png | max:2048',
+            'image'         => 'required | mimes:jpeg,jpg,png| max:2048',
         ]);
         $slug                   =   new Slug;
         $slug->slug             =   $request->slug;
@@ -64,6 +69,7 @@ class BlogController extends Controller
         $blog                    =   new Blog;
         $blog->user_id           =   \Auth::user()->id;
         $blog->blog_name         =   $request->blog_name;
+        $blog->category_id         =   $request->category_id;
         $blog->status            =   $request->status;
         $blog->content           =   $request->content;
         $blog->page_title        =   $request->page_title;
@@ -116,6 +122,7 @@ class BlogController extends Controller
     {
         $blog   =   Blog::findOrFail($id);
         $sidebars = Sidebar::all();
+        $categories = Category::all();
         $linked_sidebar = LinkSidebar::where(['sidebar_type' => 'blog','source_page_id' =>  $id])->select('sidebar_id')->get();
         $linked_sidebar = $linked_sidebar->toArray();
         if(count($linked_sidebar))
@@ -126,7 +133,7 @@ class BlogController extends Controller
             }
             $linked_sidebar = $tmp;
         }
-        return view('admin.edit_blog',['blog'   =>  $blog ,'sidebars' => $sidebars,'linked_sidebar'=> $linked_sidebar]);
+        return view('admin.edit_blog',['blog'   =>  $blog ,'sidebars' => $sidebars,'linked_sidebar'=> $linked_sidebar, 'categories' => $categories]);
     }
 
     /**
@@ -144,7 +151,7 @@ class BlogController extends Controller
             'blog_name'     => 'required|max:255',
             'content'       => 'required',
             'page_title'    => 'required|max:255',
-            'image'         => 'mimes:jpeg,jpg,png | max:2048',
+            'image'         => 'mimes:jpeg,jpg,png| max:2048',
 
         ]);
 
@@ -155,6 +162,7 @@ class BlogController extends Controller
         $blog->blog_name         =   $request->blog_name;
         $blog->user_id           =   \Auth::user()->id;
         $blog->status            =   $request->status;
+        $blog->category_id       =   $request->category_id;
         $blog->content           =   $request->content;
         $blog->page_title        =   $request->page_title;
         $blog->meta_title        =   $request->meta_title;

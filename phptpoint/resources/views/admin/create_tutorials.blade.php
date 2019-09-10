@@ -34,7 +34,7 @@
             	@csrf
             	<div class="form form-group">
             		<label>Category Name</label>
-            		<select class="form-control" name="category_id">
+            		<select class="form-control" required name="category_id">
             			<option value="">Select Category</option>
             			@php
             				if(count($categories))

@@ -21,6 +21,10 @@
                 	<td>{{ $blog->blog_name }}</td>
                 </tr>
                 <tr>
+                    <th>Category</th>
+                    <td>@if($blog->category) {{ $blog->category->cat_name }} @endif</td>
+                </tr>
+                <tr>
                     <th>Image</th>
                     <th>
                         @if($blog->image)

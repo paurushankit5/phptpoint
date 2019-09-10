@@ -33,7 +33,7 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-12" data-aos="fade">
-            <h1>PHPTPOINT   </h1>
+            <!--<h1>PHPTPOINT</h1>-->
             @include('components.search')
           </div>
         </div>
@@ -47,16 +47,16 @@
             <h2 class="mb-5">Popular Tutorials</h2>
           </div>
         </div>
-        <div class="row">
+        <div class="row form-group">
             @php
                 if(count($tutorial)){
                     foreach ($tutorial as $tut) {
                         @endphp
-                            <div class="col-md-3" >
-                              <div class="media-with-text media-with-text-1" style="border: 1px solid gray; padding: 20px; border-radius: 10px; margin">
+                            <div class="col-md-3 col-sm-6 col-xs-6 form-group" style="margin-bottom: 50px;" >
+                              <div class="media-with-text media-with-text-1" style="border: 1px solid #f7f1f1; padding: 20px; border-radius:5px; margin;box-shadow: -2px 10px 22px -16px rgba(0,0,0)">
                                 <div class="img-border-sm mb-4">
                                   <a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}" class="image-play">
-                                    <img src="{{ asset('images/'.$tut->image) }}" style="height:200px; width: 100%;" alt="" class="img-fluid">
+                                    <center><img src="{{ asset('images/'.$tut->image) }}" style="height:100px; width: 100px;" alt="" class="img-fluid mx-auto"></center>
                                   </a>
                                 </div>
                                 <h2 class="heading mb-0 h5 text-center"><a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}">{{ $tut->tut_name }}</a></h2>
@@ -67,104 +67,16 @@
                     }
                 }
             @endphp
-
-          
         </div>
-
       </div>
     </div>
+    
      <div class="site-section bg-light">
       <div class="container">
-        <div class="row">
+        <div class="row form-group">
           <div class="col-md-8 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
-            <h2 class="mb-5 h3">Recent Tutorials</h2>
+            <h3 class="mb-5 h3">Recent Tutorials</h3>
             <div class="rounded border jobs-wrap">
-
-              <!-- <a href="job-single.html" class="job-item d-block d-md-flex align-items-center  border-bottom fulltime">
-                <div class="company-logo blank-logo text-center text-md-left pl-3">
-                  <img src="{{ asset('home/images/company_logo_blank.png') }}" alt="Image" class="img-fluid mx-auto">
-                </div>
-                <div class="job-details h-100">
-                  <div class="p-3 align-self-center">
-                    <h3>Restaurant Crew</h3>
-                    <div class="d-block d-lg-flex">
-                      <div class="mr-3"><span class="icon-suitcase mr-1"></span> Resto Bar</div>
-                      <div class="mr-3"><span class="icon-room mr-1"></span> Florida</div>
-                      <div><span class="icon-money mr-1"></span> $55000 &mdash; 70000</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="job-category align-self-center">
-                  <div class="p-3">
-                    <span class="text-info p-2 rounded border border-info">Full Time</span>
-                  </div>
-                </div>  
-              </a>
-
-              <a href="job-single.html" class="job-item d-block d-md-flex align-items-center freelance">
-                <div class="company-logo blank-logo text-center text-md-left pl-3">
-                  <img src="{{ asset('home/images/logo_1.png') }}" alt="Image" class="img-fluid mx-auto">
-                </div>
-                <div class="job-details h-100">
-                  <div class="p-3 align-self-center">
-                    <h3>JavaScript Fullstack Developer</h3>
-                    <div class="d-block d-lg-flex">
-                      <div class="mr-3"><span class="icon-suitcase mr-1"></span> Cooper</div>
-                      <div class="mr-3"><span class="icon-room mr-1"></span> Anywhere</div>
-                      <div><span class="icon-money mr-1"></span> $55000 &mdash; 70000</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="job-category align-self-center">
-                  <div class="p-3">
-                    <span class="text-warning p-2 rounded border border-warning">Freelance</span>
-                  </div>
-                </div>  
-              </a>
-
-
-              <a href="job-single.html" class="job-item d-block d-md-flex align-items-center freelance">
-                <div class="company-logo blank-logo text-center text-md-left pl-3">
-                  <img src="{{ asset('home/images/logo_1.png') }}" alt="Image" class="img-fluid mx-auto">
-                </div>
-                <div class="job-details h-100">
-                  <div class="p-3 align-self-center">
-                    <h3>ReactJS Fullstack Developer</h3>
-                    <div class="d-block d-lg-flex">
-                      <div class="mr-3"><span class="icon-suitcase mr-1"></span> Cooper</div>
-                      <div class="mr-3"><span class="icon-room mr-1"></span> Anywhere</div>
-                      <div><span class="icon-money mr-1"></span> $55000 &mdash; 70000</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="job-category align-self-center">
-                  <div class="p-3">
-                    <span class="text-warning p-2 rounded border border-warning">Freelance</span>
-                  </div>
-                </div>  
-              </a>
-
-
-              <a href="job-single.html" class="job-item d-block d-md-flex align-items-center fulltime">
-                <div class="company-logo blank-logo text-center text-md-left pl-3">
-                  <img src="{{ asset('home/images/company_logo_blank.png') }}" alt="Image" class="img-fluid mx-auto">
-                </div>
-                <div class="job-details h-100">
-                  <div class="p-3 align-self-center">
-                    <h3>Assistant Brooker, Real Estate</h3>
-                    <div class="d-block d-lg-flex">
-                      <div class="mr-3"><span class="icon-suitcase mr-1"></span> RealState</div>
-                      <div class="mr-3"><span class="icon-room mr-1"></span> New York</div>
-                      <div><span class="icon-money mr-1"></span> $55000 &mdash; 70000</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="job-category align-self-center">
-                  <div class="p-3">
-                    <span class="text-info p-2 rounded border border-info">Full Time</span>
-                  </div>
-                </div>  
-              </a> -->
               @php
                 $recent_tutorials = App\Tutorial::where('status',1)->limit(5)->orderBy('id','DESC')->get();
               @endphp
@@ -190,76 +102,34 @@
                   </a>
                 @endforeach
               @endif
-                  
-
-
             </div>
-
-            <!-- <div class="col-md-12 text-center mt-5">
-              <a href="#" class="btn btn-primary rounded py-3 px-5"><span class="icon-plus-circle"></span> Show More Jobs</a>
-            </div> -->
           </div>
-          <div class="col-md-4 block-16" data-aos="fade-up" data-aos-delay="200">
+          
+        <div class="col-md-4 block-16" data-aos="fade-up" data-aos-delay="200">
             <div class="d-flex mb-0">
               <h2 class="mb-5 h3 mb-0">Recent Articles</h2>
-              <div class="ml-auto mt-1"><a href="#" class="owl-custom-prev">Prev</a> / <a href="#" class="owl-custom-next">Next</a></div>
+<div class="ml-auto mt-1"><a href="#" class="owl-custom-prev">Prev</a> / <a href="#" class="owl-custom-next">Next</a></div>
             </div>
-
             <div class="nonloop-block-16 owl-carousel">
               @php
-                $recent_blogs = App\Blog::where('status',1)->limit(9)->orderBy('id','DESC')->get();
+                $recent_subtuts = App\Subtutorial::where('status',1)->limit(6)->orderBy('id','DESC')->get();
               @endphp
-              @if(count($recent_blogs))
-                @foreach($recent_blogs as $recent_blog)
+              @if(count($recent_subtuts))
+                @foreach($recent_subtuts as $recent_subtut)
                   <div class="border rounded p-4 bg-white">
-                    <h2 class="h5">{{ ucwords($recent_blog->blog_name) }}</h2>
-                    <p><a href="/blog/{{ $recent_blog->slug->slug }}" class="border border-warning rounded p-1 px-2 text-warning">View</a></p>
+                    <h2 class="h5">{{ ucwords($recent_subtut->subtut_name) }}</h2>
+                    <p><a href="{{ $recent_subtut->slug->slug }}" class="border border-warning rounded p-1 px-2 text-warning">View</a></p>
                     <p>
-                      <span class="d-block"><span class="icon-suitcase"></span> {{ $recent_blog->user->name }}</span>
+                      <span class="d-block"><span class="icon-suitcase"></span> <a href="/{{ $recent_subtut->tutorial->slug->slug }}">{{ $recent_subtut->tutorial->tut_name }}</a></span>
                       <!-- <span class="d-block"><span class="icon-room"></span> Florida</span> -->
-                      <span class="d-block"><span class="icon-calendar mr-1"></span> {{ date('d-M Y',strtotime($recent_blog->created_at)) }}</span>
+                      <span class="d-block"><span class="icon-calendar mr-1"></span> {{ date('d-M Y',strtotime($recent_subtut->created_at)) }}</span>
                     </p>
-                    <p class="mb-0">{!! substr($recent_blog->content,0,200) !!}</p>
+                    <p class="mb-0">{!! substr($recent_subtut->content,0,200) !!}</p>
                   </div>
                 @endforeach
               @endif
-              
-
-              <!-- <div class="border rounded p-4 bg-white">
-                <h2 class="h5">Javascript Fullstack Developer</h2>
-                <p><span class="border border-warning rounded p-1 px-2 text-warning">Freelance</span></p>
-                <p>
-                  <span class="d-block"><span class="icon-suitcase"></span> Resto Bar</span>
-                  <span class="d-block"><span class="icon-room"></span> Florida</span>
-                  <span class="d-block"><span class="icon-money mr-1"></span> $55000 &mdash; 70000</span>
-                </p>
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus accusamus necessitatibus praesentium voluptate natus excepturi rerum, autem. Magnam laboriosam, quam sapiente laudantium iure sit ea! Tenetur, quasi, praesentium. Architecto, eum.</p>
-              </div>
-
-              <div class="border rounded p-4 bg-white">
-                <h2 class="h5">Assistant Brooker, Real Estate</h2>
-                <p><span class="border border-warning rounded p-1 px-2 text-warning">Freelance</span></p>
-                <p>
-                  <span class="d-block"><span class="icon-suitcase"></span> Resto Bar</span>
-                  <span class="d-block"><span class="icon-room"></span> Florida</span>
-                  <span class="d-block"><span class="icon-money mr-1"></span> $55000 &mdash; 70000</span>
-                </p>
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus esse, quam consectetur ipsum quibusdam ullam ab nesciunt, doloribus voluptatum neque iure perspiciatis vel vero illo consequatur facilis, fuga nobis corporis.</p>
-              </div>
-
-              <div class="border rounded p-4 bg-white">
-                <h2 class="h5">Telecommunication Manager</h2>
-                <p><span class="border border-warning rounded p-1 px-2 text-warning">Freelance</span></p>
-                <p>
-                  <span class="d-block"><span class="icon-suitcase"></span> Resto Bar</span>
-                  <span class="d-block"><span class="icon-room"></span> Florida</span>
-                  <span class="d-block"><span class="icon-money mr-1"></span> $55000 &mdash; 70000</span>
-                </p>
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid at ipsum commodi hic, cum esse asperiores libero molestiae, perferendis consectetur assumenda iusto, dolorem nemo maiores magnam illo laborum sit, dicta.</p>
-              </div> -->
-
             </div>
-
+            
           </div>
         </div>
       </div>
@@ -348,7 +218,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-            <h2>Recent Projects</h2>
+            <h2>Recent Free Projects</h2>
           </div>
         </div>
 

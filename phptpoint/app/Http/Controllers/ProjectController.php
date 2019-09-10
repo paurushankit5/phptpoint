@@ -86,6 +86,7 @@ class ProjectController extends Controller
         $tut->meta_title        =   $request->meta_title;
         $tut->meta_keyword      =   $request->meta_keyword;
         $tut->meta_description  =   $request->meta_description;
+        $tut->is_top_menu       =   $request->is_top_menu;
         $tut->slug_id           =   $slug->id;
         $tut->save();
 
@@ -194,6 +195,7 @@ class ProjectController extends Controller
         $pro->meta_title        =   $request->meta_title;
         $pro->meta_keyword      =   $request->meta_keyword;
         $pro->meta_description  =   $request->meta_description;
+        $pro->is_top_menu       =   $request->is_top_menu;
         $pro->slug_id           =   $slug->id;
         $pro->save();
 

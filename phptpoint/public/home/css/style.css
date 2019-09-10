@@ -260,7 +260,7 @@ a {
       display: inline-block; }
     .site-navbar .site-navigation .site-menu > li {
       display: inline-block;
-      padding: 10px 5px; }
+      padding: 10px 2px; }
       .site-navbar .site-navigation .site-menu > li > a {
         padding: 10px 5px;
         text-transform: uppercase;

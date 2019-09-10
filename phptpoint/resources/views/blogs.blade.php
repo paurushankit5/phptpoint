@@ -1,14 +1,18 @@
 @extends('layouts.main')
-
+@php
+  $seo  = App\Seo::where('page_name',"blogs")->first();
+@endphp
 @section('title')
+  @if(!empty($seo->page_title)) {{$seo->page_title}} @endif
 @endsection
 
 @section('meta_keyword')
+     @if(!empty($seo->meta_keyword)) {{$seo->meta_keyword}} @endif
 @endsection
 
 @section('meta_description')
+     @if(!empty($seo->meta_description)) {{$seo->meta_description}} @endif
 @endsection
-
 @section('page_banner')
 	<div style="height: 113px;"></div>
     <div class="unit-5 overlay" style='background-image: url("{{ asset('home/images/hero_1.jpg') }}");'>
@@ -21,15 +25,31 @@
 
 @section('content')
 	<div class="row">
-   		<!-- <div class="col-lg-3">
-            <div class="p-4 mb-3 bg-white">
-             	
+   		<div class="col-lg-3">
+           <div class="p-4 mb-3 bg-white">
+             	<div class="list-group">
+                    <a href="/blogs" class="list-group-item list-group-item-action active">Recent Blogs </a>
+                    @php
+                    error_reporting(1);
+                        if(count($recent_blogs)){
+                            foreach($recent_blogs as $recent_blog)
+                            {
+                                @endphp                                 
+                                    <a href="/blog/{{ $recent_blog->slug->slug }}" class="list-group-item list-group-item-action ">{{ ucwords($recent_blog->blog_name) }}</a>
+                                @php
+                            }
+                        }
+                    @endphp
+                </div>
+                @component('components.sidebar')
+                    @slot('sidebar_type','blog')
+                    @slot('source_page_id',$blog->id)
+                @endcomponent
             </div>
-            
-        </div> -->
-        <div class="col-md-10 col-lg-10 mb-5 bg-white"> 
+        </div>
+        
+        <div class="col-md-6 col-lg-6 mb-5 bg-white"> 
         	<div class="p-8 mb-5 bg-white"> 
-
         		<br>
                 <div class="row">
                   <div class="col-md-6 mx-auto text-center mb-5 section-heading">
@@ -39,8 +59,7 @@
         		  @if(count($blogs))
                     <div class="row">
                             @foreach($blogs as $blog)
-                                 <div class="col-md-6">
-
+                        <div class="col-md-4 form-group" style="border:1px solid #CCC;">
                                     <div class="media-with-text">
                                         <div class="img-border-sm mb-4">
                                             <a href="/blog/{{ $blog->slug->slug }}" class="image-play">
@@ -54,7 +73,6 @@
                                         @endif
                                       </span>
                                     </div>
-                                    <hr>
                                 </div>
                             @endforeach
                             <div class="clearfix"></div>
@@ -70,7 +88,7 @@
             	
         	</div>          
         </div>   
-        <div class="col-md-2">
+        <div class="col-md-3">
             @include('components.add')
         </div>       
     </div>

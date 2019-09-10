@@ -44,15 +44,25 @@
                 <div class="form-group">
                     <label>Paid*</label>
                     <label class="radio-inline">
-                      <input type="radio" name="is_paid" value="1" checked> Yes
+                      <input type="radio" name="is_paid" value="1" checked > Yes
                     </label>
                     <label class="radio-inline">
-                      <input type="radio" name="is_paid" value="0"> No
+                      <input type="radio" name="is_paid" value="0" > No
                     </label>
                 </div>
+                
                 <div class="form-group price_field">
                     <label>Price</label>
                     <input type="text" class="form-control" name="project_price" id="project_price" value="{{ old('project_price') }}" placeholder="Enter Project Price in INR" >
+                </div>
+                <div class="form-group">
+                    <label>Top Menu*</label>
+                    <label class="radio-inline">
+                      <input type="radio" name="is_top_menu" value="1" checked> Yes
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="is_top_menu" value="0"> No
+                    </label>
                 </div>
                 <div class="form-group">
                     <label>Youtube Embed Link</label>

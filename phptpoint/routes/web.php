@@ -68,6 +68,10 @@ Route::any('/blog/{slug}', function($slug)
 		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
 	}
 	else{
+		$method = \DB::table('slugs')->where('slug',$slug."/")->first();
+		if($method){
+			return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
+		}
 		abort(404);
 	}
 	
@@ -82,6 +86,10 @@ Route::any('/projects/{slug}', function($slug)
 		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
 	}
 	else{
+		$method = \DB::table('slugs')->where('slug',$slug."/")->first();
+		if($method){
+			return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
+		}
 		abort(404);
 	}
 	
@@ -92,10 +100,13 @@ Route::any('/{slug}', function($slug)
 {
 	$method = \DB::table('slugs')->where('slug',$slug)->first();
 	if($method){
-		//return $method->method_name;
 		return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
 	}
 	else{
+		$method = \DB::table('slugs')->where('slug',$slug."/")->first();
+		if($method){
+			return \App::call('\App\Http\Controllers\\'.$method->method_name,[$method->id]);
+		}
 		abort(404);
 	}
 	

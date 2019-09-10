@@ -20,7 +20,7 @@
 								<?php
 									$sidebar_content_data = App\Http\Controllers\HomeController::getsidebarcontent($sidebar_content->destination_id,$linked_sidebar->sidebar->sidebar_type);
 								?> 	
-								<a href="/{{ $sidebar_content_data->slug }}" class="list-group-item list-group-item-action">{{ $sidebar_content_data->name }}</a>
+								<a href="@if($sidebar_content_data->external_link !='') {{$sidebar_content_data->external_link}} @else /{{ $sidebar_content_data->slug }} @endif" class="list-group-item list-group-item-action">{{ $sidebar_content_data->name }}</a>
 							@endforeach
 						@endif	
 					</div>

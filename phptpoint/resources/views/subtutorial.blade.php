@@ -12,6 +12,18 @@
 	{{ $subtut->meta_description }}
 @endsection
 
+@section('header_style')
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <style type="text/css">
+    .media-with-text-1{
+      transition: transform .2s;
+    }
+    .media-with-text-1:hover {
+      transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+  </style>
+@endsection
+
 @section('page_banner')
 	<div style="height: 113px;"></div>
     <div class="unit-5 overlay" style='background-image: url("{{ asset('home/images/hero_1.jpg') }}");'>
@@ -45,7 +57,7 @@
             </div>
             
         </div>
-        <div class="col-md-7 col-lg-7 mb-5 bg-white"> 
+        <div class="col-md-6 col-lg-6 mb-5 bg-white"> 
         	<div class="p-8 mb-5 bg-white"> 
         		<br>
         		@component('components.prev_next')
@@ -77,9 +89,40 @@
 					@slot('add','bottom')
 					
 				@endcomponent 
-        	</div>          
+        	</div> 
+            <div class="site-section">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                    <h2 class="mb-5">Popular Tutorials</h2>
+                  </div>
+                </div>
+                <div class="row form-group">
+                    @php
+                        $page_tutorials = App\Tutorial::where('status',1)->limit(8)->orderBy('id','DESC')->get();
+                        if(count($page_tutorials)){
+                            foreach ($page_tutorials as $tut) {
+                                @endphp
+                                    <div class="col-md-3 col-sm-6 col-xs-6 form-group" >
+                                      <div class="media-with-text media-with-text-1" style="border: 1px solid #f7f1f1; padding: 20px; height:200px; border-radius:5px; margin;box-shadow: -2px 10px 22px -16px rgba(0,0,0)">
+                                        <div class="img-border-sm mb-4">
+                                          <a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}" class="image-play">
+                                            <center><img src="{{ asset('images/'.$tut->image) }}" style="height:100px; width: 100px;" alt="" class="img-fluid mx-auto"></center>
+                                          </a>
+                                        </div>
+                                        <h2 class="heading mb-0 h5 text-center"><a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}">{{ $tut->tut_name }}</a></h2>
+                                        
+                                      </div>
+                                    </div>
+                                @php
+                            }
+                        }
+                    @endphp
+                </div>
+              </div>
+            </div>          
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
         	@include('components.add')
         </div>           
     </div>

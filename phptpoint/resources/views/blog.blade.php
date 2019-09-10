@@ -1,4 +1,4 @@
-@extends('layouts.main')
+    @extends('layouts.main')
 
 @section('title')
     {{ $blog->page_title }}
@@ -48,7 +48,7 @@
             </div>
             
         </div>
-        <div class="col-md-7 col-lg-7 mb-5 bg-white"> 
+        <div class="col-md-6 col-lg-6 mb-5 bg-white"> 
         	<div class="p-8 mb-5 bg-white"> 
 
         		<br>
@@ -94,10 +94,41 @@
                     @slot('next_url',$next_slug)
                     @slot('prev_url',$prev_slug)
                 @endcomponent 
+                <div class="site-section">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+                        <h2 class="mb-5">Latest Blogs</h2>
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                        @php
+                            $recent_blogs   =   App\Blog::where('status',1)->where('id','<>',$blog->id)->limit(8)->orderBy('id','DESC')->get();
+                            if(count($recent_blogs)){
+                                foreach ($recent_blogs as $recent_blog) {
+                                    @endphp
+                                        <div class="col-md-3 col-sm-6 col-xs-6 form-group" >
+                                          <div class="media-with-text media-with-text-1" style="border: 1px solid #f7f1f1; padding: 20px; height:200px; border-radius:5px; margin;box-shadow: -2px 10px 22px -16px rgba(0,0,0)">
+                                            <div class="img-border-sm mb-4">
+                                              <a href="{{ env('APP_URL').'/blog/'.$recent_blog->slug->slug  }}" class="image-play">
+                                                <center><img src="{{ asset('images/'.$recent_blog->image) }}" alt="" style="height:100px;" class="img-fluid mx-auto"></center>
+                                              </a>
+                                            </div>
+                                            <h2 class="heading mb-0 h5 text-center"><a href="{{ env('APP_URL').'/blog/'.$recent_blog->slug->slug  }}">{{ $recent_blog->blog_name }}</a></h2>
+                                            
+                                          </div>
+                                        </div>
+                                    @php
+                                }
+                            }
+                        @endphp
+                    </div>
+                  </div>
+                </div> 
             	
         	</div>          
         </div>   
-        <div class="col-md-2">
+        <div class="col-md-3">
             @include('components.add')
         </div>       
     </div>

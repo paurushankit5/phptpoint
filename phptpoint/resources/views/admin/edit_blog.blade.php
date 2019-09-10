@@ -33,7 +33,32 @@
             {{ Form::open(array('url' => route("blogs.update",$blog->id), 'method' => 'PUT', 'class'=>'form form-horizontal', 'files' => true)) }}
             	@csrf
             	
-            	
+            	<div class="form form-group">
+                    <label>Category Name</label>
+                    <select class="form-control" name="category_id">
+                        <option value="">Select Category</option>
+                        @php
+                            if(count($categories))
+                            {
+                                foreach($categories as $cat)
+                                {
+                                    @endphp
+                                        <option value="{{ $cat->id }}" 
+                                            @php 
+                                                if($cat->id == $blog->category_id)
+                                                {
+                                                    echo " selected ";
+                                                }
+                                            @endphp
+                                        >
+                                            {{ $cat->cat_name }}
+                                        </option>
+                                    @php
+                                }
+                            }
+                        @endphp
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>Blog Title*</label>
                     <input type="text" class="form-control" name="blog_name" id="page_name" value="{{ $blog->blog_name }}" placeholder="Enter Page Name to displayed as header" required>
