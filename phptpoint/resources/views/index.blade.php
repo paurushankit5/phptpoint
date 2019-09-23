@@ -74,7 +74,7 @@
      <div class="site-section bg-light">
       <div class="container">
         <div class="row form-group">
-          <div class="col-md-8 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-md-6 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
             <h3 class="mb-5 h3">Recent Tutorials</h3>
             <div class="rounded border jobs-wrap">
               @php
@@ -104,33 +104,38 @@
               @endif
             </div>
           </div>
-          
-        <div class="col-md-4 block-16" data-aos="fade-up" data-aos-delay="200">
-            <div class="d-flex mb-0">
-              <h2 class="mb-5 h3 mb-0">Recent Articles</h2>
-<div class="ml-auto mt-1"><a href="#" class="owl-custom-prev">Prev</a> / <a href="#" class="owl-custom-next">Next</a></div>
-            </div>
-            <div class="nonloop-block-16 owl-carousel">
+          <div class="col-md-6 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="mb-5 h3">Recent Topics</h3>
+            <div class="rounded border jobs-wrap">
               @php
-                $recent_subtuts = App\Subtutorial::where('status',1)->limit(6)->orderBy('id','DESC')->get();
+                $recent_subtuts = App\Subtutorial::where('status',1)->limit(10)->orderBy('id','DESC')->get();
               @endphp
               @if(count($recent_subtuts))
                 @foreach($recent_subtuts as $recent_subtut)
-                  <div class="border rounded p-4 bg-white">
-                    <h2 class="h5">{{ ucwords($recent_subtut->subtut_name) }}</h2>
-                    <p><a href="{{ $recent_subtut->slug->slug }}" class="border border-warning rounded p-1 px-2 text-warning">View</a></p>
-                    <p>
-                      <span class="d-block"><span class="icon-suitcase"></span> <a href="/{{ $recent_subtut->tutorial->slug->slug }}">{{ $recent_subtut->tutorial->tut_name }}</a></span>
-                      <!-- <span class="d-block"><span class="icon-room"></span> Florida</span> -->
-                      <span class="d-block"><span class="icon-calendar mr-1"></span> {{ date('d-M Y',strtotime($recent_subtut->created_at)) }}</span>
-                    </p>
-                    <p class="mb-0">{!! substr($recent_subtut->content,0,200) !!}</p>
-                  </div>
+                  <a href="/{{ $recent_subtut->slug->slug }}" class="job-item d-block d-md-flex align-items-center partime">
+                    <!-- <div class="company-logo blank-logo text-center text-md-left pl-3">
+                      <img src="{{ asset('home/images/logo_2.png') }}" alt="Image" class="img-fluid mx-auto">
+                    </div> -->
+                    <div class=" h-100">
+                      <div class="align-self-center" style="padding-left: 15px;">
+                        <h3>{{ $recent_subtut->subtut_name }}</h3>
+                        <div class="d-block d-lg-flex">
+                          <div class="mr-3"><span class="icon-suitcase mr-1"></span> {{ date('d-M-Y', strtotime($recent_subtut->created_at)) }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <div class="job-category align-self-center">
+                      <div class="p-3">
+                        <span class="text-danger p-2 rounded border border-danger">View</span>
+                      </div>
+                    </div>  --> 
+                  </a>
                 @endforeach
               @endif
             </div>
-            
           </div>
+          
+        
         </div>
       </div>
     </div>
@@ -228,17 +233,18 @@
         <div class="nonloop-block-15 owl-carousel">
             @if(count($recent_projects))
               @foreach($recent_projects as $recent_project)
-                <div class="media-with-text">
-                  <div class="img-border-sm mb-4">
+                <div class="media-with-text panel">
+                  <div class="img-border-sm mb-4" style="">
                     <a href="/projects/{{ $recent_project->slug->slug }}" class="image-play">
                       @if($recent_project->pro_image)
-                          <img src="{{ asset('images/projects/'.$recent_project->pro_image) }}" alt="{{ $recent_project->pro_name }}" style="height:300px;" class="img-fluid">
+                          <img src="{{ asset('images/projects/'.$recent_project->pro_image) }}" alt="{{ $recent_project->pro_name }}" style="height:150px;width:150px" class="img-fluid">
                         @endif
                     </a>
                   </div>
-                  <h2 class="heading mb-0 h5"><a href="#">{{ $recent_project->pro_name }}</a></h2>
+                  <h3 class="heading mb-0 h5"><a href="#">{{ $recent_project->pro_name }}</a></h3>
                   <span class="mb-3 d-block post-date">{{ date('d-M-Y', strtotime($recent_project->created_at)) }} </span>
-                  <p>{!! substr($recent_project->content,0,200) !!}</p>
+                  <br>
+                  <!--<p>{!! substr($recent_project->content,0,150) !!}</p>-->
                   <p class="text-center"><a href="/projects/{{ $recent_project->slug->slug }}" class="btn btn-danger btn-lg ">Download  </a></p>
                 </div>
               @endforeach 

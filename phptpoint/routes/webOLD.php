@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /*
 |--------------------------------------------------------------------------
@@ -46,13 +46,11 @@ Route::get('/clear-cache', function() {
     // return what you want
 });
 
-Route::any('/projects/', 'ProjectController@getAllProjects');
-
-
 Route::get('/mail1', 'HomeController@sendmail');
 
 
 Route::get('/blogs', 'BlogController@getLatestBlogs');
+Route::get('/projects/', 'ProjectController@getAllProjects');
 
 Route::get('/getprojectfile/{id}', 'HomeController@getprojectfile')->where('slug', '.*');
 Route::get('/gettutorialfile/{id}', 'HomeController@gettutorialfile');
@@ -114,6 +112,8 @@ Route::any('/{slug}', function($slug)
 	}
 	
 })->where('slug', '.*');
+
+
 
 
 

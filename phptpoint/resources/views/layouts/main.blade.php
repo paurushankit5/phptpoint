@@ -91,14 +91,14 @@
                                 }
                             }
                              @endphp
-            <li><a href="/mysql-tutorial">MySQL</a></li>
-            <li><a href="/ajax-tutorial">Ajax</a></li>
-            <li><a href="/codeigniter-tutorial">Codeigniter</a></li>
-            <li><a href="/laravel-tutorial">Laravel</a></li>
-            <li><a href="/wordpress-tutorial">WordPress</a></li>
-            <li><a href="/seo-tutorial">SEO</a></li>
-            <li><a href="/python-tutorial">Python</a></li>
-            <li><a href="/json-tutorial">JSON</a></li>
+            <li><a href="/mysql-tutorial/">MySQL</a></li>
+            <li><a href="/ajax-tutorial/">Ajax</a></li>
+            <li><a href="/codeigniter-tutorial/">Codeigniter</a></li>
+            <li><a href="/laravel-tutorial/">Laravel</a></li>
+            <li><a href="/wordpress-tutorial/">WordPress</a></li>
+            <li><a href="/seo-tutorial/">SEO</a></li>
+            <li><a href="/python-tutorial/">Python</a></li>
+            <li><a href="/json-tutorial/">JSON</a></li>
             <li><a href="https://www.products.phptpoint.com">Product</a></li>
                             @php
                             if(count($menu['free_projects']))
@@ -155,7 +155,7 @@
             @yield('content')
       </div>
     </div>
-    
+    <div class="clearfix"></div>
     <footer class="site-footer">
       <div class="container">
         <div class="row">
@@ -163,6 +163,7 @@
             <h3 class="footer-heading mb-4 text-white">About</h3>
              <ul class="list-unstyled">
              <li><a href="/blogs">Blogs</a></li>
+             <li><a href="/projects/">Projects</a></li>
              <li><a href="/contact-us">Contact us</a></li>
              <li><a href="/login">Guest Post</a></li>
              <li><a href="#" class="btn btn-primary">Live Support</a></li>

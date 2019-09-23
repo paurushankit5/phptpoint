@@ -82,9 +82,9 @@
                         <br>
                         <br>
                         @guest
-                            <a href="/loginToDownload/{{$tut->slug->slug}}/{{ $tut->id }}?page=tutorial" class="btn btn-primary btn-download"> Login / Register To Download</a>
+                            <a href="/loginToDownload/{{$tut->slug->slug}}" class="btn btn-primary btn-download"> Login / Register To Download</a>
                         @else
-                            <a href="/gettutorialfile/{{$tut->slug->slug}}/{{ $tut->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
+                            <a href="/gettutorialfile/{{ $tut->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
                         @endguest
                     </div>
                 @endif
@@ -112,14 +112,15 @@
                             foreach ($page_tutorials as $tut) {
                                 @endphp
                                     <div class="col-md-3 col-sm-6 col-xs-6 form-group" >
-                                      <div class="media-with-text media-with-text-1" style="border: 1px solid #f7f1f1; padding: 20px; height:200px; border-radius:5px; margin;box-shadow: -2px 10px 22px -16px rgba(0,0,0)">
+                                      <div class="media-with-text media-with-text-1" style="border: 1px solid #f7f1f1; padding: 20px; height:120px; border-radius:5px; margin;box-shadow: -2px 10px 22px -16px rgba(0,0,0)">
                                         <div class="img-border-sm mb-4">
                                           <a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}" class="image-play">
-                                            <center><img src="{{ asset('images/'.$tut->image) }}" style="height: 100px;" alt="" class="img-fluid mx-auto"></center>
+                                            <center><img src="{{ asset('images/'.$tut->image) }}" style="height:80px; width: 80px;" alt="{{ $tut->tut_name }}" title="{{ $tut->tut_name }}" class="img-fluid mx-auto"></center>
                                           </a>
                                         </div>
+                                        <!--
                                         <h2 class="heading mb-0 h5 text-center"><a href="{{ env('APP_URL').'/'.$tut->slug->slug  }}">{{ $tut->tut_name }}</a></h2>
-                                        
+                                        -->
                                       </div>
                                     </div>
                                 @php

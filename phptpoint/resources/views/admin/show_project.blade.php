@@ -109,7 +109,7 @@
                     <th>File</th>
                     <td>
                         @if($project->zip_name)
-                            <a href="/getprojectfile/{{ $project->slug->slug }}/{{ $project->id }}">{{ $project->zip_name }}</a>
+                            <a href="/getprojectfile/{{ $project->id }}">{{ $project->zip_name }}</a>
                         @else 
                         N/A
                         @endif

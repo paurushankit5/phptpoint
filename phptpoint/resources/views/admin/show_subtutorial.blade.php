@@ -90,7 +90,7 @@
                     <th>File</th>
                     <td>
                         @if($subtutorial->zip_name)
-                            <a href="/getsubtutorialfile/{{ $subtutorial->slug->slug }}/{{ $subtutorial->id }}">{{ $subtutorial->zip_name }}</a>
+                            <a href="/getsubtutorialfile/{{ $subtutorial->id }}">{{ $subtutorial->zip_name }}</a>
                         @else 
                         N/A
                         @endif

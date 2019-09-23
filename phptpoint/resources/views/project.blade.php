@@ -65,9 +65,9 @@
                     <p class="btn btn-primary"><b>Total Downloads : {{$pro->downloads->count()}}</b></p>
                     @endif
                         @guest
-                            <a href="/loginToDownload/{{$pro->slug->slug}}/{{ $pro->id }}?page=project" class="btn btn-primary btn-download"> Login / Register To Download</a>
+                            <a href="/loginToDownload/projects/{{$pro->slug->slug}}" class="btn btn-primary btn-download"> Login / Register To Download</a>
                         @else
-                            <a href="/getprojectfile/{{$pro->slug->slug}}/{{ $pro->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
+                            <a href="/getprojectfile/{{ $pro->id }}" class="btn btn-primary btn-download"> Click Here To Download</a>
                         @endguest
                     </div>
                 @endif
@@ -78,24 +78,26 @@
                   <div class="container">
                     <div class="row">
                       <div class="col-md-6 mx-auto text-center mb-5 section-heading">
-                        <h2 class="mb-5">Latest Projects</h2>
+                        <h2 class="mb-5">Other Free Latest Projects</h2>
                       </div>
                     </div>
                     <div class="row form-group">
                         @php
-                            $recent_projects   =   App\Project::where('is_paid',0)->where('id','<>',$pro->id)->limit(8)->orderBy('id','DESC')->get();
+                            $recent_projects   =   App\Project::where('is_paid',0)->where('id','<>',$pro->id)->limit(16)->orderBy('id','DESC')->get();
                             if(count($recent_projects)){
                                 foreach ($recent_projects as $recent_project) {
                                     @endphp
                                         <div class="col-md-3 col-sm-6 col-xs-6 form-group" >
-                                          <div class="media-with-text media-with-text-1" style="border: 1px solid #f7f1f1; padding: 20px; height:200px; border-radius:5px; margin;box-shadow: -2px 10px 22px -16px rgba(0,0,0)">
+                                          <div class="media-with-text media-with-text-1" style="border: 1px solid #f7f1f1; padding: 20px; height:120px; border-radius:5px; margin;box-shadow: -2px 10px 22px -16px rgba(0,0,0)">
                                             <div class="img-border-sm mb-4">
                                               <a href="{{ env('APP_URL').'/projects/'.$recent_project->slug->slug  }}" class="image-play">
-                                                <center><img src="{{ asset('images/projects/'.$recent_project->pro_image) }}" alt="" style="height:100px;" class="img-fluid mx-auto"></center>
+                                                <center><img src="{{ asset('images/projects/'.$recent_project->pro_image) }}" alt="" style="height:80px;width:80px" title="Download {{ $recent_project->pro_name }}" class="img-fluid mx-auto"></center>
                                               </a>
                                             </div>
-                                            <h2 class="heading mb-0 h5 text-center"><a href="{{ env('APP_URL').'/projects/'.$recent_project->slug->slug  }}">{{ $recent_project->pro_name }}</a></h2>
                                             
+                                        <!--
+                                        <h2 class="heading mb-0 h5 text-center"><a href="{{ env('APP_URL').'/projects/'.$recent_project->slug->slug  }}">{{ $recent_project->pro_name }}</a></h2>
+                                        -->    
                                           </div>
                                         </div>
                                     @php

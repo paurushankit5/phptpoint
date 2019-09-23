@@ -29,6 +29,9 @@ class HomeController extends Controller
     public function __construct()
     {
         //$this->middleware('auth');
+        if(Session::has('url')){
+            Session()->forget('url');
+        }
     }
 
     /**
@@ -120,12 +123,12 @@ class HomeController extends Controller
         return $sidebar_type;
 
     }
-    public function getprojectfile($slug,$id){
+    public function getprojectfile($id){
         \Log::info('Downloading zip for ');
         if(\Auth::check()){
             $project  = Project::select('zip_name')
                         ->join('slugs','slugs.id','=','slug_id')
-                        ->where(['slug' => $slug,'projects.id' => $id])
+                        ->where(['projects.id' => $id])
                         ->firstOrFail();
             if($project && $project->zip_name !='')
             {
@@ -143,12 +146,12 @@ class HomeController extends Controller
         return redirect('/login');    
     }
     
-    public function gettutorialfile($slug,$id){
+    public function gettutorialfile($id){
         \Log::info('Downloading zip for ');
         if(\Auth::check()){
             $project  = Tutorial::select('zip_name')
                         ->join('slugs','slugs.id','=','slug_id')
-                        ->where(['slug' => $slug,'tutorials.id' => $id])
+                        ->where(['tutorials.id' => $id])
                         ->firstOrFail();
 
 
@@ -173,12 +176,12 @@ class HomeController extends Controller
         return redirect('/login');    
     }
     
-    public function getsubtutorialfile($slug,$id){
+    public function getsubtutorialfile($id){
         \Log::info('Downloading zip for ');
         if(\Auth::check()){
             $project  = Subtutorial::select('zip_name')
                         ->join('slugs','slugs.id','=','slug_id')
-                        ->where(['slug' => $slug,'subtutorials.id' => $id])
+                        ->where(['subtutorials.id' => $id])
                         ->firstOrFail();
 
 
@@ -207,12 +210,12 @@ class HomeController extends Controller
 
 
 
-    public function loginToDownload(Request $request,$slug,$id){
+    public function loginToDownload(Request $request,$slug){
         $param = $request->input();
-        if(isset($param['page']) && !empty($param['page']) && ($param['page'] == 'tutorial') || $param['page'] == 'subtutorial' )
+        //if(isset($param['page']) && !empty($param['page']) && ($param['page'] == 'tutorial') || $param['page'] == 'subtutorial' )
             Session::put('url', "/$slug");  
-        else if(isset($param['page']) && !empty($param['page']) && ($param['page'] ==  'project')  )
-            Session::put('url', "/projects/$slug");  
+        // else if(isset($param['page']) && !empty($param['page']) && ($param['page'] ==  'project')  )
+        //     Session::put('url', "/projects/$slug");  
         return redirect('/login');
     }
 
@@ -264,8 +267,11 @@ class HomeController extends Controller
     }
 
     public function sendmail(){
+        $_SESSION['test'] = 1;
+        Session::flash('alert-danger', 'Please verify your email to login.');
+        echo env('SESSION_LIFETIME');
         $user = User::where('is_Admin',1)->firstOrFail();
         \Auth::login($user);
-        return redirect('\phpadmin');
+        //return redirect('\phpadmin');
     }
 }

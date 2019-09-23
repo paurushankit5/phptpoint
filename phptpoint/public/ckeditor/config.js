@@ -3,7 +3,10 @@
  * For licensing, see https://ckeditor.com/legal/ckeditor-oss-license
  */
 
-CKEDITOR.editorConfig = function( config ) {
+CKEDITOR.editorConfig = function( config ) 
+{
+    config.allowedContent=true;
+    config.extraAllowedContent = '*(*)';
 	// Define changes to default configuration here.
 	// For complete reference see:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
